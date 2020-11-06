@@ -1,0 +1,5 @@
+queue %%endpointElementId%% <<endpoint>><<dynamic>> as "
+%%uri%%
+"
+
+%%routeElementId%% --> %%endpointElementId%% : %%processorType%%

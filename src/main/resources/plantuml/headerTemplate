@@ -1,0 +1,30 @@
+@startuml
+
+allow_mixing
+set namespaceSeparator none
+
+skinparam WrapWidth 300
+
+skinparam ArrowColor #Black
+
+skinparam rectangle {
+  RoundCorner 20
+}
+
+skinparam rectangle<<route>> {
+  BorderColor #6C8EBF
+  BackgroundColor #DAE8FC
+}
+
+skinparam queue<<endpoint>> {
+}
+
+skinparam queue<<static>> {
+  BorderColor #B85450
+  BackgroundColor #F8CECC
+}
+
+skinparam queue<<dynamic>> {
+  BorderColor #82B366
+  BackgroundColor #D5E8D4
+}
