@@ -4,10 +4,7 @@ import fr.ncasaux.camelplantuml.extractor.ConsumersInfoExtractor;
 import fr.ncasaux.camelplantuml.extractor.EndpointsInfoExtractor;
 import fr.ncasaux.camelplantuml.extractor.ProducersInfoExtractor;
 import fr.ncasaux.camelplantuml.extractor.RoutesInfoExtractor;
-import fr.ncasaux.camelplantuml.extractor.processor.EnricherInfoExtractor;
-import fr.ncasaux.camelplantuml.extractor.processor.PollEnricherInfoExtractor;
-import fr.ncasaux.camelplantuml.extractor.processor.SendDynamicProcessorInfoExtractor;
-import fr.ncasaux.camelplantuml.extractor.processor.WireTapProcessorInfoExtractor;
+import fr.ncasaux.camelplantuml.extractor.processor.*;
 import fr.ncasaux.camelplantuml.generator.*;
 import fr.ncasaux.camelplantuml.model.*;
 import org.apache.camel.Exchange;
@@ -60,6 +57,9 @@ public class GetRoutesInfoProcessor implements Processor {
 
         LOGGER.info("Processing WireTapProcessor processors");
         WireTapProcessorInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo, endpointUrisInfo, endpointBaseUrisInfo);
+
+        LOGGER.info("Processing RecipientList processors");
+        RecipientListInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo, endpointUrisInfo, endpointBaseUrisInfo);
 
         LOGGER.info("Generating PlantUML diagram");
         String umlString = HeaderDiagramGenerator.generateUmlString()

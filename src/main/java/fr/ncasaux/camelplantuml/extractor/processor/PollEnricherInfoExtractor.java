@@ -26,23 +26,20 @@ public class PollEnricherInfoExtractor {
         List<ObjectName> processorsList = List.copyOf(processorsSet);
 
         for (ObjectName on : processorsList) {
-            ConsumerInfo consumerInfo = new ConsumerInfo();
-
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
-            String normalizedEndpointUri = EndpointHelper.normalizeEndpointUri(expression);
-            String endpointUri = URLDecoder.decode(normalizedEndpointUri, StandardCharsets.UTF_8);
-
-            consumerInfo.setRouteId((String) mbeanServer.getAttribute(on, "RouteId"));
-            consumerInfo.setEndpointUri(endpointUri);
-            consumerInfo.setProcessorType("pollEnrich");
+            String endpointUri = URLDecoder.decode(EndpointHelper.normalizeEndpointUri(expression), StandardCharsets.UTF_8);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
-                consumerInfo.setUseDynamicEndpoint(false);
-                ListUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo);
+                ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
+                        endpointUri, "pollEnrich", false);
+                ListUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
-                consumerInfo.setUseDynamicEndpoint(true);
-                ListUtils.addConsumerInfo(consumersInfo, consumerInfo);
+                ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
+                        endpointUri, "pollEnrich", true);
+                ListUtils.addConsumerInfo(consumersInfo, consumerInfo, LOGGER);
+
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);
             }

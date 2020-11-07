@@ -4,12 +4,12 @@ import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.EndpointUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.utils.ListUtils;
+import fr.ncasaux.camelplantuml.utils.MapUtils;
 import org.apache.camel.support.EndpointHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.*;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -34,36 +34,24 @@ public class WireTapProcessorInfoExtractor {
 
         for (int index = 0; index < processorsList.size(); index++) {
             ObjectName on = processorsList.get(index);
+            String normalizedUri = EndpointHelper.normalizeEndpointUri((String) mbeanServer.getAttribute(on, "Uri"));
+            String endpointUri = URLDecoder.decode(normalizedUri, StandardCharsets.UTF_8);
 
-            ProducerInfo producerInfo = new ProducerInfo();
+            if ((boolean) mbeanServer.getAttribute(on, "DynamicUri")) {
+                ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
+                        endpointUri, "wiretap", true);
+                ListUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
 
-            String wiretapUri = (String) mbeanServer.getAttribute(on, "Uri");
-            String normalizedWiretapUri = EndpointHelper.normalizeEndpointUri(wiretapUri);
-            String endpointUri = URLDecoder.decode(normalizedWiretapUri, StandardCharsets.UTF_8);
-            Boolean dynamicUri = (Boolean) mbeanServer.getAttribute(on, "DynamicUri");
-
-            producerInfo.setRouteId((String) mbeanServer.getAttribute(on, "RouteId"));
-            producerInfo.setEndpointUri(URLDecoder.decode(normalizedWiretapUri, StandardCharsets.UTF_8));
-            producerInfo.setProcessorType("wiretap");
-
-            if (dynamicUri) {
-                producerInfo.setUseDynamicEndpoint(true);
-                ListUtils.addProducerInfo(producersInfo, producerInfo);
             } else {
-                producerInfo.setUseDynamicEndpoint(false);
-                ListUtils.addProducerInfoIfNotInList(producersInfo, producerInfo);
+                ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
+                        endpointUri, "wiretap", false);
+                ListUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
-                EndpointUriInfo endpointUriInfo = new EndpointUriInfo();
-                URI uri = new URI(normalizedWiretapUri);
-                String endpointBaseUri = URLDecoder.decode(new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), null, uri.getFragment()).toString(), StandardCharsets.UTF_8);
-                endpointUriInfo.setEndpointBaseUri(endpointBaseUri);
-                endpointUrisInfo.put(endpointUri, endpointUriInfo);
-                LOGGER.info("{} with id \"{}\" added to the map of endpointUris", endpointUriInfo.toString(), endpointUri);
+                EndpointUriInfo endpointUriInfo = new EndpointUriInfo(normalizedUri);
+                MapUtils.addEndpointUriInfo(endpointUrisInfo, endpointUri, endpointUriInfo, LOGGER);
 
-                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
-                endpointBaseUriInfo.setDiagramElementId("endpoint_wiretap_".concat(String.valueOf(index)));
-                endpointBaseUrisInfo.put(endpointBaseUri, endpointBaseUriInfo);
-                LOGGER.info("EndpointBaseUri with id \"{}\" added to the map of endpointBaseUris", endpointBaseUri);
+                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo("endpoint_wiretap_".concat(String.valueOf(index)));
+                MapUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointUriInfo.getEndpointBaseUri(), endpointBaseUriInfo, LOGGER);
             }
         }
     }

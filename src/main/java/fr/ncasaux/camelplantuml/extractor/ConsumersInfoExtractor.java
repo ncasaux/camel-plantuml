@@ -20,15 +20,9 @@ public class ConsumersInfoExtractor {
         Set<ObjectName> consumersSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=consumers,*"), null);
 
         for (ObjectName on : consumersSet) {
-            ConsumerInfo consumerInfo = new ConsumerInfo();
-
-            String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
-            consumerInfo.setRouteId((String) mbeanServer.getAttribute(on, "RouteId"));
-            consumerInfo.setEndpointUri(endpointUri != null ? endpointUri : "");
-            consumerInfo.setProcessorType("from");
-            consumerInfo.setUseDynamicEndpoint(false);
-
-            addConsumerInfoIfNotInList(consumersInfo, consumerInfo);
+            ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
+                    (String) mbeanServer.getAttribute(on, "EndpointUri"), "from", false);
+            addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
         }
     }
 }

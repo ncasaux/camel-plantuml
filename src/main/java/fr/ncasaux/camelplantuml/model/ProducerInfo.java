@@ -1,10 +1,17 @@
 package fr.ncasaux.camelplantuml.model;
 
 public class ProducerInfo {
-    private String routeId;
-    private String endpointUri;
-    private String processorType;
-    private Boolean useDynamicEndpoint;
+    private final String routeId;
+    private final String endpointUri;
+    private final String processorType;
+    private final Boolean useDynamicEndpoint;
+
+    public ProducerInfo(String routeId, String endpointUri, String processorType, Boolean useDynamicEndpoint) {
+        this.routeId = routeId;
+        this.endpointUri = endpointUri;
+        this.processorType = processorType;
+        this.useDynamicEndpoint = useDynamicEndpoint;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -28,31 +35,15 @@ public class ProducerInfo {
         return useDynamicEndpoint;
     }
 
-    public void setUseDynamicEndpoint(Boolean useDynamicEndpoint) {
-        this.useDynamicEndpoint = useDynamicEndpoint;
-    }
-
     public String getProcessorType() {
         return processorType;
-    }
-
-    public void setProcessorType(String processorType) {
-        this.processorType = processorType;
     }
 
     public String getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
     public String getEndpointUri() {
         return endpointUri;
-    }
-
-    public void setEndpointUri(String endpointUri) {
-        this.endpointUri = endpointUri;
     }
 }

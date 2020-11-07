@@ -38,7 +38,6 @@ public class EndpointsDiagramGenerator {
             }
 
             if (drawEndpoint) {
-
                 umlString = umlString
                         .concat(StringUtils.replaceEach(umlEndpointTemplate,
                                 new String[]{"%%endpointBaseUri%%", "%%endpointElementId%%"},

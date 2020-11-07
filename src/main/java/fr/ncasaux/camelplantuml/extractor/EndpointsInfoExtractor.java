@@ -2,6 +2,7 @@ package fr.ncasaux.camelplantuml.extractor;
 
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.EndpointUriInfo;
+import fr.ncasaux.camelplantuml.utils.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,18 +29,13 @@ public class EndpointsInfoExtractor {
         for (int index = 0; index < endpointsList.size(); index++) {
             ObjectName on = endpointsList.get(index);
 
-            EndpointUriInfo endpointUriInfo = new EndpointUriInfo();
             String endpointUri = URLDecoder.decode((String) mbeanServer.getAttribute(on, "EndpointUri"), StandardCharsets.UTF_8);
-            String endpointBaseUri = URLDecoder.decode((String) mbeanServer.getAttribute(on, "EndpointBaseUri"), StandardCharsets.UTF_8);
-            endpointUriInfo.setEndpointBaseUri(endpointBaseUri != null ? endpointBaseUri : "");
 
-            endpointUrisInfo.put(endpointUri, endpointUriInfo);
-            LOGGER.info("{} with id \"{}\" added to the map of endpointUris", endpointUriInfo.toString(), endpointUri);
+            EndpointUriInfo endpointUriInfo = new EndpointUriInfo(endpointUri);
+            MapUtils.addEndpointUriInfo(endpointUrisInfo, endpointUri, endpointUriInfo, LOGGER);
 
-            EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
-            endpointBaseUriInfo.setDiagramElementId("endpoint_".concat(String.valueOf(index)));
-            endpointBaseUrisInfo.put(endpointBaseUri, endpointBaseUriInfo);
-            LOGGER.info("EndpointBaseUri with id \"{}\" added to the map of endpointBaseUris", endpointBaseUri);
+            EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo("endpoint_".concat(String.valueOf(index)));
+            MapUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointUriInfo.getEndpointBaseUri(), endpointBaseUriInfo, LOGGER);
         }
     }
 }

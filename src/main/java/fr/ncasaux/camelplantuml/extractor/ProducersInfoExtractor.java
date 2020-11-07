@@ -20,15 +20,10 @@ public class ProducersInfoExtractor {
         Set<ObjectName> producersSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=producers,*"), null);
 
         for (ObjectName on : producersSet) {
-            ProducerInfo producerInfo = new ProducerInfo();
+            ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
+                    (String) mbeanServer.getAttribute(on, "EndpointUri"), "to", false);
 
-            String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
-            producerInfo.setRouteId((String) mbeanServer.getAttribute(on, "RouteId"));
-            producerInfo.setEndpointUri(endpointUri != null ? endpointUri : "");
-            producerInfo.setProcessorType("to");
-            producerInfo.setUseDynamicEndpoint(false);
-
-            addProducerInfoIfNotInList(producersInfo, producerInfo);
+            addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
         }
     }
 }

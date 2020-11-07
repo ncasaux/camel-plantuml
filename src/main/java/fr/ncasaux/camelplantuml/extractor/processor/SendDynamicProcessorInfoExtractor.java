@@ -23,14 +23,9 @@ public class SendDynamicProcessorInfoExtractor {
         List<ObjectName> processorsList = List.copyOf(processorsSet);
 
         for (ObjectName on : processorsList) {
-            ProducerInfo producerInfo = new ProducerInfo();
-
-            producerInfo.setRouteId((String) mbeanServer.getAttribute(on, "RouteId"));
-            producerInfo.setEndpointUri((String) mbeanServer.getAttribute(on, "Uri"));
-            producerInfo.setProcessorType("toD");
-            producerInfo.setUseDynamicEndpoint(true);
-
-            ListUtils.addProducerInfo(producersInfo, producerInfo);
+            ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
+                    (String) mbeanServer.getAttribute(on, "Uri"), "toD", true);
+            ListUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
         }
     }
 }

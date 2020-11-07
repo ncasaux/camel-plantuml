@@ -1,7 +1,22 @@
 package fr.ncasaux.camelplantuml.model;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 public class EndpointUriInfo {
-    private String endpointBaseUri;
+    private final String endpointBaseUri;
+
+    public EndpointUriInfo(String endpointBaseUri) throws URISyntaxException {
+        URI uri = new URI(endpointBaseUri);
+        this.endpointBaseUri = URLDecoder.decode(new URI(
+                uri.getScheme(),
+                uri.getAuthority(),
+                uri.getPath(),
+                null,
+                uri.getFragment()).toString(), StandardCharsets.UTF_8);
+    }
 
     @Override
     public String toString() {
@@ -10,9 +25,5 @@ public class EndpointUriInfo {
 
     public String getEndpointBaseUri() {
         return endpointBaseUri;
-    }
-
-    public void setEndpointBaseUri(String endpointBaseUri) {
-        this.endpointBaseUri = endpointBaseUri;
     }
 }

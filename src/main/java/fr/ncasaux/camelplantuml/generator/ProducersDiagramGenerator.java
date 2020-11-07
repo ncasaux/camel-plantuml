@@ -48,18 +48,19 @@ public class ProducersDiagramGenerator {
             }
 
             if (drawRoute) {
-
-
                 if (!producerInfo.getUseDynamicEndpoint()) {
-                    String endpointBaseUri = endpointUrisInfo.get(producerInfo.getEndpointUri()).getEndpointBaseUri();
-                    String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
+                    try {
+                        String endpointBaseUri = endpointUrisInfo.get(producerInfo.getEndpointUri()).getEndpointBaseUri();
+                        String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
 
-                    umlString = umlString
-                            .concat(StringUtils.replaceEach(umlProducerTemplate,
-                                    new String[]{"%%endpointElementId%%", "%%routeElementId%%", "%%processorType%%"},
-                                    new String[]{endpointElementId, routeElementId, processorType}))
-                            .concat("\n\n");
-
+                        umlString = umlString
+                                .concat(StringUtils.replaceEach(umlProducerTemplate,
+                                        new String[]{"%%endpointElementId%%", "%%routeElementId%%", "%%processorType%%"},
+                                        new String[]{endpointElementId, routeElementId, processorType}))
+                                .concat("\n\n");
+                    } catch (Exception e) {
+                        LOGGER.warn("Could not find endpointBaseUri for endpoint \"{}\"", producerInfo.getEndpointUri());
+                    }
                 } else {
                     String uri = producerInfo.getEndpointUri();
                     String endpointElementId = "dynamic_producer_endpoint_".concat(String.valueOf(index));

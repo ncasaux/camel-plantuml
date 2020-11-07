@@ -1,6 +1,7 @@
 package fr.ncasaux.camelplantuml.extractor;
 
 import fr.ncasaux.camelplantuml.model.RouteInfo;
+import fr.ncasaux.camelplantuml.utils.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,17 +22,12 @@ public class RoutesInfoExtractor {
 
         for (int index = 0; index < routesList.size(); index++) {
             ObjectName on = routesList.get(index);
-            RouteInfo routeInfo = new RouteInfo();
 
-            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
+            String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
+            String description = actualDescription != null ? actualDescription : "No description...";
+            RouteInfo routeInfo = new RouteInfo(description, "route_".concat(String.valueOf(index)));
 
-            String description = (String) mbeanServer.getAttribute(on, "Description");
-            routeInfo.setDescription(description != null ? description : "No description...");
-
-            routeInfo.setDiagramElementId("route_".concat(String.valueOf(index)));
-
-            routesInfo.put(routeId, routeInfo);
-            LOGGER.info("{} and id \"{}\" added to the map of routes", routeInfo.toString(), routeId);
+            MapUtils.addRouteInfo(routesInfo, (String) mbeanServer.getAttribute(on, "RouteId"), routeInfo, LOGGER);
         }
     }
 }

@@ -48,16 +48,20 @@ public class ConsumersDiagramGenerator {
             }
 
             if (drawRoute) {
-
                 if (!consumerInfo.getUseDynamicEndpoint()) {
-                    String endpointBaseUri = endpointUrisInfo.get(consumerInfo.getEndpointUri()).getEndpointBaseUri();
-                    String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
+                    try {
+                        String endpointBaseUri = endpointUrisInfo.get(consumerInfo.getEndpointUri()).getEndpointBaseUri();
+                        String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
 
-                    umlString = umlString
-                            .concat(StringUtils.replaceEach(umlConsumerTemplate,
-                                    new String[]{"%%endpointElementId%%", "%%routeElementId%%", "%%processorType%%"},
-                                    new String[]{endpointElementId, routeElementId, processorType}))
-                            .concat("\n\n");
+                        umlString = umlString
+                                .concat(StringUtils.replaceEach(umlConsumerTemplate,
+                                        new String[]{"%%endpointElementId%%", "%%routeElementId%%", "%%processorType%%"},
+                                        new String[]{endpointElementId, routeElementId, processorType}))
+                                .concat("\n\n");
+
+                    } catch (Exception e) {
+                        LOGGER.warn("Could not find endpointBaseUri for endpoint \"{}\"", consumerInfo.getEndpointUri());
+                    }
                 } else {
                     String uri = consumerInfo.getEndpointUri();
                     String endpointElementId = "dynamic_consumer_endpoint_".concat(String.valueOf(index));
