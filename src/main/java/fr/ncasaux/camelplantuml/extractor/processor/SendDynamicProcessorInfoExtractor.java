@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.*;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +26,7 @@ public class SendDynamicProcessorInfoExtractor {
 
         for (ObjectName on : processorsList) {
             ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                    (String) mbeanServer.getAttribute(on, "Uri"), "toD", true);
+                    URLDecoder.decode((String) mbeanServer.getAttribute(on, "Uri"), StandardCharsets.UTF_8), "toD", true);
             ListUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
         }
     }

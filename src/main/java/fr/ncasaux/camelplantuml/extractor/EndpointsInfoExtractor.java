@@ -29,7 +29,7 @@ public class EndpointsInfoExtractor {
         for (int index = 0; index < endpointsList.size(); index++) {
             ObjectName on = endpointsList.get(index);
 
-            String endpointUri = URLDecoder.decode((String) mbeanServer.getAttribute(on, "EndpointUri"), StandardCharsets.UTF_8);
+            String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
 
             EndpointUriInfo endpointUriInfo = new EndpointUriInfo(endpointUri);
             MapUtils.addEndpointUriInfo(endpointUrisInfo, endpointUri, endpointUriInfo, LOGGER);
