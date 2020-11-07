@@ -1,21 +1,19 @@
 package fr.ncasaux.camelplantuml.generator;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.Objects;
 
 public class HeaderDiagramGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderDiagramGenerator.class);
 
-    public static String generateUmlString() throws URISyntaxException, IOException {
+    public static String generateUmlString() throws IOException {
 
-        return Files.readString(Paths.get(ClassLoader.getSystemResource("plantuml/headerTemplate").toURI()), StandardCharsets.UTF_8)
-                .concat("\n\n");
+        return IOUtils.toString(Objects.requireNonNull(HeaderDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/headerTemplate")),StandardCharsets.UTF_8);
     }
 }

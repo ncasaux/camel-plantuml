@@ -4,17 +4,16 @@ import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.EndpointUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.routeIdFilters;
 
@@ -25,10 +24,10 @@ public class ProducersDiagramGenerator {
     public static String generateUmlString(ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointUriInfo> endpointUrisInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
-                                           HashMap<String, RouteInfo> routesInfo) throws URISyntaxException, IOException {
+                                           HashMap<String, RouteInfo> routesInfo) throws IOException {
 
-        String umlProducerTemplate = Files.readString(Paths.get(ClassLoader.getSystemResource("plantuml/producerTemplate").toURI()), StandardCharsets.UTF_8);
-        String umlDynamicProducerRouteTemplate = Files.readString(Paths.get(ClassLoader.getSystemResource("plantuml/dynamicProducerTemplate").toURI()), StandardCharsets.UTF_8);
+        String umlProducerTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/producerTemplate")),StandardCharsets.UTF_8);
+        String umlDynamicProducerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicProducerTemplate")),StandardCharsets.UTF_8);
         String umlString = "";
 
         for (int index = 0; index < producersInfo.size(); index++) {

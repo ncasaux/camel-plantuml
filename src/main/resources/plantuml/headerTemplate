@@ -28,3 +28,4 @@ skinparam queue<<dynamic>> {
   BorderColor #82B366
   BackgroundColor #D5E8D4
 }
+

@@ -4,17 +4,16 @@ import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.EndpointUriInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.routeIdFilters;
 
@@ -25,10 +24,10 @@ public class ConsumersDiagramGenerator {
     public static String generateUmlString(ArrayList<ConsumerInfo> consumersInfo,
                                            HashMap<String, EndpointUriInfo> endpointUrisInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
-                                           HashMap<String, RouteInfo> routesInfo) throws URISyntaxException, IOException {
+                                           HashMap<String, RouteInfo> routesInfo) throws IOException {
 
-        String umlConsumerTemplate = Files.readString(Paths.get(ClassLoader.getSystemResource("plantuml/consumerTemplate").toURI()), StandardCharsets.UTF_8);
-        String umlDynamicConsumerRouteTemplate = Files.readString(Paths.get(ClassLoader.getSystemResource("plantuml/dynamicConsumerTemplate").toURI()), StandardCharsets.UTF_8);
+        String umlConsumerTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/consumerTemplate")),StandardCharsets.UTF_8);
+        String umlDynamicConsumerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicConsumerTemplate")),StandardCharsets.UTF_8);
         String umlString = "";
 
         for (int index = 0; index < consumersInfo.size(); index++) {

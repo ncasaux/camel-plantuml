@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>fr.ncasaux</groupId>
-  <artifactId>camel-diagram-plantuml</artifactId>
+  <artifactId>camel-plantuml</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
 
@@ -85,6 +85,20 @@
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpcore</artifactId>
       <version>4.4.13</version>
+    </dependency>
+
+    <!-- commons-io -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.8.0</version>
+    </dependency>
+
+    <!-- commons-codec -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.15</version>
     </dependency>
 
   </dependencies>

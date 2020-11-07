@@ -83,9 +83,7 @@ public class GetRoutesInfoProcessor implements Processor {
 //        Transcoder t = TranscoderUtil.getDefaultTranscoder();
 //        String url = t.encode(umlString);
 
-
-        exchange.getIn().setHeader("content-type", "text/plain");
-        exchange.getIn().setHeader("Content-Disposition", "inline; filename=\"diagram.puml\"");
+        exchange.getIn().setHeader("content-type", "text/plain;charset=utf-8");
         exchange.getIn().setBody(umlString);
     }
 }
