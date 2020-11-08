@@ -126,4 +126,12 @@
 
     </plugins>
   </build>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub ncasaux Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/ncasaux/camel-plantuml</url>
+    </repository>
+  </distributionManagement>
 </project>
