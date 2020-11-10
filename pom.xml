@@ -101,6 +101,13 @@
       <version>1.15</version>
     </dependency>
 
+    <!-- org.apache.commons -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.4</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -112,7 +119,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <release>11</release>
+          <release>1.8</release>
         </configuration>
       </plugin>
       <plugin>

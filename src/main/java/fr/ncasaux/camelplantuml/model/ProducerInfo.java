@@ -28,7 +28,7 @@ public class ProducerInfo {
         return "Producer in routeId \"".concat(routeId).concat("\" ")
                 .concat("producing to ").concat(useDynamicEndpoint ? "dynamic " : "static ")
                 .concat("URI \"").concat(endpointUri).concat("\" ")
-                .concat("through processor \"").concat(processorType).concat("\" ");
+                .concat("through processor \"").concat(processorType).concat("\"");
     }
 
     public Boolean getUseDynamicEndpoint() {

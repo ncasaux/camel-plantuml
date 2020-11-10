@@ -28,7 +28,7 @@ public class ConsumerInfo {
         return "Consumer in routeId \"".concat(routeId).concat("\" ")
                 .concat("consuming from ").concat(useDynamicEndpoint ? "dynamic " : "static ")
                 .concat("URI \"").concat(endpointUri).concat("\" ")
-                .concat("through processor \"").concat(processorType).concat("\" ");
+                .concat("through processor \"").concat(processorType).concat("\"");
     }
 
     public Boolean getUseDynamicEndpoint() {

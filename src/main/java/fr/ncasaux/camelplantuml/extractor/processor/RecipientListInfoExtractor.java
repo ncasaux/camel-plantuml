@@ -1,22 +1,24 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
-import fr.ncasaux.camelplantuml.model.EndpointUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.utils.ListUtils;
 import fr.ncasaux.camelplantuml.utils.MapUtils;
 import org.apache.camel.support.EndpointHelper;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.*;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import static fr.ncasaux.camelplantuml.utils.EndpointUtils.getEndpointBaseUri;
 
 public class RecipientListInfoExtractor {
 
@@ -24,13 +26,14 @@ public class RecipientListInfoExtractor {
 
     public static void getProcessorsInfo(MBeanServer mbeanServer,
                                          ArrayList<ProducerInfo> producersInfo,
-                                         HashMap<String, EndpointUriInfo> endpointUrisInfo,
                                          HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
-            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException {
+            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, UnsupportedEncodingException {
 
         QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedRecipientList"));
         Set<ObjectName> processorsSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=processors,*"), exp);
-        List<ObjectName> processorsList = List.copyOf(processorsSet);
+        List<ObjectName> processorsList = new ArrayList<>();
+
+        CollectionUtils.addAll(processorsList, processorsSet);
 
         for (int index = 0; index < processorsList.size(); index++) {
             ObjectName on = processorsList.get(index);
@@ -44,32 +47,28 @@ public class RecipientListInfoExtractor {
             if (expressionLanguage.equalsIgnoreCase("constant")) {
                 for (int recipientIndex = 0; recipientIndex < recipientList.length; recipientIndex++) {
                     String recipient = recipientList[recipientIndex];
+
                     String normalizedUri = EndpointHelper.normalizeEndpointUri(recipient);
-                    String endpointUri = URLDecoder.decode(normalizedUri, StandardCharsets.UTF_8);
+                    String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
                     ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                            endpointUri, "recipientList", false);
+                            endpointBaseUri, "recipientList", false);
 
                     ListUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
-                    EndpointUriInfo endpointUriInfo = new EndpointUriInfo(normalizedUri);
-                    MapUtils.addEndpointUriInfo(endpointUrisInfo, endpointUri, endpointUriInfo, LOGGER);
-
                     EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo("endpoint_recipientlist_".concat(String.valueOf(index))
                             .concat("_recipient_").concat(String.valueOf(recipientIndex)));
-                    MapUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointUriInfo.getEndpointBaseUri(), endpointBaseUriInfo, LOGGER);
+                    MapUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
                 }
-
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 for (String recipient : recipientList) {
                     String normalizedUri = EndpointHelper.normalizeEndpointUri(recipient);
-                    String endpointUri = URLDecoder.decode(normalizedUri, StandardCharsets.UTF_8);
+                    String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
                     ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                             endpointUri, "recipientList", true);
                     ListUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
                 }
-
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);
             }

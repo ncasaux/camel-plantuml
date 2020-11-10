@@ -1,7 +1,6 @@
 package fr.ncasaux.camelplantuml.generator;
 
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
-import fr.ncasaux.camelplantuml.model.EndpointUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
 import org.apache.commons.io.IOUtils;
@@ -22,7 +21,6 @@ public class ProducersDiagramGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProducersDiagramGenerator.class);
 
     public static String generateUmlString(ArrayList<ProducerInfo> producersInfo,
-                                           HashMap<String, EndpointUriInfo> endpointUrisInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
                                            HashMap<String, RouteInfo> routesInfo) throws IOException {
 
@@ -50,7 +48,7 @@ public class ProducersDiagramGenerator {
             if (drawRoute) {
                 if (!producerInfo.getUseDynamicEndpoint()) {
                     try {
-                        String endpointBaseUri = endpointUrisInfo.get(producerInfo.getEndpointUri()).getEndpointBaseUri();
+                        String endpointBaseUri = producerInfo.getEndpointUri();
                         String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
 
                         umlString = umlString
