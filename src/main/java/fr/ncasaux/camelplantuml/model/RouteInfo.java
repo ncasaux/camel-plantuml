@@ -13,7 +13,8 @@ public class RouteInfo {
 
     @Override
     public String toString() {
-        return "Route with description \"".concat(description).concat("\"");
+        return "Route with description \"".concat(description).concat("\"")
+                .concat(" and endpointBaseUri \"").concat(endpointBaseUri).concat("\"");
     }
 
     public String getDiagramElementId() {
@@ -22,9 +23,5 @@ public class RouteInfo {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getEndpointBaseUri() {
-        return endpointBaseUri;
     }
 }
