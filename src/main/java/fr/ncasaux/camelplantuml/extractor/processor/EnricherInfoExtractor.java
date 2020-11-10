@@ -4,7 +4,7 @@ import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.utils.ListUtils;
 import fr.ncasaux.camelplantuml.utils.MapUtils;
-import org.apache.camel.support.EndpointHelper;
+import org.apache.camel.util.URISupport;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +41,7 @@ public class EnricherInfoExtractor {
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
 
-            String normalizedUri = EndpointHelper.normalizeEndpointUri(expression);
+            String normalizedUri = URISupport.normalizeUri(expression);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
                 String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");

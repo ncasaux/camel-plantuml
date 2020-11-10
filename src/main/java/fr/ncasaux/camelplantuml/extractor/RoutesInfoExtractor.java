@@ -3,7 +3,7 @@ package fr.ncasaux.camelplantuml.extractor;
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
 import fr.ncasaux.camelplantuml.utils.MapUtils;
-import org.apache.camel.support.EndpointHelper;
+import org.apache.camel.util.URISupport;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class RoutesInfoExtractor {
             String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
 
             String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
-            String normalizedUri = EndpointHelper.normalizeEndpointUri(endpointUri);
+            String normalizedUri = URISupport.normalizeUri(endpointUri);
             String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
             String actualDescription = (String) mbeanServer.getAttribute(on, "Description");

@@ -4,7 +4,7 @@ import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.utils.ListUtils;
 import fr.ncasaux.camelplantuml.utils.MapUtils;
-import org.apache.camel.support.EndpointHelper;
+import org.apache.camel.util.URISupport;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public class RecipientListInfoExtractor {
                 for (int recipientIndex = 0; recipientIndex < recipientList.length; recipientIndex++) {
                     String recipient = recipientList[recipientIndex];
 
-                    String normalizedUri = EndpointHelper.normalizeEndpointUri(recipient);
+                    String normalizedUri = URISupport.normalizeUri(recipient);
                     String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
                     ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
@@ -62,7 +62,7 @@ public class RecipientListInfoExtractor {
                 }
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 for (String recipient : recipientList) {
-                    String normalizedUri = EndpointHelper.normalizeEndpointUri(recipient);
+                    String normalizedUri = URISupport.normalizeUri(recipient);
                     String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
                     ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),

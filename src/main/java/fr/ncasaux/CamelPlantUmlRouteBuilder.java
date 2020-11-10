@@ -1,9 +1,9 @@
 package fr.ncasaux;
 
 import fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor;
-import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.apache.camel.builder.RouteBuilder;
 
-public class CamelPlantUmlRouteBuilder extends EndpointRouteBuilder {
+public class CamelPlantUmlRouteBuilder extends RouteBuilder {
 
     private Integer port = 8090;
     private String host = "localhost";

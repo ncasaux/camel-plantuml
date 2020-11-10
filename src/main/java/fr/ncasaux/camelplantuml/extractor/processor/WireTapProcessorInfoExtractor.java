@@ -4,7 +4,7 @@ import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.utils.ListUtils;
 import fr.ncasaux.camelplantuml.utils.MapUtils;
-import org.apache.camel.support.EndpointHelper;
+import org.apache.camel.util.URISupport;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class WireTapProcessorInfoExtractor {
         for (int index = 0; index < processorsList.size(); index++) {
             ObjectName on = processorsList.get(index);
 
-            String normalizedUri = EndpointHelper.normalizeEndpointUri((String) mbeanServer.getAttribute(on, "Uri"));
+            String normalizedUri = URISupport.normalizeUri((String) mbeanServer.getAttribute(on, "Uri"));
 
             if ((boolean) mbeanServer.getAttribute(on, "DynamicUri")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
