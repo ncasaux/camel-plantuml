@@ -70,7 +70,7 @@ public class GetRoutesInfoProcessor implements Processor {
         RecipientListInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo, endpointBaseUrisInfo);
 
         LOGGER.info("Generating PlantUML diagram");
-        String umlString = HeaderDiagramGenerator.generateUmlString()
+        String umlString = HeaderDiagramGenerator.generateUmlString(exchange.getContext().getName())
                 .concat(RoutesDiagramGenerator.generateUmlString(routesInfo))
                 .concat(EndpointsDiagramGenerator.generateUmlString(endpointBaseUrisInfo))
                 .concat(ProducersDiagramGenerator.generateUmlString(producersInfo, endpointBaseUrisInfo, routesInfo))

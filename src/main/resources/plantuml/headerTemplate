@@ -1,4 +1,4 @@
-@startuml
+@startuml %%diagramName%%
 
 allow_mixing
 set namespaceSeparator none
