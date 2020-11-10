@@ -6,7 +6,7 @@
 
   <groupId>fr.ncasaux</groupId>
   <artifactId>camel3-plantuml</artifactId>
-  <packaging>jar</packaging>
+  <packaging>bundle</packaging>
   <version>1.0-SNAPSHOT</version>
 
   <name>A project to generate PlantUML diagrams from Camel routes</name>
