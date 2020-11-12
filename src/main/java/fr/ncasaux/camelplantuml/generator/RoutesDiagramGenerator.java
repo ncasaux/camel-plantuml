@@ -20,7 +20,7 @@ public class RoutesDiagramGenerator {
 
     public static String generateUmlString(HashMap<String, RouteInfo> routesInfo) throws IOException {
 
-        String umlRouteTemplate = IOUtils.toString(Objects.requireNonNull(RoutesDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/routeTemplate")),StandardCharsets.UTF_8);
+        String umlRouteTemplate = IOUtils.toString(Objects.requireNonNull(RoutesDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/routeTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
         for (Map.Entry<String, RouteInfo> routeInfoEntry : routesInfo.entrySet()) {

@@ -1,9 +1,9 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
-import org.apache.camel.util.URISupport;
 import fr.ncasaux.camelplantuml.utils.ConsumerUtils;
 import fr.ncasaux.camelplantuml.utils.EndpointUtils;
+import org.apache.camel.util.URISupport;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -26,7 +26,7 @@ public class EndpointsDiagramGenerator {
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
                                            boolean connectRoutes) throws IOException {
 
-        String umlEndpointTemplate = IOUtils.toString(Objects.requireNonNull(EndpointsDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/endpointTemplate")),StandardCharsets.UTF_8);
+        String umlEndpointTemplate = IOUtils.toString(Objects.requireNonNull(EndpointsDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/endpointTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
         for (Map.Entry<String, EndpointBaseUriInfo> endpointBaseUriInfoEntry : endpointBaseUrisInfo.entrySet()) {

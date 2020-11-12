@@ -14,6 +14,6 @@ public class FooterDiagramGenerator {
 
     public static String generateUmlString() throws IOException {
 
-        return IOUtils.toString(Objects.requireNonNull(FooterDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/footerTemplate")),StandardCharsets.UTF_8);
+        return IOUtils.toString(Objects.requireNonNull(FooterDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/footerTemplate")), StandardCharsets.UTF_8);
     }
 }
