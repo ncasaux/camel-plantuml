@@ -36,6 +36,9 @@ public class EndpointsDiagramGenerator {
 
             boolean drawEndpoint = true;
 
+            boolean endpointHasConsumer = consumersInfo.stream().anyMatch(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri));
+            boolean endpointHasProducer = producersInfo.stream().anyMatch(producerInfo -> producerInfo.getEndpointUri().equals(endpointBaseUri));
+
             for (String filter : endpointBaseUriFilters) {
                 if (endpointBaseUri.matches(filter)) {
                     drawEndpoint = false;
@@ -44,8 +47,10 @@ public class EndpointsDiagramGenerator {
                 }
             }
 
-            boolean endpointHasConsumer = consumersInfo.stream().anyMatch(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri));
-            boolean endpointHasProducer = producersInfo.stream().anyMatch(producerInfo -> producerInfo.getEndpointUri().equals(endpointBaseUri));
+            if (!endpointHasConsumer && !endpointHasProducer) {
+                drawEndpoint = false;
+                LOGGER.info("EndpointBaseUri \"{}\" has neither consumer or producer, it will not be part of the diagram", endpointBaseUri);
+            }
 
             if (connectRoutes && endpointHasConsumer && endpointHasProducer) {
                 drawEndpoint = false;
