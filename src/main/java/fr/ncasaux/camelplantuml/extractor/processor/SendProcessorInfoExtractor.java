@@ -30,6 +30,7 @@ public class SendProcessorInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+
             String destination = (String) mbeanServer.getAttribute(on, "Destination");
             String normalizedUri = URISupport.normalizeUri(destination);
             String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");

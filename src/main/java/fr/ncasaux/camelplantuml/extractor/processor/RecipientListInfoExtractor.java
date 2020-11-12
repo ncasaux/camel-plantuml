@@ -33,8 +33,7 @@ public class RecipientListInfoExtractor {
 
         CollectionUtils.addAll(processorsList, processorsSet);
 
-        for (int index = 0; index < processorsList.size(); index++) {
-            ObjectName on = processorsList.get(index);
+        for (ObjectName on : processorsList) {
 
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");

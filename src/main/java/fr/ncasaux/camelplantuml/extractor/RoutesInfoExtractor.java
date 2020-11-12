@@ -1,11 +1,12 @@
 package fr.ncasaux.camelplantuml.extractor;
 
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
+import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
-import org.apache.camel.util.URISupport;
 import fr.ncasaux.camelplantuml.utils.ConsumerUtils;
 import fr.ncasaux.camelplantuml.utils.EndpointUtils;
 import fr.ncasaux.camelplantuml.utils.RouteUtils;
+import org.apache.camel.util.URISupport;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,8 @@ public class RoutesInfoExtractor {
 
     public static void getRoutesInfo(MBeanServer mbeanServer,
                                      HashMap<String, RouteInfo> routesInfo,
-                                     ArrayList<ConsumerInfo> consumersInfo) throws Exception {
+                                     ArrayList<ConsumerInfo> consumersInfo,
+                                     HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo) throws Exception {
 
         Set<ObjectName> routesSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=routes,*"), null);
         List<ObjectName> routesList = new ArrayList<>();
@@ -36,10 +38,10 @@ public class RoutesInfoExtractor {
                 String routeState = (String) mbeanServer.getAttribute(on, "State");
                 String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
 
-                if (routeState.equalsIgnoreCase("Started")) {
-                    String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
-                    String normalizedUri = URISupport.normalizeUri(endpointUri);
-                    String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
+            if (routeState.equalsIgnoreCase("Started")) {
+                String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
+                String normalizedUri = URISupport.normalizeUri(endpointUri);
+                String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
                     String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
                     String description = actualDescription != null ? actualDescription : "No description...";
