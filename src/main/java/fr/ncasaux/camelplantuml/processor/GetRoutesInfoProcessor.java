@@ -27,29 +27,21 @@ public class GetRoutesInfoProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        LOGGER.info("Getting MBean server");
-        MBeanServer mbeanServer = exchange.getContext().getManagementStrategy().getManagementAgent().getMBeanServer();
-
+        boolean connectRoutes = Boolean.parseBoolean(exchange.getIn().getHeader("connectRoutes", String.class));
 
         HashMap<String, RouteInfo> routesInfo = new HashMap<>();
         ArrayList<ConsumerInfo> consumersInfo = new ArrayList<>();
         ArrayList<ProducerInfo> producersInfo = new ArrayList<>();
         HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo = new HashMap<>();
 
+        LOGGER.info("Getting MBean server");
+        MBeanServer mbeanServer = exchange.getContext().getManagementStrategy().getManagementAgent().getMBeanServer();
+
         LOGGER.info("Processing routes");
         RoutesInfoExtractor.getRoutesInfo(mbeanServer, routesInfo, consumersInfo);
 
         LOGGER.info("Processing endpoints");
-//        HashMap<String, EndpointUriInfo> endpointUrisInfo = new HashMap<>();
         EndpointsInfoExtractor.getEndpointsInfo(mbeanServer, endpointBaseUrisInfo);
-
-//        LOGGER.info("Processing producers");
-//        ArrayList<ProducerInfo> producersInfo = new ArrayList<>();
-//        ProducersInfoExtractor.getProducersInfo(mbeanServer, producersInfo);
-//
-//        LOGGER.info("Processing consumers");
-//        ArrayList<ConsumerInfo> consumersInfo = new ArrayList<>();
-//        ConsumersInfoExtractor.getConsumersInfo(mbeanServer, consumersInfo);
 
         LOGGER.info("Processing SendProcessor processors");
         SendProcessorInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo);
@@ -72,26 +64,12 @@ public class GetRoutesInfoProcessor implements Processor {
         LOGGER.info("Generating PlantUML diagram");
         String umlString = HeaderDiagramGenerator.generateUmlString(exchange.getContext().getName())
                 .concat(RoutesDiagramGenerator.generateUmlString(routesInfo))
-                .concat(EndpointsDiagramGenerator.generateUmlString(endpointBaseUrisInfo))
-                .concat(ProducersDiagramGenerator.generateUmlString(producersInfo, endpointBaseUrisInfo, routesInfo))
-                .concat(ConsumersDiagramGenerator.generateUmlString(consumersInfo, endpointBaseUrisInfo, routesInfo))
+                .concat(EndpointsDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, connectRoutes))
+                .concat(ProducersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, connectRoutes))
+                .concat(ConsumersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, connectRoutes))
                 .concat(FooterDiagramGenerator.generateUmlString());
 
-//        SourceStringReader reader = new SourceStringReader(umlString);
-//        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-//
-//        DiagramDescription diagramDescription = reader.outputImage(os, new FileFormatOption(FileFormat.SVG));
-//        os.close();
-//
-//        final String svg = new String(os.toByteArray(), StandardCharsets.UTF_8);
-//
-//        exchange.getIn().setHeader(HTTP.CONTENT_TYPE,constant("image/svg+xml"));
-//        exchange.getIn().setBody(svg);
-
-//        Transcoder t = TranscoderUtil.getDefaultTranscoder();
-//        String url = t.encode(umlString);
-
-        exchange.getIn().setHeader("content-type", "text/plain;charset=utf-8");
+        exchange.getIn().setHeader("content-type","text/plain;charset=utf-8");
         exchange.getIn().setBody(umlString);
     }
 }

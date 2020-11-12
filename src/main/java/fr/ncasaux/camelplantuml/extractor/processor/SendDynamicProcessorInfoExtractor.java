@@ -1,7 +1,7 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
-import fr.ncasaux.camelplantuml.utils.ListUtils;
+import fr.ncasaux.camelplantuml.utils.ProducerUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class SendDynamicProcessorInfoExtractor {
         for (ObjectName on : processorsList) {
             ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                     URLDecoder.decode((String) mbeanServer.getAttribute(on, "Uri"), "UTF-8"), "toD", true);
-            ListUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
+            ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
         }
     }
 }

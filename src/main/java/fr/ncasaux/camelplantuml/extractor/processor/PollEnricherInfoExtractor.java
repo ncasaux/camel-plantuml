@@ -1,7 +1,8 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
-import fr.ncasaux.camelplantuml.utils.ListUtils;
+import fr.ncasaux.camelplantuml.utils.ConsumerUtils;
+import fr.ncasaux.camelplantuml.utils.EndpointUtils;
 import org.apache.camel.support.EndpointHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -14,8 +15,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import static fr.ncasaux.camelplantuml.utils.EndpointUtils.getEndpointBaseUri;
 
 public class PollEnricherInfoExtractor {
 
@@ -38,17 +37,17 @@ public class PollEnricherInfoExtractor {
             String normalizedUri = EndpointHelper.normalizeEndpointUri(expression);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
-                String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
+                String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
                 ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                         endpointBaseUri, "pollEnrich", false);
-                ListUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+                ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
                 ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                         endpointUri, "pollEnrich", true);
-                ListUtils.addConsumerInfo(consumersInfo, consumerInfo, LOGGER);
+                ConsumerUtils.addConsumerInfo(consumersInfo, consumerInfo, LOGGER);
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);
             }

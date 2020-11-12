@@ -1,5 +1,6 @@
 package fr.ncasaux.camelplantuml.generator;
 
+import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
@@ -20,12 +21,14 @@ public class ProducersDiagramGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProducersDiagramGenerator.class);
 
-    public static String generateUmlString(ArrayList<ProducerInfo> producersInfo,
+    public static String generateUmlString(ArrayList<ConsumerInfo> consumersInfo,
+                                           ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
-                                           HashMap<String, RouteInfo> routesInfo) throws IOException {
+                                           HashMap<String, RouteInfo> routesInfo,
+                                           boolean connectRoutes) throws IOException {
 
-        String umlProducerTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/producerTemplate")),StandardCharsets.UTF_8);
-        String umlDynamicProducerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicProducerTemplate")),StandardCharsets.UTF_8);
+        String umlProducerTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/producerTemplate")), StandardCharsets.UTF_8);
+        String umlDynamicProducerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicProducerTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
         for (int index = 0; index < producersInfo.size(); index++) {
@@ -35,30 +38,35 @@ public class ProducersDiagramGenerator {
             String routeId = producerInfo.getRouteId();
             String routeElementId = routesInfo.get(routeId).getDiagramElementId();
             String processorType = producerInfo.getProcessorType();
+            String endpointBaseUri = producerInfo.getEndpointUri();
 
-            boolean drawRoute = true;
+            boolean drawProducer = true;
 
             for (String filter : routeIdFilters) {
                 if (routeId.matches(filter)) {
-                    drawRoute = false;
-                    LOGGER.info("Producer \"{}\" matches the routeId filter \"{}\", it will not be part of the diagram", producerInfo, filter);
+                    drawProducer = false;
+                    LOGGER.info("{} matches the routeId filter \"{}\", it will not be part of the diagram", producerInfo, filter);
+                    break;
                 }
             }
 
-            if (drawRoute) {
+            if (drawProducer) {
                 if (!producerInfo.getUseDynamicEndpoint()) {
-                    try {
-                        String endpointBaseUri = producerInfo.getEndpointUri();
-                        String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
-
-                        umlString = umlString
-                                .concat(StringUtils.replaceEach(umlProducerTemplate,
-                                        new String[]{"%%endpointElementId%%", "%%routeElementId%%", "%%processorType%%"},
-                                        new String[]{endpointElementId, routeElementId, processorType}))
-                                .concat("\n\n");
-                    } catch (Exception e) {
-                        LOGGER.warn("Could not find endpointBaseUri for endpoint \"{}\"", producerInfo.getEndpointUri());
+                    String targetElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
+                    if (connectRoutes) {
+                       ConsumerInfo ci = consumersInfo.stream().filter(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri)).findFirst().orElse(null);
+                        if (ci != null) {
+                            targetElementId = routesInfo.get(ci.getRouteId()).getDiagramElementId();
+                            LOGGER.info("Parameter \"connectRoutes\" is \"true\", producer from routeId \"{}\" will be directly connected to routeId \"{}\", bypassing endpointBaseUri \"{}\"", routeId, ci.getRouteId(), endpointBaseUri);
+                        }
                     }
+
+                    umlString = umlString
+                            .concat(StringUtils.replaceEach(umlProducerTemplate,
+                                    new String[]{"%%targetElementId%%", "%%routeElementId%%", "%%processorType%%"},
+                                    new String[]{targetElementId, routeElementId, processorType}))
+                            .concat("\n\n");
+
                 } else {
                     String uri = producerInfo.getEndpointUri();
                     String endpointElementId = "dynamic_producer_endpoint_".concat(String.valueOf(index));

@@ -1,1 +1,1 @@
-%%routeElementId%% --> %%endpointElementId%% : %%processorType%%
+%%routeElementId%% --> %%targetElementId%% : %%processorType%%
