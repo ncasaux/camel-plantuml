@@ -60,7 +60,6 @@ public class ConsumersDiagramGenerator {
 
             if (drawConsumer) {
                 if (!consumerInfo.getUseDynamicEndpoint()) {
-//                    try {
 
                         String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
 
@@ -70,9 +69,6 @@ public class ConsumersDiagramGenerator {
                                         new String[]{endpointElementId, routeElementId, processorType}))
                                 .concat("\n\n");
 
-//                    } catch (Exception e) {
-//                        LOGGER.warn("Could not find endpointBaseUri for endpoint \"{}\"", consumerInfo.getEndpointUri());
-//                    }
                 } else {
                     String uri = consumerInfo.getEndpointUri();
                     String endpointElementId = "dynamic_consumer_endpoint_".concat(String.valueOf(index));
