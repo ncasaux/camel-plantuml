@@ -2,6 +2,7 @@ package fr.ncasaux.camelplantuml.generator;
 
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
+import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -21,8 +22,10 @@ public class ConsumersDiagramGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConsumersDiagramGenerator.class);
 
     public static String generateUmlString(ArrayList<ConsumerInfo> consumersInfo,
+                                           ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
-                                           HashMap<String, RouteInfo> routesInfo) throws IOException {
+                                           HashMap<String, RouteInfo> routesInfo,
+                                           boolean connectRoutes) throws IOException {
 
         String umlConsumerTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/consumerTemplate")),StandardCharsets.UTF_8);
         String umlDynamicConsumerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicConsumerTemplate")),StandardCharsets.UTF_8);
@@ -35,21 +38,30 @@ public class ConsumersDiagramGenerator {
             String routeId = consumerInfo.getRouteId();
             String routeElementId = routesInfo.get(routeId).getDiagramElementId();
             String processorType = consumerInfo.getProcessorType();
+            String endpointBaseUri = consumerInfo.getEndpointUri();
 
-            boolean drawRoute = true;
+            boolean drawConsumer = true;
 
             for (String filter : routeIdFilters) {
                 if (routeId.matches(filter)) {
-                    drawRoute = false;
-                    LOGGER.info("Consumer \"{}\" matches the routeId filter \"{}\", it will not be part of the diagram", consumerInfo, filter);
+                    drawConsumer = false;
+                    LOGGER.info("{} matches the routeId filter \"{}\", it will not be part of the diagram", consumerInfo, filter);
+                    break;
                 }
             }
 
-            if (drawRoute) {
+            if (connectRoutes) {
+                ProducerInfo pi = producersInfo.stream().filter(producerInfo -> producerInfo.getEndpointUri().equals(endpointBaseUri)).findFirst().orElse(null);
+                if (pi != null) {
+                    drawConsumer = false;
+                    LOGGER.info("Parameter \"connectRoutes\" is \"true\", consumer of endpointBaseUri \"{}\" from routeId \"{}\" will not be part of the diagram", endpointBaseUri, routeId);
+                }
+            }
+
+            if (drawConsumer) {
                 if (!consumerInfo.getUseDynamicEndpoint()) {
-                    try {
-//                        String endpointBaseUri = endpointUrisInfo.get(consumerInfo.getEndpointUri()).getEndpointBaseUri();
-                        String endpointBaseUri = consumerInfo.getEndpointUri();
+//                    try {
+
                         String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
 
                         umlString = umlString
@@ -58,9 +70,9 @@ public class ConsumersDiagramGenerator {
                                         new String[]{endpointElementId, routeElementId, processorType}))
                                 .concat("\n\n");
 
-                    } catch (Exception e) {
-                        LOGGER.warn("Could not find endpointBaseUri for endpoint \"{}\"", consumerInfo.getEndpointUri());
-                    }
+//                    } catch (Exception e) {
+//                        LOGGER.warn("Could not find endpointBaseUri for endpoint \"{}\"", consumerInfo.getEndpointUri());
+//                    }
                 } else {
                     String uri = consumerInfo.getEndpointUri();
                     String endpointElementId = "dynamic_consumer_endpoint_".concat(String.valueOf(index));

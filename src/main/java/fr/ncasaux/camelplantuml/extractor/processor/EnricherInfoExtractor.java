@@ -2,9 +2,9 @@ package fr.ncasaux.camelplantuml.extractor.processor;
 
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
-import fr.ncasaux.camelplantuml.utils.ListUtils;
-import fr.ncasaux.camelplantuml.utils.MapUtils;
 import org.apache.camel.util.URISupport;
+import fr.ncasaux.camelplantuml.utils.EndpointUtils;
+import fr.ncasaux.camelplantuml.utils.ProducerUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import static fr.ncasaux.camelplantuml.utils.EndpointUtils.getEndpointBaseUri;
 
 public class EnricherInfoExtractor {
 
@@ -44,20 +42,20 @@ public class EnricherInfoExtractor {
             String normalizedUri = URISupport.normalizeUri(expression);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
-                String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
+                String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
                 ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                         endpointBaseUri, "enrich", false);
-                ListUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
+                ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
                 EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo("endpoint_enricher_".concat(String.valueOf(index)));
-                MapUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
+                EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
                 ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                         endpointUri, "enrich", true);
-                ListUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
+                ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);
             }

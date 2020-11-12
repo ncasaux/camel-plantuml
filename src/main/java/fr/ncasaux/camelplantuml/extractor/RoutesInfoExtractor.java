@@ -2,8 +2,10 @@ package fr.ncasaux.camelplantuml.extractor;
 
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
-import fr.ncasaux.camelplantuml.utils.MapUtils;
 import org.apache.camel.util.URISupport;
+import fr.ncasaux.camelplantuml.utils.ConsumerUtils;
+import fr.ncasaux.camelplantuml.utils.EndpointUtils;
+import fr.ncasaux.camelplantuml.utils.RouteUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import static fr.ncasaux.camelplantuml.utils.EndpointUtils.getEndpointBaseUri;
-import static fr.ncasaux.camelplantuml.utils.ListUtils.addConsumerInfoIfNotInList;
 
 public class RoutesInfoExtractor {
 
@@ -37,17 +36,18 @@ public class RoutesInfoExtractor {
             String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
 
             String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
+
             String normalizedUri = URISupport.normalizeUri(endpointUri);
-            String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
+            String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
             String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
             String description = actualDescription != null ? actualDescription : "No description...";
 
             RouteInfo routeInfo = new RouteInfo(description, "route_".concat(String.valueOf(index)), endpointBaseUri);
-            MapUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
+            RouteUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
 
             ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri,"from",false);
-            addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+            ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
         }
     }
 }

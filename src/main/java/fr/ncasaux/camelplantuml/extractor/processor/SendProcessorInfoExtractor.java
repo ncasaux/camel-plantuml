@@ -1,7 +1,8 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
-import fr.ncasaux.camelplantuml.utils.ListUtils;
+import fr.ncasaux.camelplantuml.utils.EndpointUtils;
+import fr.ncasaux.camelplantuml.utils.ProducerUtils;
 import org.apache.camel.util.URISupport;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -14,8 +15,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import static fr.ncasaux.camelplantuml.utils.EndpointUtils.getEndpointBaseUri;
 
 public class SendProcessorInfoExtractor {
 
@@ -33,11 +32,11 @@ public class SendProcessorInfoExtractor {
         for (ObjectName on : processorsList) {
             String destination = (String) mbeanServer.getAttribute(on, "Destination");
             String normalizedUri = URISupport.normalizeUri(destination);
-            String endpointBaseUri = URLDecoder.decode(getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
+            String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
             ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                     endpointBaseUri, "to", false);
-            ListUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
+            ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
         }
     }
 }
