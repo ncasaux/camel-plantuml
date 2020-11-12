@@ -1,5 +1,6 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
+import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.utils.EndpointUtils;
 import fr.ncasaux.camelplantuml.utils.ProducerUtils;
@@ -13,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +23,7 @@ public class SendProcessorInfoExtractor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendProcessorInfoExtractor.class);
 
     public static void getProcessorsInfo(MBeanServer mbeanServer,
-                                         ArrayList<ProducerInfo> producersInfo)
+                                         ArrayList<ProducerInfo> producersInfo, HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
             throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, UnsupportedEncodingException {
 
         QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedSendProcessor"));
@@ -38,6 +40,9 @@ public class SendProcessorInfoExtractor {
             ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                     endpointBaseUri, "to", false);
             ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
+
+            EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
+            EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
         }
     }
 }

@@ -42,9 +42,7 @@ public class RecipientListInfoExtractor {
             String[] recipientList = expression.split(uriDelimiter);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
-                for (int recipientIndex = 0; recipientIndex < recipientList.length; recipientIndex++) {
-                    String recipient = recipientList[recipientIndex];
-
+                for (String recipient : recipientList) {
                     String normalizedUri = URISupport.normalizeUri(recipient);
                     String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
@@ -53,8 +51,7 @@ public class RecipientListInfoExtractor {
 
                     ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
-                    EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo("endpoint_recipientlist_".concat(String.valueOf(index))
-                            .concat("_recipient_").concat(String.valueOf(recipientIndex)));
+                    EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
                     EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
                 }
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {

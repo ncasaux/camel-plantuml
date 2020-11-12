@@ -32,29 +32,31 @@ public class RoutesInfoExtractor {
         List<ObjectName> routesList = new ArrayList<>();
         CollectionUtils.addAll(routesList, routesSet);
 
-        for (int index = 0; index < routesList.size(); index++) {
-            ObjectName on = routesList.get(index);
+        for (ObjectName on : routesList) {
 
-                String routeState = (String) mbeanServer.getAttribute(on, "State");
-                String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
+            String routeState = (String) mbeanServer.getAttribute(on, "State");
+            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
 
             if (routeState.equalsIgnoreCase("Started")) {
                 String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
                 String normalizedUri = URISupport.normalizeUri(endpointUri);
                 String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
-                    String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
-                    String description = actualDescription != null ? actualDescription : "No description...";
+                String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
+                String description = actualDescription != null ? actualDescription : "No description...";
 
-                    RouteInfo routeInfo = new RouteInfo(description, "route_".concat(String.valueOf(index)), endpointBaseUri);
-                    RouteUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
+                RouteInfo routeInfo = new RouteInfo(endpointBaseUri, description);
+                RouteUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
 
-                    ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "from", false);
-                    ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+                ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "from", false);
+                ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
 
-                } else {
-                    LOGGER.info("RouteId \"{}\" is not started, it will not be processed", routeId);
-                }
+                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
+                EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
+
+            } else {
+                LOGGER.info("RouteId \"{}\" is not started, it will not be processed", routeId);
+            }
         }
     }
 }

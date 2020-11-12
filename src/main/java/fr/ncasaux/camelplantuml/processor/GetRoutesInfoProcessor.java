@@ -1,6 +1,5 @@
 package fr.ncasaux.camelplantuml.processor;
 
-import fr.ncasaux.camelplantuml.extractor.EndpointsInfoExtractor;
 import fr.ncasaux.camelplantuml.extractor.RoutesInfoExtractor;
 import fr.ncasaux.camelplantuml.extractor.processor.*;
 import fr.ncasaux.camelplantuml.generator.*;
@@ -40,11 +39,8 @@ public class GetRoutesInfoProcessor implements Processor {
         LOGGER.info("Processing routes");
         RoutesInfoExtractor.getRoutesInfo(mbeanServer, routesInfo, consumersInfo, endpointBaseUrisInfo);
 
-        LOGGER.info("Processing endpoints");
-        EndpointsInfoExtractor.getEndpointsInfo(mbeanServer, endpointBaseUrisInfo);
-
         LOGGER.info("Processing SendProcessor processors");
-        SendProcessorInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo);
+        SendProcessorInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo, endpointBaseUrisInfo);
 
         LOGGER.info("Processing SendDynamicProcessor processors");
         SendDynamicProcessorInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo);
@@ -53,7 +49,7 @@ public class GetRoutesInfoProcessor implements Processor {
         EnricherInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo, endpointBaseUrisInfo);
 
         LOGGER.info("Processing PollEnricher processors");
-        PollEnricherInfoExtractor.getProcessorsInfo(mbeanServer, consumersInfo);
+        PollEnricherInfoExtractor.getProcessorsInfo(mbeanServer, consumersInfo, endpointBaseUrisInfo);
 
         LOGGER.info("Processing WireTapProcessor processors");
         WireTapProcessorInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo, endpointBaseUrisInfo);

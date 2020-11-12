@@ -7,8 +7,13 @@ import java.util.HashMap;
 
 public class RouteUtils {
 
-    public static void addRouteInfo(HashMap<String, RouteInfo> routesInfo, String routeId, RouteInfo routeInfo, Logger LOGGER) {
+    public static void addRouteInfo(HashMap<String, RouteInfo> routesInfo,
+                                    String routeId,
+                                    RouteInfo routeInfo,
+                                    Logger LOGGER) {
+
+        routeInfo.setDiagramElementId("route_".concat(String.valueOf(routesInfo.size())));
         routesInfo.put(routeId, routeInfo);
-        LOGGER.info("{} and id \"{}\" added to the map of routes", routeInfo.toString(), routeId);
+        LOGGER.info("{} and routeId \"{}\" added to the map of routes", routeInfo.toString(), routeId);
     }
 }

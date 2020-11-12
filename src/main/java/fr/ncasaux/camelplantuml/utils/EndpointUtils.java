@@ -28,7 +28,12 @@ public class EndpointUtils {
         return endpointBaseUri;
     }
 
-    public static void addEndpointBaseUriInfo(HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo, String endpointBaseUri, EndpointBaseUriInfo endpointBaseUriInfo, Logger LOGGER) {
+    public static void addEndpointBaseUriInfo(HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
+                                              String endpointBaseUri,
+                                              EndpointBaseUriInfo endpointBaseUriInfo,
+                                              Logger LOGGER) {
+
+        endpointBaseUriInfo.setDiagramElementId("endpoint_".concat(String.valueOf(endpointBaseUrisInfo.size())));
 
         if (!endpointBaseUrisInfo.containsKey(endpointBaseUri)) {
             endpointBaseUrisInfo.put(endpointBaseUri, endpointBaseUriInfo);

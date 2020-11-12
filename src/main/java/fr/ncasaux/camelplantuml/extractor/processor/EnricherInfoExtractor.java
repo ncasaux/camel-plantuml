@@ -33,8 +33,7 @@ public class EnricherInfoExtractor {
 
         CollectionUtils.addAll(processorsList, processorsSet);
 
-        for (int index = 0; index < processorsList.size(); index++) {
-            ObjectName on = processorsList.get(index);
+        for (ObjectName on : processorsList) {
 
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
@@ -48,8 +47,9 @@ public class EnricherInfoExtractor {
                         endpointBaseUri, "enrich", false);
                 ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
-                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo("endpoint_enricher_".concat(String.valueOf(index)));
+                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
                 EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
+
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
