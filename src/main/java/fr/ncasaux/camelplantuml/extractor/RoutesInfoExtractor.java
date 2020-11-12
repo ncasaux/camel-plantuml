@@ -33,6 +33,7 @@ public class RoutesInfoExtractor {
         CollectionUtils.addAll(routesList, routesSet);
 
         for (ObjectName on : routesList) {
+
             String routeState = (String) mbeanServer.getAttribute(on, "State");
             String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
 

@@ -34,6 +34,7 @@ public class PollEnricherInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
 
