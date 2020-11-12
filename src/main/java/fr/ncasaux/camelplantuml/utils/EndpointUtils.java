@@ -29,7 +29,12 @@ public class EndpointUtils {
     }
 
     public static void addEndpointBaseUriInfo(HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo, String endpointBaseUri, EndpointBaseUriInfo endpointBaseUriInfo, Logger LOGGER) {
-        endpointBaseUrisInfo.put(endpointBaseUri, endpointBaseUriInfo);
-        LOGGER.info("EndpointBaseUri with id \"{}\" added to the map of endpointBaseUris", endpointBaseUri);
+
+        if (!endpointBaseUrisInfo.containsKey(endpointBaseUri)) {
+            endpointBaseUrisInfo.put(endpointBaseUri, endpointBaseUriInfo);
+            LOGGER.info("EndpointBaseUri with id \"{}\" added to the map of endpointBaseUris", endpointBaseUri);
+        } else {
+            LOGGER.info("EndpointBaseUri with id \"{}\" already in the map of endpointBaseUris", endpointBaseUri);
+        }
     }
 }
