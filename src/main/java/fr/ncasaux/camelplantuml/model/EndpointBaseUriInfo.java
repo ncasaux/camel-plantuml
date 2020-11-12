@@ -1,9 +1,16 @@
 package fr.ncasaux.camelplantuml.model;
 
 public class EndpointBaseUriInfo {
-    private final String diagramElementId;
+    private String diagramElementId;
+
+    public EndpointBaseUriInfo() {
+    }
 
     public EndpointBaseUriInfo(String diagramElementId) {
+        this.diagramElementId = diagramElementId;
+    }
+
+    public void setDiagramElementId(String diagramElementId) {
         this.diagramElementId = diagramElementId;
     }
 

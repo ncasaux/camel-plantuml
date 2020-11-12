@@ -1,6 +1,7 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
+import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.utils.ConsumerUtils;
 import fr.ncasaux.camelplantuml.utils.EndpointUtils;
 import org.apache.camel.support.EndpointHelper;
@@ -13,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -21,7 +23,8 @@ public class PollEnricherInfoExtractor {
     private static final Logger LOGGER = LoggerFactory.getLogger(PollEnricherInfoExtractor.class);
 
     public static void getProcessorsInfo(MBeanServer mbeanServer,
-                                         ArrayList<ConsumerInfo> consumersInfo)
+                                         ArrayList<ConsumerInfo> consumersInfo,
+                                         HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
             throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, UnsupportedEncodingException {
 
         QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedPollEnricher"));
@@ -42,6 +45,10 @@ public class PollEnricherInfoExtractor {
                 ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
                         endpointBaseUri, "pollEnrich", false);
                 ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+
+                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
+                EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
+
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 

@@ -32,8 +32,9 @@ public class WireTapProcessorInfoExtractor {
         List<ObjectName> processorsList = new ArrayList<>();
         CollectionUtils.addAll(processorsList, processorsSet);
 
-        for (int index = 0; index < processorsList.size(); index++) {
-            ObjectName on = processorsList.get(index);
+        for (ObjectName on : processorsList) {
+//        for (int index = 0; index < processorsList.size(); index++) {
+//            ObjectName on = processorsList.get(index);
 
             String normalizedUri = EndpointHelper.normalizeEndpointUri((String) mbeanServer.getAttribute(on, "Uri"));
 
@@ -50,7 +51,7 @@ public class WireTapProcessorInfoExtractor {
                         endpointBaseUri, "wiretap", false);
                 ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
-                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo("endpoint_wiretap_".concat(String.valueOf(index)));
+                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
                 EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
             }
         }
