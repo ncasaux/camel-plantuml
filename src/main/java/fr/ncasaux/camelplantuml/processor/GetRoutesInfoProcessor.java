@@ -39,9 +39,6 @@ public class GetRoutesInfoProcessor implements Processor {
         LOGGER.info("Processing routes");
         RoutesInfoExtractor.getRoutesInfo(mbeanServer, routesInfo, consumersInfo, endpointBaseUrisInfo);
 
-//        LOGGER.info("Processing endpoints");
-//        EndpointsInfoExtractor.getEndpointsInfo(mbeanServer, endpointBaseUrisInfo);
-
         LOGGER.info("Processing SendProcessor processors");
         SendProcessorInfoExtractor.getProcessorsInfo(mbeanServer, producersInfo, endpointBaseUrisInfo);
 

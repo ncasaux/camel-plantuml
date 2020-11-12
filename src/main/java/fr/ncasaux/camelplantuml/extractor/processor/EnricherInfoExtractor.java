@@ -34,8 +34,6 @@ public class EnricherInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
-//        for (int index = 0; index < processorsList.size(); index++) {
-//            ObjectName on = processorsList.get(index);
 
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");

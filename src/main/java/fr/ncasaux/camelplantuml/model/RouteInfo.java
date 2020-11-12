@@ -5,12 +5,6 @@ public class RouteInfo {
     private final String description;
     private String diagramElementId;
 
-//    public RouteInfo(String description, String diagramElementId, String endpointBaseUri) {
-//        this.description = description;
-//        this.diagramElementId = diagramElementId;
-//        this.endpointBaseUri = endpointBaseUri;
-//    }
-
     public RouteInfo(String endpointBaseUri, String description) {
         this.description = description;
         this.endpointBaseUri = endpointBaseUri;

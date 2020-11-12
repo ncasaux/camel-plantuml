@@ -33,8 +33,6 @@ public class WireTapProcessorInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
-//        for (int index = 0; index < processorsList.size(); index++) {
-//            ObjectName on = processorsList.get(index);
 
             String normalizedUri = EndpointHelper.normalizeEndpointUri((String) mbeanServer.getAttribute(on, "Uri"));
 
