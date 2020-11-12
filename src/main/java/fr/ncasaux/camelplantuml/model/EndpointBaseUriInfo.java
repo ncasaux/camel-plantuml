@@ -6,10 +6,6 @@ public class EndpointBaseUriInfo {
     public EndpointBaseUriInfo() {
     }
 
-    public EndpointBaseUriInfo(String diagramElementId) {
-        this.diagramElementId = diagramElementId;
-    }
-
     public void setDiagramElementId(String diagramElementId) {
         this.diagramElementId = diagramElementId;
     }
