@@ -27,8 +27,8 @@ public class ConsumersDiagramGenerator {
                                            HashMap<String, RouteInfo> routesInfo,
                                            boolean connectRoutes) throws IOException {
 
-        String umlConsumerTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/consumerTemplate")),StandardCharsets.UTF_8);
-        String umlDynamicConsumerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicConsumerTemplate")),StandardCharsets.UTF_8);
+        String umlConsumerTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/consumerTemplate")), StandardCharsets.UTF_8);
+        String umlDynamicConsumerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicConsumerTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
         for (int index = 0; index < consumersInfo.size(); index++) {
@@ -61,13 +61,13 @@ public class ConsumersDiagramGenerator {
             if (drawConsumer) {
                 if (!consumerInfo.getUseDynamicEndpoint()) {
 
-                        String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
+                    String endpointElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
 
-                        umlString = umlString
-                                .concat(StringUtils.replaceEach(umlConsumerTemplate,
-                                        new String[]{"%%endpointElementId%%", "%%routeElementId%%", "%%processorType%%"},
-                                        new String[]{endpointElementId, routeElementId, processorType}))
-                                .concat("\n\n");
+                    umlString = umlString
+                            .concat(StringUtils.replaceEach(umlConsumerTemplate,
+                                    new String[]{"%%endpointElementId%%", "%%routeElementId%%", "%%processorType%%"},
+                                    new String[]{endpointElementId, routeElementId, processorType}))
+                            .concat("\n\n");
 
                 } else {
                     String uri = consumerInfo.getEndpointUri();

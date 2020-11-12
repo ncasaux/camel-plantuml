@@ -54,7 +54,7 @@ public class ProducersDiagramGenerator {
                 if (!producerInfo.getUseDynamicEndpoint()) {
                     String targetElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
                     if (connectRoutes) {
-                       ConsumerInfo ci = consumersInfo.stream().filter(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri)).findFirst().orElse(null);
+                        ConsumerInfo ci = consumersInfo.stream().filter(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri)).findFirst().orElse(null);
                         if (ci != null) {
                             targetElementId = routesInfo.get(ci.getRouteId()).getDiagramElementId();
                             LOGGER.info("Parameter \"connectRoutes\" is \"true\", producer from routeId \"{}\" will be directly connected to routeId \"{}\", bypassing endpointBaseUri \"{}\"", routeId, ci.getRouteId(), endpointBaseUri);

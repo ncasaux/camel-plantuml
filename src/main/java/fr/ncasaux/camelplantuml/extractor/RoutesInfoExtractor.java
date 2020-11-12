@@ -1,6 +1,7 @@
 package fr.ncasaux.camelplantuml.extractor;
 
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
+import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
 import fr.ncasaux.camelplantuml.utils.ConsumerUtils;
 import fr.ncasaux.camelplantuml.utils.EndpointUtils;
@@ -24,7 +25,8 @@ public class RoutesInfoExtractor {
 
     public static void getRoutesInfo(MBeanServer mbeanServer,
                                      HashMap<String, RouteInfo> routesInfo,
-                                     ArrayList<ConsumerInfo> consumersInfo) throws Exception {
+                                     ArrayList<ConsumerInfo> consumersInfo,
+                                     HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo) throws Exception {
 
         Set<ObjectName> routesSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=routes,*"), null);
         List<ObjectName> routesList = new ArrayList<>();
@@ -47,6 +49,9 @@ public class RoutesInfoExtractor {
 
                 ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "from", false);
                 ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+
+                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
+                EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
 
             } else {
                 LOGGER.info("RouteId \"{}\" is not started, it will not be processed", routeId);

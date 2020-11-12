@@ -37,7 +37,7 @@ public class GetRoutesInfoProcessor implements Processor {
         MBeanServer mbeanServer = exchange.getContext().getManagementStrategy().getManagementAgent().getMBeanServer();
 
         LOGGER.info("Processing routes");
-        RoutesInfoExtractor.getRoutesInfo(mbeanServer, routesInfo, consumersInfo);
+        RoutesInfoExtractor.getRoutesInfo(mbeanServer, routesInfo, consumersInfo, endpointBaseUrisInfo);
 
 //        LOGGER.info("Processing endpoints");
 //        EndpointsInfoExtractor.getEndpointsInfo(mbeanServer, endpointBaseUrisInfo);
@@ -68,7 +68,7 @@ public class GetRoutesInfoProcessor implements Processor {
                 .concat(ConsumersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, connectRoutes))
                 .concat(FooterDiagramGenerator.generateUmlString());
 
-        exchange.getIn().setHeader("content-type","text/plain;charset=utf-8");
+        exchange.getIn().setHeader("content-type", "text/plain;charset=utf-8");
         exchange.getIn().setBody(umlString);
     }
 }

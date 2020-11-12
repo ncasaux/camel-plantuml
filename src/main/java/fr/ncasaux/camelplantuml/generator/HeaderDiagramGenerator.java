@@ -15,7 +15,7 @@ public class HeaderDiagramGenerator {
 
     public static String generateUmlString(String contextName) throws IOException {
 
-        String umlHeaderTemplate = IOUtils.toString(Objects.requireNonNull(HeaderDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/headerTemplate")),StandardCharsets.UTF_8);
+        String umlHeaderTemplate = IOUtils.toString(Objects.requireNonNull(HeaderDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/headerTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
         umlString = umlString
@@ -24,6 +24,6 @@ public class HeaderDiagramGenerator {
                         new String[]{contextName}))
                 .concat("\n\n")
         ;
-    return umlString;
+        return umlString;
     }
 }

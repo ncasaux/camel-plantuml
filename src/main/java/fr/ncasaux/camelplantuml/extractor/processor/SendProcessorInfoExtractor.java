@@ -23,7 +23,8 @@ public class SendProcessorInfoExtractor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendProcessorInfoExtractor.class);
 
     public static void getProcessorsInfo(MBeanServer mbeanServer,
-                                         ArrayList<ProducerInfo> producersInfo, HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
+                                         ArrayList<ProducerInfo> producersInfo,
+                                         HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
             throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, UnsupportedEncodingException {
 
         QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedSendProcessor"));
