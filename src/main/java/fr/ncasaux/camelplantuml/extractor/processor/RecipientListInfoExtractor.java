@@ -63,6 +63,7 @@ public class RecipientListInfoExtractor {
                             endpointUri, "recipientList", true);
                     ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
                 }
+
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);
             }
