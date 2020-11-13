@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="785px" preserveAspectRatio="none" style="width:640px;height:785px;" version="1.1" viewBox="0 0 640 785" width="640px" zoomAndPan="magnify"><defs><filter height="300%" id="f1bygde5cwz6ab" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[23087fb8b60a9636ce8eff16cac0701e]
+entity route_4--><rect fill="#DAE8FC" filter="url(#f1bygde5cwz6ab)" height="80.8281" rx="10" ry="10" style="stroke: #6C8EBF; stroke-width: 1.5;" width="325" x="188" y="411"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="49" x="326" y="435.5332">«route»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="68" x="198" y="453.1426">mainRoute</text><line style="stroke: #6C8EBF; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="189" x2="512" y1="456.2188" y2="456.2188"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="305" x="198" y="474.752">Route which handles processing of the message</text><!--MD5=[d73888687ce401f430dedc5c934d6298]
+entity route_1--><rect fill="#DAE8FC" filter="url(#f1bygde5cwz6ab)" height="80.8281" rx="10" ry="10" style="stroke: #6C8EBF; stroke-width: 1.5;" width="291" x="7" y="129"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="49" x="128" y="153.5332">«route»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="97" x="17" y="171.1426">fastTimerRoute</text><line style="stroke: #6C8EBF; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="8" x2="297" y1="174.2188" y2="174.2188"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="271" x="17" y="192.752">Route which generates fast periodic events</text><!--MD5=[701d2032f2de379f9eeeed4442393f61]
+entity route_2--><rect fill="#DAE8FC" filter="url(#f1bygde5cwz6ab)" height="80.8281" rx="10" ry="10" style="stroke: #6C8EBF; stroke-width: 1.5;" width="253" x="86" y="693"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="49" x="188" y="717.5332">«route»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="98" x="96" y="735.1426">transformRoute</text><line style="stroke: #6C8EBF; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="87" x2="338" y1="738.2188" y2="738.2188"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="233" x="96" y="756.752">Route which transforms the message</text><!--MD5=[a1cd7453c7fbd5e2f19e8108a8ac311e]
+entity route_3--><rect fill="#DAE8FC" filter="url(#f1bygde5cwz6ab)" height="80.8281" rx="10" ry="10" style="stroke: #6C8EBF; stroke-width: 1.5;" width="295" x="333" y="129"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="49" x="456" y="153.5332">«route»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="101" x="343" y="171.1426">slowTimerRoute</text><line style="stroke: #6C8EBF; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="334" x2="627" y1="174.2188" y2="174.2188"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="275" x="343" y="192.752">Route which generates slow periodic events</text><!--MD5=[15f40c399c0a644fbf2372eb1d4ea3ea]
+entity endpoint_4--><path d="M285.5,288 L415.5,288 C420.5,288 420.5,310.6094 420.5,310.6094 C420.5,310.6094 420.5,333.2188 415.5,333.2188 L285.5,333.2188 C280.5,333.2188 280.5,310.6094 280.5,310.6094 C280.5,310.6094 280.5,288 285.5,288 " fill="#F8CECC" filter="url(#f1bygde5cwz6ab)" style="stroke: #B85450; stroke-width: 1.5;"/><path d="M415.5,288 C410.5,288 410.5,310.6094 410.5,310.6094 C410.5,333.2188 415.5,333.2188 415.5,333.2188 " fill="none" style="stroke: #B85450; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="120" x="285.5" y="307.5332">«endpoint»«static»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="106" x="292.5" y="325.1426">seda://endpoint1</text><!--MD5=[20e5980ebeb016b3d3605857d901d35a]
+entity endpoint_3--><path d="M415.5,6 L545.5,6 C550.5,6 550.5,28.6094 550.5,28.6094 C550.5,28.6094 550.5,51.2188 545.5,51.2188 L415.5,51.2188 C410.5,51.2188 410.5,28.6094 410.5,28.6094 C410.5,28.6094 410.5,6 415.5,6 " fill="#F8CECC" filter="url(#f1bygde5cwz6ab)" style="stroke: #B85450; stroke-width: 1.5;"/><path d="M545.5,6 C540.5,6 540.5,28.6094 540.5,28.6094 C540.5,51.2188 545.5,51.2188 545.5,51.2188 " fill="none" style="stroke: #B85450; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="120" x="415.5" y="25.5332">«endpoint»«static»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="63" x="444" y="43.1426">timer://foo</text><!--MD5=[1c990b2b00937cf072b641e6df32f521]
+entity endpoint_1--><path d="M87.5,6 L217.5,6 C222.5,6 222.5,28.6094 222.5,28.6094 C222.5,28.6094 222.5,51.2188 217.5,51.2188 L87.5,51.2188 C82.5,51.2188 82.5,28.6094 82.5,28.6094 C82.5,28.6094 82.5,6 87.5,6 " fill="#F8CECC" filter="url(#f1bygde5cwz6ab)" style="stroke: #B85450; stroke-width: 1.5;"/><path d="M217.5,6 C212.5,6 212.5,28.6094 212.5,28.6094 C212.5,51.2188 217.5,51.2188 217.5,51.2188 " fill="none" style="stroke: #B85450; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="120" x="87.5" y="25.5332">«endpoint»«static»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="64" x="115.5" y="43.1426">timer://bar</text><!--MD5=[5482357c61020a39cc88a0c16ad518ee]
+entity endpoint_2--><path d="M147.5,570 L277.5,570 C282.5,570 282.5,592.6094 282.5,592.6094 C282.5,592.6094 282.5,615.2188 277.5,615.2188 L147.5,615.2188 C142.5,615.2188 142.5,592.6094 142.5,592.6094 C142.5,592.6094 142.5,570 147.5,570 " fill="#F8CECC" filter="url(#f1bygde5cwz6ab)" style="stroke: #B85450; stroke-width: 1.5;"/><path d="M277.5,570 C272.5,570 272.5,592.6094 272.5,592.6094 C272.5,615.2188 277.5,615.2188 277.5,615.2188 " fill="none" style="stroke: #B85450; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="120" x="147.5" y="589.5332">«endpoint»«static»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="110" x="152.5" y="607.1426">direct://endpoint2</text><!--MD5=[3cba7796c0c7fd5ee62401a3901ed43e]
+entity dynamic_producer_endpoint_2--><path d="M323,570 L472,570 C477,570 477,592.6094 477,592.6094 C477,592.6094 477,615.2188 472,615.2188 L323,615.2188 C318,615.2188 318,592.6094 318,592.6094 C318,592.6094 318,570 323,570 " fill="#D5E8D4" filter="url(#f1bygde5cwz6ab)" style="stroke: #82B366; stroke-width: 1.5;"/><path d="M472,570 C467,570 467,592.6094 467,592.6094 C467,615.2188 472,615.2188 472,615.2188 " fill="none" style="stroke: #82B366; stroke-width: 1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="139" x="323" y="589.5332">«endpoint»«dynamic»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="132" x="326.5" y="607.1426">mock://mock-${body}</text><!--MD5=[2b4ea0b4924d653e7b702e290f5f3800]
+link endpoint_1 to route_1--><path codeLine="68" d="M152.5,51.219 C152.5,70.537 152.5,99.401 152.5,123.66 " fill="none" id="endpoint_1-to-route_1" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="152.5,128.761,156.5,119.761,152.5,123.761,148.5,119.761,152.5,128.761" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="25" x="153.5" y="95.4951">from</text><!--MD5=[c47c6d34137a99fb7a08ad335d6db525]
+link endpoint_2 to route_2--><path codeLine="70" d="M212.5,615.219 C212.5,634.537 212.5,663.401 212.5,687.6597 " fill="none" id="endpoint_2-to-route_2" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="212.5,692.7612,216.5,683.7612,212.5,687.7612,208.5,683.7612,212.5,692.7612" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="25" x="213.5" y="659.4951">from</text><!--MD5=[2b154a537dcaf2d8a356270385472900]
+link endpoint_3 to route_3--><path codeLine="72" d="M480.5,51.219 C480.5,70.537 480.5,99.401 480.5,123.66 " fill="none" id="endpoint_3-to-route_3" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="480.5,128.761,484.5,119.761,480.5,123.761,476.5,119.761,480.5,128.761" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="25" x="481.5" y="95.4951">from</text><!--MD5=[c0892a2bf9c277594aea063d32428077]
+link endpoint_4 to route_4--><path codeLine="74" d="M350.5,333.219 C350.5,352.537 350.5,381.401 350.5,405.66 " fill="none" id="endpoint_4-to-route_4" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="350.5,410.761,354.5,401.761,350.5,405.761,346.5,401.761,350.5,410.761" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="25" x="351.5" y="377.4951">from</text><!--MD5=[c204d81cbac0a1d555b422e32df1bc26]
+link route_1 to endpoint_4--><path codeLine="76" d="M208.974,210.146 C243.292,234.238 286.027,264.239 315.507,284.934 " fill="none" id="route_1-to-endpoint_4" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="319.758,287.919,314.6896,279.4744,315.6655,285.0464,310.0935,286.0223,319.758,287.919" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="11" x="276.5" y="254.4951">to</text><!--MD5=[13c807e99856c639b85958fd043d2038]
+link route_3 to endpoint_4--><path codeLine="78" d="M443.247,210.332 C421.069,234.046 393.584,263.433 374.313,284.038 " fill="none" id="route_3-to-endpoint_4" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="370.814,287.78,379.8834,283.94,374.2297,284.1286,374.0411,278.4749,370.814,287.78" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="11" x="416.5" y="254.4951">to</text><!--MD5=[bab684cfcedb9a4bfb65e72cdd957b88]
+link route_4 to dynamic_producer_endpoint_2--><path codeLine="84" d="M363.968,492.332 C371.854,515.652 381.594,544.459 388.541,565.005 " fill="none" id="route_4-to-dynamic_producer_endpoint_2" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="390.156,569.78,391.0631,559.973,388.5547,565.0433,383.4844,562.535,390.156,569.78" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="20" x="381.5" y="536.4951">toD</text><!--MD5=[287ea35527d15c71cfc4d2d952fed386]
+link route_4 to endpoint_2--><path codeLine="86" d="M310.955,492.332 C287.411,516.046 258.235,545.433 237.779,566.038 " fill="none" id="route_4-to-endpoint_2" style="stroke: #000000; stroke-width: 1.0;"/><polygon fill="#000000" points="234.064,569.78,243.2442,566.2129,237.5874,566.2323,237.5679,560.5755,234.064,569.78" style="stroke: #000000; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="35" x="282.5" y="536.4951">enrich</text><!--MD5=[27338884663800cae33b3f2e73c12558]
+@startuml camel-1
+
+skinparam ArrowColor #Black
+
+skinparam rectangle {
+  RoundCorner 20
+}
+
+skinparam rectangle<<route>> {
+  BorderColor #6C8EBF
+  BackgroundColor #DAE8FC
+}
+
+skinparam queue<<endpoint>> {
+}
+
+skinparam queue<<static>> {
+  BorderColor #B85450
+  BackgroundColor #F8CECC
+}
+
+skinparam queue<<dynamic>> {
+  BorderColor #82B366
+  BackgroundColor #D5E8D4
+}
+
+
+
+rectangle route_4 <<route>> as "
+mainRoute
+....
+<i>Route which handles processing of the message</i>
+"
+
+rectangle route_1 <<route>> as "
+fastTimerRoute
+....
+<i>Route which generates fast periodic events</i>
+"
+
+rectangle route_2 <<route>> as "
+transformRoute
+....
+<i>Route which transforms the message</i>
+"
+
+rectangle route_3 <<route>> as "
+slowTimerRoute
+....
+<i>Route which generates slow periodic events</i>
+"
+
+queue endpoint_4 <<endpoint>><<static>> as "
+seda://endpoint1
+"
+
+queue endpoint_3 <<endpoint>><<static>> as "
+timer://foo
+"
+
+queue endpoint_1 <<endpoint>><<static>> as "
+timer://bar
+"
+
+queue endpoint_2 <<endpoint>><<static>> as "
+direct://endpoint2
+"
+
+endpoint_1 - -> route_1 : from
+
+endpoint_2 - -> route_2 : from
+
+endpoint_3 - -> route_3 : from
+
+endpoint_4 - -> route_4 : from
+
+route_1 - -> endpoint_4 : to
+
+route_3 - -> endpoint_4 : to
+
+queue dynamic_producer_endpoint_2 <<endpoint>><<dynamic>> as "
+mock://mock-${body}
+"
+
+route_4 - -> dynamic_producer_endpoint_2 : toD
+
+route_4 - -> endpoint_2 : enrich
+
+@enduml
+
+PlantUML version 1.2020.18(Wed Sep 30 21:40:44 CEST 2020)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: fr
+Country: FR
+--></g></svg>
