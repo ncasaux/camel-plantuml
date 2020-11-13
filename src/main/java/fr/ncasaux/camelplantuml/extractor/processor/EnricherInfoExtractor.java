@@ -40,7 +40,6 @@ public class EnricherInfoExtractor {
             String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
-
             String normalizedUri = EndpointHelper.normalizeEndpointUri(expression);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
