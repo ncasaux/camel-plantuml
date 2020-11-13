@@ -1,10 +1,5 @@
 @startuml %%diagramName%%
 
-allow_mixing
-set namespaceSeparator none
-
-skinparam WrapWidth 300
-
 skinparam ArrowColor #Black
 
 skinparam rectangle {
