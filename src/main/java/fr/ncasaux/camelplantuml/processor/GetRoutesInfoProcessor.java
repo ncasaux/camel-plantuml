@@ -7,6 +7,7 @@ import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
+import fr.ncasaux.camelplantuml.model.query.Parameters;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class GetRoutesInfoProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        boolean connectRoutes = Boolean.parseBoolean(exchange.getIn().getHeader("connectRoutes", String.class));
+        Parameters parameters = new Parameters(Boolean.parseBoolean(exchange.getIn().getHeader("connectRoutes", String.class)));
 
         HashMap<String, RouteInfo> routesInfo = new HashMap<>();
         ArrayList<ConsumerInfo> consumersInfo = new ArrayList<>();
@@ -60,9 +61,9 @@ public class GetRoutesInfoProcessor implements Processor {
         LOGGER.info("Generating PlantUML diagram");
         String umlString = HeaderDiagramGenerator.generateUmlString(exchange.getContext().getName())
                 .concat(RoutesDiagramGenerator.generateUmlString(routesInfo))
-                .concat(EndpointsDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, connectRoutes))
-                .concat(ProducersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, connectRoutes))
-                .concat(ConsumersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, connectRoutes))
+                .concat(EndpointsDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, parameters))
+                .concat(ConsumersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, parameters))
+                .concat(ProducersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, parameters))
                 .concat(FooterDiagramGenerator.generateUmlString());
 
         exchange.getIn().setHeader("content-type", "text/plain;charset=utf-8");

@@ -12,8 +12,7 @@ public class RouteInfo {
 
     @Override
     public String toString() {
-        return "Route consuming from endpointBaseUri \"".concat(endpointBaseUri).concat("\"")
-                .concat(" with description \"").concat(description).concat("\"");
+        return "Route consuming from endpointBaseUri \"".concat(endpointBaseUri).concat("\"");
     }
 
     public String getDescription() {

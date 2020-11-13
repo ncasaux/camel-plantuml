@@ -27,9 +27,12 @@ public class SendDynamicProcessorInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+            String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");
+            LOGGER.debug("Processing processorId \"{}\"", processorId);
 
-            ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                    URLDecoder.decode((String) mbeanServer.getAttribute(on, "Uri"), "UTF-8"), "toD", true);
+            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
+
+            ProducerInfo producerInfo = new ProducerInfo(routeId, URLDecoder.decode((String) mbeanServer.getAttribute(on, "Uri"), "UTF-8"), "toD", true);
             ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
         }
     }

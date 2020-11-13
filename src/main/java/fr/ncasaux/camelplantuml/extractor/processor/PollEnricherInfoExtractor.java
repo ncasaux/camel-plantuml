@@ -34,7 +34,10 @@ public class PollEnricherInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+            String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");
+            LOGGER.debug("Processing processorId \"{}\"", processorId);
 
+            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
 
@@ -43,8 +46,7 @@ public class PollEnricherInfoExtractor {
             if (expressionLanguage.equalsIgnoreCase("constant")) {
                 String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
-                ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                        endpointBaseUri, "pollEnrich", false);
+                ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "pollEnrich", false);
                 ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
 
                 EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
@@ -53,9 +55,9 @@ public class PollEnricherInfoExtractor {
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
-                ConsumerInfo consumerInfo = new ConsumerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                        endpointUri, "pollEnrich", true);
+                ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointUri, "pollEnrich", true);
                 ConsumerUtils.addConsumerInfo(consumersInfo, consumerInfo, LOGGER);
+
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);
             }

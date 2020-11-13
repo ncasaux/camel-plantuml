@@ -3,6 +3,7 @@ package fr.ncasaux.camelplantuml.generator;
 import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
+import fr.ncasaux.camelplantuml.model.query.Parameters;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,37 +25,30 @@ public class EndpointsDiagramGenerator {
     public static String generateUmlString(ArrayList<ConsumerInfo> consumersInfo,
                                            ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
-                                           boolean connectRoutes) throws IOException {
+                                           Parameters parameters) throws IOException {
 
         String umlEndpointTemplate = IOUtils.toString(Objects.requireNonNull(EndpointsDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/endpointTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
         for (Map.Entry<String, EndpointBaseUriInfo> endpointBaseUriInfoEntry : endpointBaseUrisInfo.entrySet()) {
-
             String endpointBaseUri = endpointBaseUriInfoEntry.getKey();
             String diagramElementId = endpointBaseUriInfoEntry.getValue().getDiagramElementId();
 
-            boolean drawEndpoint = true;
-
             boolean endpointHasConsumer = consumersInfo.stream().anyMatch(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri));
             boolean endpointHasProducer = producersInfo.stream().anyMatch(producerInfo -> producerInfo.getEndpointUri().equals(endpointBaseUri));
+            boolean drawEndpoint = true;
 
             for (String filter : endpointBaseUriFilters) {
                 if (endpointBaseUri.matches(filter)) {
                     drawEndpoint = false;
-                    LOGGER.info("EndpointBaseUri \"{}\" matches the endpoint filter \"{}\", it will not be part of the diagram", endpointBaseUri, filter);
+                    LOGGER.info("EndpointBaseUri \"{}\" matches the endpoint filter \"{}\", endpoint will not be part of the diagram", endpointBaseUri, filter);
                     break;
                 }
             }
 
-            if (!endpointHasConsumer && !endpointHasProducer) {
+            if (parameters.connectRoutes() && endpointHasConsumer && endpointHasProducer) {
                 drawEndpoint = false;
-                LOGGER.info("EndpointBaseUri \"{}\" has neither consumer or producer, it will not be part of the diagram", endpointBaseUri);
-            }
-
-            if (connectRoutes && endpointHasConsumer && endpointHasProducer) {
-                drawEndpoint = false;
-                LOGGER.info("Parameter \"connectRoutes\" is \"true\", and endpointBaseUri \"{}\" has both consumer and producer, it will not be part of the diagram", endpointBaseUri);
+                LOGGER.info("Parameter \"connectRoutes\" is \"true\", and endpointBaseUri \"{}\" has both consumer and producer, endpoint will not be part of the diagram", endpointBaseUri);
             }
 
             if (drawEndpoint) {

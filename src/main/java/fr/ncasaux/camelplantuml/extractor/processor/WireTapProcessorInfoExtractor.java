@@ -33,20 +33,22 @@ public class WireTapProcessorInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+            String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");
+            LOGGER.debug("Processing processorId \"{}\"", processorId);
 
+            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
             String normalizedUri = EndpointHelper.normalizeEndpointUri((String) mbeanServer.getAttribute(on, "Uri"));
 
             if ((boolean) mbeanServer.getAttribute(on, "DynamicUri")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
-                ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                        endpointUri, "wiretap", true);
+                ProducerInfo producerInfo = new ProducerInfo(routeId, endpointUri, "wiretap", true);
                 ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
+
             } else {
                 String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
-                ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                        endpointBaseUri, "wiretap", false);
+                ProducerInfo producerInfo = new ProducerInfo(routeId, endpointBaseUri, "wiretap", false);
                 ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
                 EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();

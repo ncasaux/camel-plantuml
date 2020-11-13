@@ -34,11 +34,13 @@ public class RecipientListInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+            String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");
+            LOGGER.debug("Processing processorId \"{}\"", processorId);
 
+            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
             String uriDelimiter = (String) mbeanServer.getAttribute(on, "UriDelimiter");
-
             String[] recipientList = expression.split(uriDelimiter);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
@@ -46,21 +48,19 @@ public class RecipientListInfoExtractor {
                     String normalizedUri = EndpointHelper.normalizeEndpointUri(recipient);
                     String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
-                    ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                            endpointBaseUri, "recipientList", false);
-
+                    ProducerInfo producerInfo = new ProducerInfo(routeId, endpointBaseUri, "recipientList", false);
                     ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
                     EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
                     EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
                 }
+
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 for (String recipient : recipientList) {
                     String normalizedUri = EndpointHelper.normalizeEndpointUri(recipient);
                     String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
-                    ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                            endpointUri, "recipientList", true);
+                    ProducerInfo producerInfo = new ProducerInfo(routeId, endpointUri, "recipientList", true);
                     ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
                 }
 

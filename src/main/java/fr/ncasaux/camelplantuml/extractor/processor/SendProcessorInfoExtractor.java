@@ -33,13 +33,15 @@ public class SendProcessorInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+            String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");
+            LOGGER.debug("Processing processorId \"{}\"", processorId);
 
+            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
             String destination = (String) mbeanServer.getAttribute(on, "Destination");
             String normalizedUri = URISupport.normalizeUri(destination);
             String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
-            ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                    endpointBaseUri, "to", false);
+            ProducerInfo producerInfo = new ProducerInfo(routeId, endpointBaseUri, "to", false);
             ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
             EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();

@@ -33,30 +33,29 @@ public class RoutesInfoExtractor {
         CollectionUtils.addAll(routesList, routesSet);
 
         for (ObjectName on : routesList) {
-
             String routeState = (String) mbeanServer.getAttribute(on, "State");
             String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
 
-            if (routeState.equalsIgnoreCase("Started")) {
-                String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
-                String normalizedUri = EndpointHelper.normalizeEndpointUri(endpointUri);
-                String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
-
-                String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
-                String description = actualDescription != null ? actualDescription : "No description...";
-
-                RouteInfo routeInfo = new RouteInfo(endpointBaseUri, description);
-                RouteUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
-
-                ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "from", false);
-                ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
-
-                EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
-                EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
-
-            } else {
-                LOGGER.info("RouteId \"{}\" is not started, it will not be processed", routeId);
+            LOGGER.debug("Processing routeId \"{}\"", routeId);
+            if (!routeState.equalsIgnoreCase("Started")) {
+                LOGGER.warn("Route with id \"{}\" is not started, associated processors may not have been created, diagram may be incomplete", routeId);
             }
+
+            String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
+            String normalizedUri = EndpointHelper.normalizeEndpointUri(endpointUri);
+            String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
+
+            String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
+            String description = actualDescription != null ? actualDescription : "No description...";
+
+            RouteInfo routeInfo = new RouteInfo(endpointBaseUri, description);
+            RouteUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
+
+            ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "from", false);
+            ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+
+            EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
+            EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
         }
     }
 }
