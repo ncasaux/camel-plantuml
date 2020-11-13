@@ -21,7 +21,7 @@ public class EndpointUtils {
                 null,
                 uri.getFragment()).toString();
 
-        LOGGER.info("EndpointBaseUri \"{}\" built from EndpointUri \"{}\"",
+        LOGGER.debug("EndpointBaseUri \"{}\" built from EndpointUri \"{}\"",
                 URLDecoder.decode(endpointBaseUri, "UTF-8"),
                 URLDecoder.decode(endpointUri, "UTF-8"));
 

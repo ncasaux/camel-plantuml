@@ -33,7 +33,7 @@ public class RoutesDiagramGenerator {
             for (String filter : routeIdFilters) {
                 if (routeId.matches(filter)) {
                     drawRoute = false;
-                    LOGGER.info("Route with id \"{}\" matches the routeId filter \"{}\", it will not be part of the diagram", routeId, filter);
+                    LOGGER.info("Route with id \"{}\" matches the routeId filter \"{}\", route will not be part of the diagram", routeId, filter);
                     break;
                 }
             }

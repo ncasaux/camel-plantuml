@@ -34,17 +34,18 @@ public class EnricherInfoExtractor {
         CollectionUtils.addAll(processorsList, processorsSet);
 
         for (ObjectName on : processorsList) {
+            String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");
+            LOGGER.debug("Processing processorId \"{}\"", processorId);
 
+            String routeId = (String) mbeanServer.getAttribute(on, "RouteId");
             String expression = (String) mbeanServer.getAttribute(on, "Expression");
             String expressionLanguage = (String) mbeanServer.getAttribute(on, "ExpressionLanguage");
-
             String normalizedUri = URISupport.normalizeUri(expression);
 
             if (expressionLanguage.equalsIgnoreCase("constant")) {
                 String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
-                ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                        endpointBaseUri, "enrich", false);
+                ProducerInfo producerInfo = new ProducerInfo(routeId, endpointBaseUri, "enrich", false);
                 ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
                 EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
@@ -53,9 +54,9 @@ public class EnricherInfoExtractor {
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
-                ProducerInfo producerInfo = new ProducerInfo((String) mbeanServer.getAttribute(on, "RouteId"),
-                        endpointUri, "enrich", true);
+                ProducerInfo producerInfo = new ProducerInfo(routeId, endpointUri, "enrich", true);
                 ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
+
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);
             }

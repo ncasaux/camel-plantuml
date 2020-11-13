@@ -4,6 +4,7 @@ import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
+import fr.ncasaux.camelplantuml.model.query.Parameters;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class ProducersDiagramGenerator {
                                            ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
                                            HashMap<String, RouteInfo> routesInfo,
-                                           boolean connectRoutes) throws IOException {
+                                           Parameters parameters) throws IOException {
 
         String umlProducerTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/producerTemplate")), StandardCharsets.UTF_8);
         String umlDynamicProducerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicProducerTemplate")), StandardCharsets.UTF_8);
@@ -36,16 +37,16 @@ public class ProducersDiagramGenerator {
             ProducerInfo producerInfo = producersInfo.get(index);
 
             String routeId = producerInfo.getRouteId();
-            String routeElementId = routesInfo.get(routeId).getDiagramElementId();
             String processorType = producerInfo.getProcessorType();
             String endpointBaseUri = producerInfo.getEndpointUri();
+            String routeElementId = routesInfo.get(routeId).getDiagramElementId();
 
             boolean drawProducer = true;
 
             for (String filter : routeIdFilters) {
                 if (routeId.matches(filter)) {
                     drawProducer = false;
-                    LOGGER.info("{} matches the routeId filter \"{}\", it will not be part of the diagram", producerInfo, filter);
+                    LOGGER.info("{} matches the routeId filter \"{}\", producer will not be part of the diagram", producerInfo, filter);
                     break;
                 }
             }
@@ -53,11 +54,11 @@ public class ProducersDiagramGenerator {
             if (drawProducer) {
                 if (!producerInfo.getUseDynamicEndpoint()) {
                     String targetElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
-                    if (connectRoutes) {
+                    if (parameters.connectRoutes()) {
                         ConsumerInfo ci = consumersInfo.stream().filter(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri)).findFirst().orElse(null);
                         if (ci != null) {
                             targetElementId = routesInfo.get(ci.getRouteId()).getDiagramElementId();
-                            LOGGER.info("Parameter \"connectRoutes\" is \"true\", producer from routeId \"{}\" will be directly connected to routeId \"{}\", bypassing endpointBaseUri \"{}\"", routeId, ci.getRouteId(), endpointBaseUri);
+                            LOGGER.info("Parameter \"connectRoutes\" is \"true\", producer in routeId \"{}\" will be directly connected to routeId \"{}\", bypassing endpointBaseUri \"{}\"", routeId, ci.getRouteId(), endpointBaseUri);
                         }
                     }
 
