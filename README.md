@@ -51,7 +51,7 @@ or any other computer where PlantUML and graphviz are available (VSCode, Intelli
 
 ## Features
 This tool generates PlantUML diagrams with following features:
-- each route is rendered as a rectangle.
+- each route is rendered as a rectangle, with its id and description
 - each static endpoint base URI is rendered as a queue with a "static" layout.
 - each dynamic endpoint URI is rendered as a queue with a "dynamic" layout.
 - each consumer is rendered as a labelled arrow (`from` or `pollEnrich`) which connects an endpoint to a route.
