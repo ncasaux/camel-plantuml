@@ -66,16 +66,16 @@ This tool generates PlantUML diagrams with following features:
 ## Versions
 There is a version for the two Camel major versions. Both versions uses Java `1.8`.
 
-##### Camel 2.x
+### Camel 2.x
 The jar to use is `camel2-plantuml`. It has been built with Camel version `2.20.4`.
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
-##### Camel 3.x
+### Camel 3.x
 The jar to use is `camel3-plantuml`. It has been built with Camel version `3.4.4`.
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 ## How to use ?
-##### 1. Add the dependency to your project:
+### 1. Add the dependency to your project:
 If you use Camel **2.x**:
 ```
 <dependency>
@@ -93,14 +93,14 @@ If you use Camel **3.x**:
 </dependency>
 ```
 
-##### 2. Add the route builder to your Camel context:
+### 2. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
 
 Default host is `localhost`, default port is `8090`, but you can overide them:
 
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder("localhost", 8090));`
 
-##### 3. Start your Camel context, and open a browser:
+### 3. Start your Camel context, and open a browser:
 To have all the endpoints, go to:
 
 `http://{{host}}:{{port}}/camel-plantuml/diagram.puml`
@@ -109,7 +109,7 @@ To connect routes directly (and hide "internal" endpoints), go to:
 
 `http://{{host}}:{{port}}/camel-plantuml/diagram.puml?connectRoutes=true`
 
-##### 4. Render the PlantUML code:
+### 4. Render the PlantUML code:
 There are multiple options: 
 - You can install PlantUML extension on your IDE, and graphviz on your computer to render locally
 - You can use an browser Extension to direcly render the code. There are extensions for Chrome and Firefox at least. 
