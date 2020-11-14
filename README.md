@@ -103,11 +103,11 @@ Default host is `localhost`, default port is `8090`, but you can overide them:
 ##### 3. Start your Camel context, and open a browser:
 To have all the endpoints, go to:
 
-`http://localhost:8090/camel-plantuml/diagram.puml`
+`http://{{host}}:{{port}}/camel-plantuml/diagram.puml`
 
 To connect routes directly (and hide "internal" endpoints), go to:
 
-`http://localhost:9090/camel-plantuml/diagram.puml?connectRoutes=true`
+`http://{{host}}:{{port}}/camel-plantuml/diagram.puml?connectRoutes=true`
 
 ##### 4. Render the PlantUML code:
 There are multiple options: 
