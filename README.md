@@ -35,6 +35,8 @@ It will allow you to generate these images:
 
 ![](images/example1.light.svg)
 
+This tool is intended to be a software documentation tool, it is not intended to be a monitoring tool with real-time metrics or statistics.
+
 ## How it works
 This tool needs to have a running Camel context instance, deployed with this tool as a dependency.
 It uses the Camel JMX MBeans (which are enabled by default in Camel), and particularly the ones related to routes and processors.
