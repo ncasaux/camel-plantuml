@@ -84,7 +84,7 @@ If you use Camel **2.x**:
 <dependency>
     <groupId>fr.ncasaux</groupId>
     <artifactId>camel2-plantuml</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>{{version}}</version>
 </dependency>
 ```
 If you use Camel **3.x**:
@@ -92,7 +92,7 @@ If you use Camel **3.x**:
 <dependency>
     <groupId>fr.ncasaux</groupId>
     <artifactId>camel3-plantuml</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>{{version}}</version>
 </dependency>
 ```
 
