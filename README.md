@@ -46,8 +46,13 @@ Following processors are handled:
 - WireTapProcessor (`wireTap`)
 - RecipientList (`recipientList`)
 
-The PlantUML code is exposed through a configurable HTTP endpoint, and can be rendered afterwards as an image using PlantUML [webserver](http://www.plantuml.com/plantuml/uml "PlantUML webserver") 
-or any other computer where PlantUML and graphviz are available (VSCode, IntelliJ, your own PlantUML server...)
+It parses the processors to extract URI(s) information. 
+If an expression is found, then, based on the language of the expression:
+1. If the language is `constant`, it will consider it as static endpoint (which could be used in other processors or routes).
+2. If the language is `simple`, it will consider it as a dynamic endpoint.
+3. Otherwise, it will ignore the endpoint.
+
+The PlantUML code is exposed through a configurable HTTP endpoint, so it can be re-worked, and finally rendered as an image.
 
 ## Features
 This tool generates PlantUML diagrams with following features:
@@ -56,6 +61,7 @@ This tool generates PlantUML diagrams with following features:
 - each dynamic endpoint URI is rendered as a queue with a "dynamic" layout.
 - each consumer is rendered as a labelled arrow (`from` or `pollEnrich`) which connects an endpoint to a route.
 - each producer is rendered as a labelled arrow (`to`,`toD`,`enrich`,`wireTap` or `recipientList`) which connects a route to an endpoint.
+- it's possible to connect routes direcly, if you don't want to have the "internal" endpoints on the diagram.
 
 ## Versions
 There is a version for the two Camel major versions. Both versions uses Java `1.8`.
