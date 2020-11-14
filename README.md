@@ -1,4 +1,4 @@
-### Overview
+## Overview
 camel-plantuml is a tool which helps to genereate [PlantUML](https://plantuml.com/) diagrams describing Apache [Camel](https://camel.apache.org/) routes. 
 
 It allows to have diagrams where we can see interactions between endpoints and routes.
@@ -35,7 +35,7 @@ It will allow you generate this:
 
 ![](images/example1.light.svg)
 
-### How it works
+## How it works
 It uses the Camel JMX MBeans (which are enabled by default in Camel), and particularly the ones related to routes and processors.
 
 Following processors are handled:
@@ -46,9 +46,10 @@ Following processors are handled:
 - WireTapProcessor (`wireTap`)
 - RecipientList (`recipientList`)
 
-The PlantUML code is exposed through a configurable HTTP endpoint, and can be rendered afterwards as an image using PlantUML [webserver](http://www.plantuml.com/plantuml/uml "PlantUML webserver") or any other tool where PlantUML is available (VSCode, IntelliJ, your own PlantUML server...)
+The PlantUML code is exposed through a configurable HTTP endpoint, and can be rendered afterwards as an image using PlantUML [webserver](http://www.plantuml.com/plantuml/uml "PlantUML webserver") 
+or any other computer where PlantUML and graphviz are available (VSCode, IntelliJ, your own PlantUML server...)
 
-### Features
+## Features
 This tool generates PlantUML diagrams with following features:
 - each route is rendered as a rectangle.
 - each static endpoint base URI is rendered as a queue with a "static" layout.
@@ -56,7 +57,7 @@ This tool generates PlantUML diagrams with following features:
 - each consumer is rendered as a labelled arrow (`from` or `pollEnrich`) which connects an endpoint to a route.
 - each producer is rendered as a labelled arrow (`to`,`toD`,`enrich`,`wireTap` or `recipientList`) which connects a route to an endpoint.
 
-### Versions
+## Versions
 There is a version for the two Camel major versions. Both versions uses Java `1.8`.
 
 ##### Camel 2.x
@@ -67,8 +68,8 @@ The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 The jar to use is `camel3-plantuml`. It has been built with Camel version `3.4.4`.
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
-### How to use
-#### 1. Add the dependency to your project
+## How to use ?
+##### 1. Add the dependency to your project:
 If you use Camel **2.x**:
 ```
 <dependency>
@@ -86,15 +87,14 @@ If you use Camel **3.x**:
 </dependency>
 ```
 
-#### 2. Add the route builder to your Camel context
+##### 2. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
 
-Default host is `localhost`, default port is `8090`, but you can change them:
+Default host is `localhost`, default port is `8090`, but you can overide them:
 
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder("localhost", 8090));`
 
-
-#### 3. Start your Camel context, and open a browser:
+##### 3. Start your Camel context, and open a browser:
 To have all the endpoints, go to:
 
 `http://localhost:8090/camel-plantuml/diagram.puml`
@@ -102,4 +102,10 @@ To have all the endpoints, go to:
 To connect routes directly (and hide "internal" endpoints), go to:
 
 `http://localhost:9090/camel-plantuml/diagram.puml?connectRoutes=true`
+
+##### 4. Render the PlantUML code:
+There are multiple options: 
+- You can install PlantUML extension on your IDE, and graphviz on your computer to render locally
+- You can use an browser Extension to direcly render the code. There are extensions for Chrome and Firefox at least. 
+- You can use the official PlantUML [webserver](http://www.plantuml.com/plantuml/uml "PlantUML webserver") and copy/paste the diagram.
 
