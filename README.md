@@ -49,8 +49,8 @@ Following processors are handled:
 
 It parses the processors to extract URI(s) information. 
 If an expression is found, then, based on the language of the expression:
-1. If the language is `constant`, it will consider it as static endpoint (which could be used in other processors or routes).
-2. If the language is `simple`, it will consider it as a dynamic endpoint.
+1. If the language is `constant`, it will consider it as a static endpoint (which could be used in other processors or routes).
+2. If the language is `simple`, it will consider it as a dynamic endpoint (with no possible link with other processors or routes).
 3. Otherwise, it will ignore the endpoint.
 
 The PlantUML code is exposed through a configurable HTTP endpoint, so it can be re-worked, and finally rendered as an image.
