@@ -25,13 +25,13 @@ from(direct("endpoint2")).id("transformRoute")
         .description("Route which transforms the message")
         .transform(simple("${body}${body}"));
 ```
-It will allow you generate this:
+It will allow you to generate these images:
 
 - with all endpoints:
 
 ![](images/example1.full.svg)
 
-- with only "internal" endpoints:
+- without the "internal" endpoints:
 
 ![](images/example1.light.svg)
 
@@ -61,7 +61,7 @@ This tool generates PlantUML diagrams with following features:
 - each dynamic endpoint URI is rendered as a queue with a "dynamic" layout.
 - each consumer is rendered as a labelled arrow (`from` or `pollEnrich`) which connects an endpoint to a route.
 - each producer is rendered as a labelled arrow (`to`,`toD`,`enrich`,`wireTap` or `recipientList`) which connects a route to an endpoint.
-- it's possible to connect routes direcly, if you don't want to have the "internal" endpoints on the diagram.
+- it's possible to connect the routes to each other, if you don't want to display the "internal" endpoints on the diagram.
 
 ## Versions
 There is a version for the two Camel major versions. Both versions uses Java `1.8`.
