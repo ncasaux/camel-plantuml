@@ -118,3 +118,5 @@ There are multiple options:
 - You can use an browser Extension to direcly render the code. There are extensions for Chrome and Firefox. 
 - You can use the official PlantUML [webserver](http://www.plantuml.com/plantuml/uml "PlantUML webserver") and copy/paste the diagram.
 
+## Contributing
+Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
