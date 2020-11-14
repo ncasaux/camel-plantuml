@@ -106,7 +106,7 @@ To have all the endpoints, go to:
 
 `http://{{host}}:{{port}}/camel-plantuml/diagram.puml`
 
-To connect routes directly (and hide "internal" endpoints), go to:
+To connect routes directly (and hide "internal" endpoints), add the following parameter:
 
 `http://{{host}}:{{port}}/camel-plantuml/diagram.puml?connectRoutes=true`
 
