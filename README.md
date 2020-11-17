@@ -78,7 +78,12 @@ The jar to use is `camel3-plantuml`. It has been built with Camel version `3.4.4
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 ## How to use ?
-### 1. Add the dependency to your project:
+
+### 1. Download the jar :
+Download the jar which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
+
+
+### 2. Add the dependency to your project:
 If you use Camel **2.x**:
 ```
 <dependency>
@@ -96,14 +101,14 @@ If you use Camel **3.x**:
 </dependency>
 ```
 
-### 2. Add the route builder to your Camel context:
+### 3. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
 
 Default host is `localhost`, default port is `8090`, but you can overide them:
 
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder("localhost", 8090));`
 
-### 3. Start your Camel context, and open a browser:
+### 4. Start your Camel context, and open a browser:
 To have all the endpoints, go to:
 
 `http://{{host}}:{{port}}/camel-plantuml/diagram.puml`
@@ -112,7 +117,7 @@ To connect routes directly (and hide "internal" endpoints), add the following pa
 
 `http://{{host}}:{{port}}/camel-plantuml/diagram.puml?connectRoutes=true`
 
-### 4. Render the PlantUML code:
+### 5. Render the PlantUML code:
 There are multiple options: 
 - You can install PlantUML extension on your IDE, and graphviz on your computer to render locally (the best option).
 - You can use an browser Extension to direcly render the code. There are extensions for Chrome and Firefox. 
