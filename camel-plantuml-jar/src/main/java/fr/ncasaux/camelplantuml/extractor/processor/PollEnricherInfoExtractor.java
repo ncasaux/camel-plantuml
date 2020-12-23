@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.*;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ public class PollEnricherInfoExtractor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PollEnricherInfoExtractor.class);
 
-    public static void getProcessorsInfo(MBeanServer mbeanServer,
+    public static void getProcessorsInfo(MBeanServerConnection mbeanServer,
                                          ArrayList<ConsumerInfo> consumersInfo,
                                          HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
-            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, UnsupportedEncodingException {
+            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, IOException {
 
         QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedPollEnricher"));
         Set<ObjectName> processorsSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=processors,*"), exp);

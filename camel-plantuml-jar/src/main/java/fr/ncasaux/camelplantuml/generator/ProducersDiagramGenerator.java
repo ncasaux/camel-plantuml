@@ -46,7 +46,7 @@ public class ProducersDiagramGenerator {
             for (String filter : routeIdFilters) {
                 if (routeId.matches(filter)) {
                     drawProducer = false;
-                    LOGGER.info("\"{}\" matches the routeId filter \"{}\", producer \"{}\" will not be part of the diagram", routeId, filter, producerInfo);
+                    LOGGER.info("\"{}\" matches the routeId filter \"{}\", producer will not be part of the diagram", producerInfo, filter);
                     break;
                 }
             }

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.*;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
@@ -22,10 +23,10 @@ public class SendProcessorInfoExtractor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SendProcessorInfoExtractor.class);
 
-    public static void getProcessorsInfo(MBeanServer mbeanServer,
+    public static void getProcessorsInfo(MBeanServerConnection mbeanServer,
                                          ArrayList<ProducerInfo> producersInfo,
                                          HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
-            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, UnsupportedEncodingException {
+            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, IOException {
 
         QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedSendProcessor"));
         Set<ObjectName> processorsSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=processors,*"), exp);

@@ -45,7 +45,7 @@ public class ConsumersDiagramGenerator {
             for (String filter : routeIdFilters) {
                 if (routeId.matches(filter)) {
                     drawConsumer = false;
-                    LOGGER.info("\"{}\" matches the routeId filter \"{}\", consumer \"{}\" will not be part of the diagram", routeId, filter, consumerInfo);
+                    LOGGER.info("\"{}\" matches the routeId filter \"{}\", consumer will not be part of the diagram", consumerInfo, filter);
                     break;
                 }
             }

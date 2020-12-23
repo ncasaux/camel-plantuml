@@ -1,4 +1,4 @@
-package fr.ncasaux;
+package fr.ncasaux.camelplantuml.routebuilder;
 
 import fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor;
 import org.apache.camel.builder.RouteBuilder;
@@ -23,9 +23,9 @@ public class CamelPlantUmlRouteBuilder extends RouteBuilder {
 
         rest("camel-plantuml")
                 .get("diagram.puml")
-                .param().name("connectRoutes").type(RestParamType.query).defaultValue("false").endParam()
-                .route().id("camelplantuml-http-trigger")
-                .process(new GetRoutesInfoProcessor())
+                    .param().name("connectRoutes").type(RestParamType.query).defaultValue("false").endParam()
+                    .route().id("camelplantuml-http-trigger")
+                    .process(new GetRoutesInfoProcessor())
                 .endRest()
         ;
     }

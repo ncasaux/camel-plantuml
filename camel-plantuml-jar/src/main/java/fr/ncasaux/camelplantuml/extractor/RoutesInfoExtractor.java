@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.MBeanServer;
+import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class RoutesInfoExtractor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoutesInfoExtractor.class);
 
-    public static void getRoutesInfo(MBeanServer mbeanServer,
+    public static void getRoutesInfo(MBeanServerConnection mbeanServer,
                                      HashMap<String, RouteInfo> routesInfo,
                                      ArrayList<ConsumerInfo> consumersInfo,
                                      HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo) throws Exception {
