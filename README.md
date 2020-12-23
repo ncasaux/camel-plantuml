@@ -145,9 +145,11 @@ Start your application with following parameters and port of your choice:
 Start locally the tool with parameter `jmxHost`:
 
 If you use Camel **2.x**:
+
 `java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel2-plantuml-zip-{{version}}.jar`
 
 If you use Camel **3.x**:
+
 `java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel3-plantuml-zip-{{version}}.jar`
 
 #### 4. Open a browser:
