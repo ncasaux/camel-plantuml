@@ -70,11 +70,11 @@ This tool generates PlantUML diagrams with following features:
 There is a version for the two Camel major versions. Both versions uses Java `1.8`.
 
 ### Camel 2.x
-The jar to use is `camel2-plantuml`. It has been built with Camel version `2.20.4`.
+The jar/zip to use are `camel2-plantuml-*`. It has been built with Camel version `2.20.4`.
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 ### Camel 3.x
-The jar to use is `camel3-plantuml`. It has been built with Camel version `3.4.4`.
+The jar/zip to use is `camel3-plantuml-*`. It has been built with Camel version `3.4.4`.
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 ## How to use ?
@@ -94,7 +94,7 @@ If you use Camel **2.x**:
 ```
 <dependency>
     <groupId>fr.ncasaux</groupId>
-    <artifactId>camel2-plantuml</artifactId>
+    <artifactId>camel2-plantuml-jar</artifactId>
     <version>{{version}}</version>
 </dependency>
 ```
@@ -102,7 +102,7 @@ If you use Camel **3.x**:
 ```
 <dependency>
     <groupId>fr.ncasaux</groupId>
-    <artifactId>camel3-plantuml</artifactId>
+    <artifactId>camel3-plantuml-jar</artifactId>
     <version>{{version}}</version>
 </dependency>
 ```
