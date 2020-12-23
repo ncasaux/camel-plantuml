@@ -13,7 +13,10 @@ import org.apache.camel.Processor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.management.MBeanServer;
+import javax.management.MBeanServerConnection;
+import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,7 +25,8 @@ public class GetRoutesInfoProcessor implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(GetRoutesInfoProcessor.class);
 
     public final static String[] routeIdFilters = {"camelplantuml.*"};
-    public final static String[] endpointBaseUriFilters = {".*camel-plantuml.*", "rest:.*"};
+    public final static String[] endpointBaseUriFilters = {".*camel-plantuml.*"};
+    private final String jmxHost = System.getProperty("jmxHost");
 
     @Override
     public void process(Exchange exchange) throws Exception {
@@ -34,8 +38,18 @@ public class GetRoutesInfoProcessor implements Processor {
         ArrayList<ProducerInfo> producersInfo = new ArrayList<>();
         HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo = new HashMap<>();
 
-        LOGGER.info("Getting MBean server");
-        MBeanServer mbeanServer = exchange.getContext().getManagementStrategy().getManagementAgent().getMBeanServer();
+        MBeanServerConnection mbeanServer;
+
+        if (jmxHost == null) {
+            LOGGER.info("Getting MBean server");
+            mbeanServer = exchange.getContext().getManagementStrategy().getManagementAgent().getMBeanServer();
+        } else {
+            LOGGER.info("Getting MBean server from provided jmxHost \"".concat(jmxHost).concat("\""));
+            String url = "service:jmx:rmi:///jndi/rmi://" + jmxHost + "/jmxrmi";
+            JMXServiceURL serviceURL = new JMXServiceURL(url);
+            JMXConnector connector = JMXConnectorFactory.connect(serviceURL);
+            mbeanServer = connector.getMBeanServerConnection();
+        }
 
         LOGGER.info("Processing routes");
         RoutesInfoExtractor.getRoutesInfo(mbeanServer, routesInfo, consumersInfo, endpointBaseUrisInfo);

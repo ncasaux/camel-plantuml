@@ -1,16 +1,16 @@
 package fr.ncasaux.camelplantuml.extractor.processor;
 
-import fr.ncasaux.camelplantuml.model.ConsumerInfo;
 import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
-import fr.ncasaux.camelplantuml.utils.ConsumerUtils;
+import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.utils.EndpointUtils;
+import fr.ncasaux.camelplantuml.utils.ProducerUtils;
 import org.apache.camel.support.EndpointHelper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.*;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -18,16 +18,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-public class PollEnricherInfoExtractor {
+public class EnricherInfoExtractor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PollEnricherInfoExtractor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnricherInfoExtractor.class);
 
-    public static void getProcessorsInfo(MBeanServer mbeanServer,
-                                         ArrayList<ConsumerInfo> consumersInfo,
+    public static void getProcessorsInfo(MBeanServerConnection mbeanServer,
+                                         ArrayList<ProducerInfo> producersInfo,
                                          HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo)
-            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, UnsupportedEncodingException {
+            throws MalformedObjectNameException, AttributeNotFoundException, MBeanException, ReflectionException, InstanceNotFoundException, URISyntaxException, IOException {
 
-        QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedPollEnricher"));
+        QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedEnricher"));
         Set<ObjectName> processorsSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=processors,*"), exp);
         List<ObjectName> processorsList = new ArrayList<>();
 
@@ -45,8 +45,8 @@ public class PollEnricherInfoExtractor {
             if (expressionLanguage.equalsIgnoreCase("constant")) {
                 String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
-                ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "pollEnrich", false);
-                ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+                ProducerInfo producerInfo = new ProducerInfo(routeId, endpointBaseUri, "enrich", false);
+                ProducerUtils.addProducerInfoIfNotInList(producersInfo, producerInfo, LOGGER);
 
                 EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
                 EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
@@ -54,8 +54,8 @@ public class PollEnricherInfoExtractor {
             } else if (expressionLanguage.equalsIgnoreCase("simple")) {
                 String endpointUri = URLDecoder.decode(normalizedUri, "UTF-8");
 
-                ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointUri, "pollEnrich", true);
-                ConsumerUtils.addConsumerInfo(consumersInfo, consumerInfo, LOGGER);
+                ProducerInfo producerInfo = new ProducerInfo(routeId, endpointUri, "enrich", true);
+                ProducerUtils.addProducerInfo(producersInfo, producerInfo, LOGGER);
 
             } else {
                 LOGGER.info("Expression \"{}({})\" can not be used to get an URI", expressionLanguage, expression);

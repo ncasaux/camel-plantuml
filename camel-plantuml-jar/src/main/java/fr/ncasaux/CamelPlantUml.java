@@ -1,5 +1,6 @@
 package fr.ncasaux;
 
+import fr.ncasaux.camelplantuml.routebuilder.CamelPlantUmlRouteBuilder;
 import org.apache.camel.main.Main;
 
 public class CamelPlantUml {
