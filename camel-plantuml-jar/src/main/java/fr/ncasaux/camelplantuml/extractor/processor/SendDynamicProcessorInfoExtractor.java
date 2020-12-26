@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.management.*;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;

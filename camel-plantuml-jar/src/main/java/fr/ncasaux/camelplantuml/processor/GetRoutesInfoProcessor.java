@@ -8,6 +8,7 @@ import fr.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
 import fr.ncasaux.camelplantuml.model.ProducerInfo;
 import fr.ncasaux.camelplantuml.model.RouteInfo;
 import fr.ncasaux.camelplantuml.model.query.Parameters;
+import fr.ncasaux.camelplantuml.utils.JmxUtils;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;
@@ -15,8 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.management.MBeanServerConnection;
 import javax.management.remote.JMXConnector;
-import javax.management.remote.JMXConnectorFactory;
-import javax.management.remote.JMXServiceURL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,9 +44,7 @@ public class GetRoutesInfoProcessor implements Processor {
             mbeanServer = exchange.getContext().getManagementStrategy().getManagementAgent().getMBeanServer();
         } else {
             LOGGER.info("Getting MBean server from provided jmxHost \"".concat(jmxHost).concat("\""));
-            String url = "service:jmx:rmi:///jndi/rmi://" + jmxHost + "/jmxrmi";
-            JMXServiceURL serviceURL = new JMXServiceURL(url);
-            JMXConnector connector = JMXConnectorFactory.connect(serviceURL);
+            JMXConnector connector = JmxUtils.getConnector(jmxHost);
             mbeanServer = connector.getMBeanServerConnection();
         }
 

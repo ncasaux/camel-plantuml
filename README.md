@@ -80,14 +80,14 @@ The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 ## How to use ?
 This tool can be used in two different ways:
  - _**embedded**_ mode: the tool is embedded to your application (suggested mode).
- - _**remote**_ mode: the tool connects to your application through a unsecured JMX url.
+ - _**remote**_ mode: the tool connects to your application through an unsecured JMX url.
 
 ### Option 1: _embedded_ mode
 In this mode, the tool is embedded within your project and connects directly to the MBean server of your application's JVM.
 The tool exposes the UML diagram directly from your application through a dedicated HTTP endpoint.
 
 #### 1. Download the jar :
-Download the jar which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
+Download (or build) the jar which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
 
 #### 2. Add the dependency to your project:
 If you use Camel **2.x**:
@@ -128,7 +128,7 @@ In this mode, the tool connects remotely to the MBean server of your application
 The tool exposes the UML diagram directly from its dedicated HTTP endpoint.
 
 #### 1. Download the zip :
-Download the zip archive which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
+Download (or build) the zip archive which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
 
 Unzip it in the folder of your choice and go into this directory.
 
@@ -164,7 +164,7 @@ To connect routes directly (and hide "internal" endpoints), add the following pa
 ## Rendering the PlantUML Code
 There are multiple options:
 - You can install PlantUML extension on your IDE, and graphviz on your computer to render locally (the best option).
-- You can use a web browser extension to direcly render the code. There are extensions for Chrome and Firefox.
+- You can use a web browser extension to directly render the code. There are extensions for Chrome and Firefox.
 - You can use the official PlantUML [webserver](http://www.plantuml.com/plantuml/uml "PlantUML webserver") and copy/paste the diagram.
 
 ## Contributing

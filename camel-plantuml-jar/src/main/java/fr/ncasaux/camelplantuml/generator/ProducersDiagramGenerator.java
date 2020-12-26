@@ -46,7 +46,7 @@ public class ProducersDiagramGenerator {
             for (String filter : routeIdFilters) {
                 if (routeId.matches(filter)) {
                     drawProducer = false;
-                    LOGGER.info("\"{}\" matches the routeId filter \"{}\", producer will not be part of the diagram", producerInfo, filter);
+                    LOGGER.info("{} matches the routeId filter \"{}\", producer will not be part of the diagram", producerInfo, filter);
                     break;
                 }
             }
@@ -57,6 +57,7 @@ public class ProducersDiagramGenerator {
                     if (parameters.connectRoutes()) {
                         ConsumerInfo ci = consumersInfo.stream().filter(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri)).findFirst().orElse(null);
                         if (ci != null) {
+                            processorType = processorType.concat(" / ").concat(ci.getProcessorType());
                             targetElementId = routesInfo.get(ci.getRouteId()).getDiagramElementId();
                             LOGGER.info("Parameter \"connectRoutes\" is \"true\", producer in routeId \"{}\" will be directly connected to routeId \"{}\", bypassing endpointBaseUri \"{}\"", routeId, ci.getRouteId(), endpointBaseUri);
                         }
