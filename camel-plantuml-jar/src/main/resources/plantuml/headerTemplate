@@ -24,3 +24,10 @@ skinparam queue<<dynamic>> {
   BackgroundColor #D5E8D4
 }
 
+footer Generated with camel-plantuml on %date("dd-MM-yyyy HH:mm")
+
+' === Some useful settings for the diagram layout ===
+'left to right direction
+'skinparam nodesep 50
+'skinparam ranksep 50
+'skinparam wrapWidth 250
