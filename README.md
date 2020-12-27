@@ -38,7 +38,7 @@ It will allow you to generate these images:
 This tool is intended to be a software documentation tool, it is not intended to be a monitoring tool with real-time metrics or statistics.
 
 ## How it works
-This tool needs to have a running Camel context instance, deployed with this tool as a dependency.
+This tool needs to have access to a running Camel context instance.
 It uses the Camel JMX MBeans (which are enabled by default in Camel), and particularly the ones related to routes and processors.
 
 Following processors are handled:
@@ -66,16 +66,6 @@ This tool generates PlantUML diagrams with following features:
 - each producer is rendered as a labelled arrow (`to`,`toD`,`enrich`,`wireTap` or `recipientList`) which connects a route to an endpoint.
 - it is possible to connect the routes to each other, if you don't want to display the "internal" endpoints on the diagram.
 
-## Versions
-There is a version for the two Camel major versions. Both versions uses Java `1.8`.
-
-### Camel 2.x
-Resources (jar or zip) to use are `camel2-plantuml-*`. It has been built with Camel version `2.20.4`.
-The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
-
-### Camel 3.x
-Resources (jar or zip) to use are `camel3-plantuml-*`. It has been built with Camel version `3.4.4`.
-The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 ## How to use ?
 This tool can be used in two different ways:
@@ -88,6 +78,18 @@ The tool exposes the UML diagram directly from your application through a dedica
 
 #### 1. Download the jar :
 Download (or build) the jar which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
+
+There is a version for the two Camel major versions. Both versions uses Java `1.8`.
+
+If you use Camel **2.x**:
+
+Jar to use is `camel2-plantuml-jar-{{version}}.jar`. It has been built with Camel version `2.20.4`.
+The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
+
+If you use Camel **3.x**:
+
+Jar to use is `camel3-plantuml-jar-{{version}}.jar`. It has been built with Camel version `3.4.4`.
+The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 #### 2. Add the dependency to your project:
 If you use Camel **2.x**:
@@ -128,9 +130,11 @@ In this mode, the tool connects remotely to the MBean server of your application
 The tool exposes the UML diagram directly from its dedicated HTTP endpoint.
 
 #### 1. Download the zip :
-Download (or build) the zip archive which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
+Download (or build) the zip `camel3-plantuml-zip-{{version}}.zip` from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
 
-Unzip it in the folder of your choice and go into this directory.
+Because it won't be integrated with your Camel context, the Camel version does not matter.
+
+Unzip it in the folder of your choice and go into this folder.
 
 #### 2. Enable JMX unsecure connection in your application
 Start your application with following parameters and port of your choice:
@@ -143,12 +147,6 @@ Start your application with following parameters and port of your choice:
 
 #### 3. Connect the tool to your application
 Start locally the tool with parameter `jmxHost`:
-
-If you use Camel **2.x**:
-
-`java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel2-plantuml-zip-{{version}}.jar`
-
-If you use Camel **3.x**:
 
 `java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel3-plantuml-zip-{{version}}.jar`
 
@@ -169,3 +167,12 @@ There are multiple options:
 
 ## Contributing
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
+
+## Releases notes
+### v1.1.0
+- Added a remote mode to use the tool, which allows connection to an existing JMX MBean server
+- Added some tips in the .puml generated file to help layout tweaking
+- Display labels of producer AND consumer on arrows when using parameter `connectRoutes=true`
+- Route without description are now shown as is.
+### v1.0.0
+- Initial version
