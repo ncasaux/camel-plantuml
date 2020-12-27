@@ -44,9 +44,7 @@ public class RoutesInfoExtractor {
             String endpointUri = (String) mbeanServer.getAttribute(on, "EndpointUri");
             String normalizedUri = EndpointHelper.normalizeEndpointUri(endpointUri);
             String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
-
-            String actualDescription = (String) mbeanServer.getAttribute(on, "Description");
-            String description = actualDescription != null ? actualDescription : "No description...";
+            String description = (String) mbeanServer.getAttribute(on, "Description");
 
             RouteInfo routeInfo = new RouteInfo(endpointBaseUri, description);
             RouteUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
