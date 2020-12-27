@@ -21,6 +21,7 @@ public class RoutesDiagramGenerator {
     public static String generateUmlString(HashMap<String, RouteInfo> routesInfo) throws IOException {
 
         String umlRouteTemplate = IOUtils.toString(Objects.requireNonNull(RoutesDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/routeTemplate")), StandardCharsets.UTF_8);
+        String umlRouteTemplateNoDescription = IOUtils.toString(Objects.requireNonNull(RoutesDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/routeTemplateNoDescription")), StandardCharsets.UTF_8);
         String umlString = "";
 
         for (Map.Entry<String, RouteInfo> routeInfoEntry : routesInfo.entrySet()) {
@@ -39,11 +40,19 @@ public class RoutesDiagramGenerator {
             }
 
             if (drawRoute) {
-                umlString = umlString
-                        .concat(StringUtils.replaceEach(umlRouteTemplate,
-                                new String[]{"%%routeId%%", "%%routeElementId%%", "%%routeDescription%%"},
-                                new String[]{routeId, diagramElementId, routeDescription}))
-                        .concat("\n\n");
+                if (routeDescription == null || routeDescription.isEmpty()) {
+                    umlString = umlString
+                            .concat(StringUtils.replaceEach(umlRouteTemplateNoDescription,
+                                    new String[]{"%%routeId%%", "%%routeElementId%%", "%%routeDescription%%"},
+                                    new String[]{routeId, diagramElementId, routeDescription}))
+                            .concat("\n\n");
+                } else {
+                    umlString = umlString
+                            .concat(StringUtils.replaceEach(umlRouteTemplate,
+                                    new String[]{"%%routeId%%", "%%routeElementId%%", "%%routeDescription%%"},
+                                    new String[]{routeId, diagramElementId, routeDescription}))
+                            .concat("\n\n");
+                }
             }
         }
         return umlString;
