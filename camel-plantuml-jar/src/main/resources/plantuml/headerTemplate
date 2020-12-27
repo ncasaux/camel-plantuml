@@ -26,8 +26,9 @@ skinparam queue<<dynamic>> {
 
 footer Generated with camel-plantuml on %date("dd-MM-yyyy HH:mm")
 
-' === Some useful settings for the diagram layout ===
+' === Some useful settings for tweaking diagram layout ===
 'left to right direction
+'hide stereotype
 'skinparam nodesep 50
 'skinparam ranksep 50
 'skinparam wrapWidth 250
