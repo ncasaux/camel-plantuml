@@ -127,8 +127,9 @@ To connect routes directly (and hide "internal" endpoints), add the following pa
 ### Option 2: _remote_ mode
 In this mode, the tool connects remotely to the MBean server of your application's JVM.
 The tool exposes the UML diagram directly from its dedicated HTTP endpoint.
+The tool is packaged as a zip file.
 
-#### 1. Download the zip :
+#### 1. Build the zip file:
 Clone the repository, checkout the branch `camel-3.x`, build the zip with `mvn package`.
 
 Unzip it in the folder of your choice and go into this folder.
