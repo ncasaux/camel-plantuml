@@ -76,19 +76,18 @@ This tool can be used in two different ways:
 In this mode, the tool is embedded within your project and connects directly to the MBean server of your application's JVM.
 The tool exposes the UML diagram directly from your application through a dedicated HTTP endpoint.
 
-#### 1. Download the jar :
-Download (or build) the jar which matches the Camel version you use from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
-
+#### 1. Build the jar :
+Clone the repository, checkout the branch  which matches the Camel version you use, build and install the jar with `mvn install`.
 There is a version for the two Camel major versions. Both versions uses Java `1.8`.
 
 If you use Camel **2.x**:
 
-Jar to use is `camel2-plantuml-jar-{{version}}.jar`. It has been built with Camel version `2.20.4`.
+The built jar is named `camel2-plantuml-jar-{{version}}.jar`. It is built with Camel version `2.20.4`.
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 If you use Camel **3.x**:
 
-Jar to use is `camel3-plantuml-jar-{{version}}.jar`. It has been built with Camel version `3.4.4`.
+The built jar is named `camel3-plantuml-jar-{{version}}.jar`. It has been built with Camel version `3.4.4`.
 The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 
 #### 2. Add the dependency to your project:
@@ -130,9 +129,7 @@ In this mode, the tool connects remotely to the MBean server of your application
 The tool exposes the UML diagram directly from its dedicated HTTP endpoint.
 
 #### 1. Download the zip :
-Download (or build) the zip `camel3-plantuml-zip-{{version}}.zip` from [here](https://github.com/ncasaux?tab=packages&repo_name=camel-plantuml)
-
-Because it won't be integrated with your Camel context, the Camel version does not matter.
+Clone the repository, checkout the branch `camel-3.x`, build the zip with `mvn package`.
 
 Unzip it in the folder of your choice and go into this folder.
 
