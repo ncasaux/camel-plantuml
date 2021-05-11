@@ -11,11 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.camelInternalEndpointSchemeFilters;
 import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.routeIdFilters;
 
 public class ConsumersDiagramGenerator {
@@ -26,7 +30,7 @@ public class ConsumersDiagramGenerator {
                                            ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
                                            HashMap<String, RouteInfo> routesInfo,
-                                           Parameters parameters) throws IOException {
+                                           Parameters parameters) throws IOException, URISyntaxException {
 
         String umlConsumerTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/consumerTemplate")), StandardCharsets.UTF_8);
         String umlDynamicConsumerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicConsumerTemplate")), StandardCharsets.UTF_8);
@@ -50,11 +54,9 @@ public class ConsumersDiagramGenerator {
                 }
             }
 
-            if (parameters.connectRoutes()) {
-                if (producersInfo.stream().anyMatch(producerInfo -> producerInfo.getEndpointUri().equals(endpointBaseUri))) {
-                    drawConsumer = false;
-                    LOGGER.info("Parameter \"connectRoutes\" is \"true\", consumer in routeId \"{}\" will not be part of the diagram", routeId);
-                }
+            if (parameters.connectRoutes() && producersInfo.stream().anyMatch(producerInfo -> producerInfo.getEndpointUri().equals(endpointBaseUri)) && Arrays.asList(camelInternalEndpointSchemeFilters).contains(new URI(endpointBaseUri).getScheme())) {
+                drawConsumer = false;
+                LOGGER.info("Parameter \"connectRoutes\" is \"true\", consumer in routeId \"{}\" from internal endpointBaseUri \"{}\" will not be part of the diagram", routeId, endpointBaseUri);
             }
 
             if (drawConsumer) {

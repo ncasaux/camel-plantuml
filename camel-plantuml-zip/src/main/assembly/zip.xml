@@ -3,18 +3,12 @@
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
     <id>zip</id>
     <includeBaseDirectory>true</includeBaseDirectory>
-
     <formats>
         <format>zip</format>
     </formats>
-    <fileSets>
-        <fileSet>
-            <directory>${project.basedir}/conf</directory>
-        </fileSet>
-    </fileSets>
     <files>
         <file>
-            <source> ${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
+            <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
             <outputDirectory>/</outputDirectory>
         </file>
     </files>

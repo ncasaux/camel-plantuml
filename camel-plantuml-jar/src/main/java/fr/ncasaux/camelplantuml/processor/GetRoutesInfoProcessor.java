@@ -25,6 +25,7 @@ public class GetRoutesInfoProcessor implements Processor {
 
     public final static String[] routeIdFilters = {"camelplantuml.*"};
     public final static String[] endpointBaseUriFilters = {".*camel-plantuml.*"};
+    public final static String[] camelInternalEndpointSchemeFilters = {"direct","seda"};
     private final String jmxHost = System.getProperty("jmxHost");
 
     @Override
@@ -32,10 +33,10 @@ public class GetRoutesInfoProcessor implements Processor {
 
         Parameters parameters = new Parameters(Boolean.parseBoolean(exchange.getIn().getHeader("connectRoutes", String.class)));
 
-        HashMap<String, RouteInfo> routesInfo = new HashMap<>();
+        HashMap<String, RouteInfo> routesInfo = new HashMap<>(); //Hashmap key will be the routeId of the Camel route
         ArrayList<ConsumerInfo> consumersInfo = new ArrayList<>();
         ArrayList<ProducerInfo> producersInfo = new ArrayList<>();
-        HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo = new HashMap<>();
+        HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo = new HashMap<>(); //Hashmap key will be the endpoint base URI of the endpoint
 
         MBeanServerConnection mbeanServer;
 
