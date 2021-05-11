@@ -10,12 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
+import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.camelInternalEndpointSchemeFilters;
 import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.endpointBaseUriFilters;
 
 public class EndpointsDiagramGenerator {
@@ -25,7 +25,7 @@ public class EndpointsDiagramGenerator {
     public static String generateUmlString(ArrayList<ConsumerInfo> consumersInfo,
                                            ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
-                                           Parameters parameters) throws IOException {
+                                           Parameters parameters) throws IOException, URISyntaxException {
 
         String umlEndpointTemplate = IOUtils.toString(Objects.requireNonNull(EndpointsDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/endpointTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
@@ -46,9 +46,9 @@ public class EndpointsDiagramGenerator {
                 }
             }
 
-            if (parameters.connectRoutes() && endpointHasConsumer && endpointHasProducer) {
+            if (parameters.connectRoutes() && endpointHasConsumer && endpointHasProducer && Arrays.asList(camelInternalEndpointSchemeFilters).contains(new URI(endpointBaseUri).getScheme())) {
                 drawEndpoint = false;
-                LOGGER.info("Parameter \"connectRoutes\" is \"true\", and endpointBaseUri \"{}\" has both consumer and producer, endpoint will not be part of the diagram", endpointBaseUri);
+                LOGGER.info("Parameter \"connectRoutes\" is \"true\", endpointBaseUri \"{}\" is internal and has both consumer and producer, endpoint will not be part of the diagram", endpointBaseUri);
             }
 
             if (drawEndpoint) {

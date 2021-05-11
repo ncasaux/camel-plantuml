@@ -11,11 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.camelInternalEndpointSchemeFilters;
 import static fr.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.routeIdFilters;
 
 public class ProducersDiagramGenerator {
@@ -26,7 +30,7 @@ public class ProducersDiagramGenerator {
                                            ArrayList<ProducerInfo> producersInfo,
                                            HashMap<String, EndpointBaseUriInfo> endpointBaseUrisInfo,
                                            HashMap<String, RouteInfo> routesInfo,
-                                           Parameters parameters) throws IOException {
+                                           Parameters parameters) throws IOException, URISyntaxException {
 
         String umlProducerTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/producerTemplate")), StandardCharsets.UTF_8);
         String umlDynamicProducerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicProducerTemplate")), StandardCharsets.UTF_8);
@@ -54,12 +58,12 @@ public class ProducersDiagramGenerator {
             if (drawProducer) {
                 if (!producerInfo.getUseDynamicEndpoint()) {
                     String targetElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();
-                    if (parameters.connectRoutes()) {
+                    if (parameters.connectRoutes() && Arrays.asList(camelInternalEndpointSchemeFilters).contains(new URI(endpointBaseUri).getScheme())) {
                         ConsumerInfo ci = consumersInfo.stream().filter(consumerInfo -> consumerInfo.getEndpointUri().equals(endpointBaseUri)).findFirst().orElse(null);
                         if (ci != null) {
                             processorType = processorType.concat(" / ").concat(ci.getProcessorType());
                             targetElementId = routesInfo.get(ci.getRouteId()).getDiagramElementId();
-                            LOGGER.info("Parameter \"connectRoutes\" is \"true\", producer in routeId \"{}\" will be directly connected to routeId \"{}\", bypassing endpointBaseUri \"{}\"", routeId, ci.getRouteId(), endpointBaseUri);
+                            LOGGER.info("Parameter \"connectRoutes\" is \"true\", producer in routeId \"{}\" will be directly connected to routeId \"{}\", bypassing internal endpointBaseUri \"{}\"", routeId, ci.getRouteId(), endpointBaseUri);
                         }
                     }
 
