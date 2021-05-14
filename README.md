@@ -1,5 +1,5 @@
 ## Overview
-camel-plantuml is a tool which helps to generate [PlantUML](https://plantuml.com/) diagrams which describe Apache [Camel](https://camel.apache.org/) routes, based on an actual **running** Camel context. 
+camel-plantuml is a tool which helps to generate [PlantUML](https://plantuml.com/) activity diagrams which describe Apache [Camel](https://camel.apache.org/) routes, based on an actual **running** Camel context. 
 
 It allows to have diagrams where you can see interactions between endpoints and routes.
 
@@ -39,7 +39,7 @@ This tool is intended to be a software documentation tool, it is not intended to
 
 ## How it works
 This tool needs to have access to a running Camel context instance.
-It uses the Camel JMX MBeans (which are enabled by default in Camel), and particularly the ones related to routes and processors. Therefore, this tool does NOT work during design time or coding of the Camel routes. It requires an actual running Camel Context.
+It uses the Camel JMX MBeans (which are enabled by default in Camel), and particularly the ones related to routes and processors. Therefore, this tool does NOT work during design time or coding of the Camel routes. It requires an actual running Camel context.
 
 Following processors are handled:
 - SendProcessor (`to`)
@@ -167,6 +167,9 @@ There are multiple options:
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.1.1
+- Fixed that internal endpoints must be with scheme `direct` or `seda` to connect routes when using parameter `connectRoutes=true`
+- Fixed zip maven assembly and updated maven plugins versions
 ### v1.1.0
 - Added a remote mode to use the tool, which allows connection to an existing JMX MBean server
 - Added some tips in the .puml generated file to help layout tweaking
