@@ -64,7 +64,7 @@ This tool generates PlantUML diagrams with following features:
 - each dynamic endpoint URI is rendered as a queue with a "dynamic" layout.
 - each consumer is rendered as a labelled arrow (`from` or `pollEnrich`) which connects an endpoint to a route.
 - each producer is rendered as a labelled arrow (`to`,`toD`,`enrich`,`wireTap` or `recipientList`) which connects a route to an endpoint.
-- it is possible to connect the routes to each other, if you don't want to display the "internal" endpoints on the diagram.
+- it is possible to connect the routes to each other, if you don't want to display the "internal" endpoints on the diagram. Routes have to share a `direct` or `seda` endpoint.
 
 
 ## How to use ?
