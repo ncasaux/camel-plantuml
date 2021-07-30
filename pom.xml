@@ -13,6 +13,8 @@
   </modules>
 
   <name>A project to generate PlantUML diagrams from Camel routes</name>
+  <description>camel-plantuml allows to generate PlantUML diagrams from deployed Camel routes</description>
+  <url>https://github.com/ncasaux/camel-plantuml</url>
 
   <licenses>
     <license>
