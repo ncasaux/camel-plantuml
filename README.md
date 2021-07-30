@@ -94,7 +94,7 @@ The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
 If you use Camel **2.x**:
 ```
 <dependency>
-    <groupId>fr.ncasaux</groupId>
+    <groupId>io.github.ncasaux</groupId>
     <artifactId>camel2-plantuml-jar</artifactId>
     <version>{{version}}</version>
 </dependency>
@@ -102,7 +102,7 @@ If you use Camel **2.x**:
 If you use Camel **3.x**:
 ```
 <dependency>
-    <groupId>fr.ncasaux</groupId>
+    <groupId>io.github.ncasaux</groupId>
     <artifactId>camel3-plantuml-jar</artifactId>
     <version>{{version}}</version>
 </dependency>

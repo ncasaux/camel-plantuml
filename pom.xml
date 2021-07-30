@@ -4,10 +4,10 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>fr.ncasaux</groupId>
+  <groupId>io.github.ncasaux</groupId>
   <artifactId>camel3-plantuml</artifactId>
   <packaging>pom</packaging>
-  <version>1.1.1</version>
+  <version>1.2.0-SNAPSHOT</version>
   <modules>
     <module>camel-plantuml-jar</module>
     <module>camel-plantuml-zip</module>
@@ -15,10 +15,43 @@
 
   <name>A project to generate PlantUML diagrams from Camel routes</name>
 
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>ncasaux</id>
+      <name>Nicolas Casaux</name>
+      <url>http://www.github.com/ncasaux</url>
+      <email>nicolas.casaux@outlook.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/ncasaux/camel-plantuml.git</connection>
+    <developerConnection>scm:git:ssh://github.com/ncasaux/camel-plantuml.git</developerConnection>
+    <url>https://github.com/ncasaux/camel-plantuml.git</url>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <log4j2-version>2.13.3</log4j2-version>
   </properties>
 
   <dependencyManagement>
@@ -27,7 +60,7 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-bom</artifactId>
-        <version>3.4.4</version>
+        <version>3.11.0</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -67,35 +100,35 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
       <scope>runtime</scope>
-      <version>${log4j2-version}</version>
+      <version>2.14.1</version>
     </dependency>
 
     <!-- org.apache.commons -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.11</version>
+      <version>3.12.0</version>
     </dependency>
 
     <!--net.sourceforge.plantuml -->
     <dependency>
       <groupId>net.sourceforge.plantuml</groupId>
       <artifactId>plantuml</artifactId>
-      <version>1.2020.19</version>
+      <version>1.2021.9</version>
     </dependency>
 
     <!-- org.apache.httpcomponents -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpcore</artifactId>
-      <version>4.4.13</version>
+      <version>4.4.14</version>
     </dependency>
 
     <!-- commons-io -->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.8.0</version>
+      <version>2.11.0</version>
     </dependency>
 
     <!-- commons-codec -->
@@ -127,7 +160,68 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>ci-cd</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <!-- Prevent gpg from using pinentry programs. Fixes: gpg: signing
+                      failed: Inappropriate ioctl for device -->
+                  <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
