@@ -14,6 +14,40 @@
 
   <name>A project to generate PlantUML diagrams from Camel routes</name>
 
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>ncasaux</id>
+      <name>Nicolas Casaux</name>
+      <url>http://www.github.com/ncasaux</url>
+      <email>nicolas.casaux@outlook.com</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/ncasaux/camel-plantuml.git</connection>
+    <developerConnection>scm:git:ssh://github.com/ncasaux/camel-plantuml.git</developerConnection>
+    <url>https://github.com/ncasaux/camel-plantuml.git</url>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
