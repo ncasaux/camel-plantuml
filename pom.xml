@@ -7,7 +7,7 @@
   <groupId>io.github.ncasaux</groupId>
   <artifactId>camel2-plantuml</artifactId>
   <packaging>pom</packaging>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <modules>
     <module>camel-plantuml-jar</module>
   </modules>
@@ -80,33 +80,16 @@
       <artifactId>camel-netty-http</artifactId>
     </dependency>
 
-    <!-- org.apache.logging.log4j -->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <scope>runtime</scope>
-      <version>2.14.1</version>
-    </dependency>
-
     <!-- org.apache.commons -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.12.0</version>
     </dependency>
-
-    <!--net.sourceforge.plantuml -->
     <dependency>
-      <groupId>net.sourceforge.plantuml</groupId>
-      <artifactId>plantuml</artifactId>
-      <version>1.2021.9</version>
-    </dependency>
-
-    <!-- org.apache.httpcomponents -->
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
-      <version>4.4.14</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.4</version>
     </dependency>
 
     <!-- commons-io -->
@@ -115,21 +98,6 @@
       <artifactId>commons-io</artifactId>
       <version>2.11.0</version>
     </dependency>
-
-    <!-- commons-codec -->
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.15</version>
-    </dependency>
-
-    <!-- org.apache.commons -->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-collections4</artifactId>
-      <version>4.4</version>
-    </dependency>
-
   </dependencies>
 
   <build>
