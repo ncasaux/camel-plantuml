@@ -7,13 +7,15 @@
   <groupId>io.github.ncasaux</groupId>
   <artifactId>camel3-plantuml</artifactId>
   <packaging>pom</packaging>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.2.1</version>
   <modules>
     <module>camel-plantuml-jar</module>
     <module>camel-plantuml-zip</module>
   </modules>
 
   <name>A project to generate PlantUML diagrams from Camel routes</name>
+  <description>camel-plantuml allows to generate PlantUML diagrams from deployed Camel routes</description>
+  <url>https://github.com/ncasaux/camel-plantuml</url>
 
   <licenses>
     <license>
@@ -109,19 +111,10 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.12.0</version>
     </dependency>
-
-    <!--net.sourceforge.plantuml -->
     <dependency>
-      <groupId>net.sourceforge.plantuml</groupId>
-      <artifactId>plantuml</artifactId>
-      <version>1.2021.9</version>
-    </dependency>
-
-    <!-- org.apache.httpcomponents -->
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
-      <version>4.4.14</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.4</version>
     </dependency>
 
     <!-- commons-io -->
@@ -130,21 +123,6 @@
       <artifactId>commons-io</artifactId>
       <version>2.11.0</version>
     </dependency>
-
-    <!-- commons-codec -->
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.15</version>
-    </dependency>
-
-    <!-- org.apache.commons -->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-collections4</artifactId>
-      <version>4.4</version>
-    </dependency>
-
   </dependencies>
 
   <build>
