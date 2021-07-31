@@ -76,27 +76,15 @@ This tool can be used in two different ways:
 In this mode, the tool is embedded within your project and connects directly to the MBean server of your application's JVM.
 The tool exposes the UML diagram directly from your application through a dedicated HTTP endpoint.
 
-#### 1. Build the jar :
-Clone the repository, checkout the branch  which matches the Camel version you use, build and install the jar with `mvn install`.
-There is a version for the two Camel major versions. Both versions uses Java `1.8`.
+#### 1. Add the dependency to your project:
+The jar is a OSGi bundle, hence it can be used with Apache ServiceMix/Apache Karaf.
 
-If you use Camel **2.x**:
-
-The built jar is named `camel2-plantuml-jar-{{version}}.jar`. It is built with Camel version `2.20.4`.
-The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
-
-If you use Camel **3.x**:
-
-The built jar is named `camel3-plantuml-jar-{{version}}.jar`. It has been built with Camel version `3.4.4`.
-The jar is a OSGi bundle, and can be used with Apache ServiceMix/Apache Karaf.
-
-#### 2. Add the dependency to your project:
 If you use Camel **2.x**:
 ```
 <dependency>
     <groupId>io.github.ncasaux</groupId>
     <artifactId>camel2-plantuml-jar</artifactId>
-    <version>{{version}}</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 If you use Camel **3.x**:
@@ -104,25 +92,25 @@ If you use Camel **3.x**:
 <dependency>
     <groupId>io.github.ncasaux</groupId>
     <artifactId>camel3-plantuml-jar</artifactId>
-    <version>{{version}}</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
-#### 3. Add the route builder to your Camel context:
+#### 2. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
 
 Default host is `localhost`, default port is `8090`, but you can overide them:
 
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder("localhost", 8090));`
 
-#### 4. Start your Camel context, and open a browser:
+#### 3. Start your Camel context, and open a browser:
 To have all the endpoints, go to:
 
-`http://{{host}}:{{port}}/camel-plantuml/diagram.puml`
+`http://localhost:8090/camel-plantuml/diagram.puml`
 
 To connect routes directly (and hide "internal" endpoints), add the following parameter:
 
-`http://{{host}}:{{port}}/camel-plantuml/diagram.puml?connectRoutes=true`
+`http://localhost:8090/camel-plantuml/diagram.puml?connectRoutes=true`
 
 ### Option 2: _remote_ mode
 In this mode, the tool connects remotely to the MBean server of your application's JVM.
@@ -146,7 +134,7 @@ Start your application with following parameters and port of your choice:
 #### 3. Connect the tool to your application
 Start locally the tool with parameter `jmxHost`:
 
-`java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel3-plantuml-zip-{{version}}.jar`
+`java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel3-plantuml-zip-1.2.1.jar`
 
 #### 4. Open a browser:
 To have all the endpoints, go to:
@@ -167,6 +155,12 @@ There are multiple options:
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.2.1
+- Renamed groupId and packages to io.github.ncasaux
+- Changed to latest LTS Camel3 version (3.11) and latest Camel2 version (2.25.4)
+- Updated POM to be able to publish to Maven Central
+- Updated dependencies version
+- Removed unused dependencies
 ### v1.1.1
 - Fixed that internal endpoints must be with scheme `direct` or `seda` to connect routes when using parameter `connectRoutes=true`
 - Fixed zip maven assembly and updated maven plugins versions
