@@ -80,6 +80,14 @@
       <artifactId>camel-netty-http</artifactId>
     </dependency>
 
+    <!-- org.apache.logging.log4j -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <scope>runtime</scope>
+      <version>2.14.1</version>
+    </dependency>
+
     <!-- org.apache.commons -->
     <dependency>
       <groupId>org.apache.commons</groupId>
