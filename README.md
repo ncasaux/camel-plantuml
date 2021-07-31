@@ -117,13 +117,13 @@ In this mode, the tool connects remotely to the MBean server of your application
 The tool exposes the UML diagram directly from its dedicated HTTP endpoint.
 The tool is packaged as a zip file.
 
-#### 1. Build the zip file:
-Clone the repository, checkout the branch `camel-3.x`, build the zip with `mvn package`.
+#### 1. Download the zip file:
+Download the latest release from [here](https://github.com/ncasaux/camel-plantuml/releases/download/camel3-plantuml-v1.2.1/camel3-plantuml-zip-1.2.1.zip)
 
 Unzip it in the folder of your choice and go into this folder.
 
 #### 2. Enable JMX unsecure connection in your application
-Start your application with following parameters and port of your choice:
+Start **your application** with following parameters and port of your choice:
 ```
 -Dcom.sun.management.jmxremote.authenticate=false
 -Dcom.sun.management.jmxremote.ssl=false
@@ -150,6 +150,25 @@ There are multiple options:
 - You can install PlantUML extension on your IDE, and graphviz on your computer to render locally (the best option).
 - You can use a web browser extension to directly render the code. There are extensions for Chrome and Firefox.
 - You can use the official PlantUML [webserver](http://www.plantuml.com/plantuml/uml "PlantUML webserver") and copy/paste the diagram.
+
+## FAQ
+1. What are the differences with the [Camel plugin for hawtio](http://hawtio.github.io/hawtio/plugins/camel/) ?
+
+The Camel plugin for hawtio has also a graphical representation of routes and route steps. 
+However, there is no graphical connection between routes directly, as each route is drawn individually.
+So you can not know the routes/endpoints interconnections.
+That is the main purpose of this tool.
+
+2. Why this tool can not expose directly the images of the diagrams, instead (or along with) the PlantUML code?
+
+This tool is based on [legacy PlantUML activity diagrams](https://plantuml.com/en/activity-diagram-legacy)
+To draw such diagrams, Graphviz is required, and unfortunately, there is no Java implementation of Graphviz...
+
+3. So, why don't this tool use the [new PlantUML activity diagrams](https://plantuml.com/en/activity-diagram-beta),
+which do not require Graphviz anymore ?
+
+As far as I know, the new activity diagram is not intended to create connections between any two actions,
+and that's completely incompatible with diagrams this tool aims to create.
 
 ## Contributing
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
