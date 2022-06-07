@@ -6,6 +6,7 @@ import io.github.ncasaux.camelplantuml.model.ProducerInfo;
 import io.github.ncasaux.camelplantuml.model.RouteInfo;
 import io.github.ncasaux.camelplantuml.model.query.Parameters;
 import io.github.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -15,10 +16,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class ProducersDiagramGenerator {
 
@@ -34,9 +32,7 @@ public class ProducersDiagramGenerator {
         String umlDynamicProducerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ProducersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicProducerTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
-        for (int index = 0; index < producersInfo.size(); index++) {
-
-            ProducerInfo producerInfo = producersInfo.get(index);
+        for (ProducerInfo producerInfo : producersInfo) {
 
             String routeId = producerInfo.getRouteId();
             String processorType = producerInfo.getProcessorType();
@@ -73,7 +69,8 @@ public class ProducersDiagramGenerator {
 
                 } else {
                     String uri = producerInfo.getEndpointUri();
-                    String endpointElementId = "dynamic_producer_endpoint_".concat(String.valueOf(index));
+//                    String endpointElementId = "dynamic_producer_endpoint_".concat(String.valueOf(index));
+                    String endpointElementId = "dynamic_producer_endpoint_".concat(DigestUtils.md5Hex(uri));
 
                     umlString = umlString
                             .concat(StringUtils.replaceEach(umlDynamicProducerRouteTemplate,

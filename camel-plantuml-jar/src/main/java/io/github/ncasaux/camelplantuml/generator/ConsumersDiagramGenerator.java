@@ -6,6 +6,7 @@ import io.github.ncasaux.camelplantuml.model.ProducerInfo;
 import io.github.ncasaux.camelplantuml.model.RouteInfo;
 import io.github.ncasaux.camelplantuml.model.query.Parameters;
 import io.github.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,9 +35,7 @@ public class ConsumersDiagramGenerator {
         String umlDynamicConsumerRouteTemplate = IOUtils.toString(Objects.requireNonNull(ConsumersDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/dynamicConsumerTemplate")), StandardCharsets.UTF_8);
         String umlString = "";
 
-        for (int index = 0; index < consumersInfo.size(); index++) {
-            ConsumerInfo consumerInfo = consumersInfo.get(index);
-
+        for (ConsumerInfo consumerInfo : consumersInfo) {
             String routeId = consumerInfo.getRouteId();
             String processorType = consumerInfo.getProcessorType();
             String endpointBaseUri = consumerInfo.getEndpointUri();
@@ -69,7 +68,8 @@ public class ConsumersDiagramGenerator {
 
                 } else {
                     String uri = consumerInfo.getEndpointUri();
-                    String endpointElementId = "dynamic_consumer_endpoint_".concat(String.valueOf(index));
+//                    String endpointElementId = "dynamic_consumer_endpoint_".concat(String.valueOf(index));
+                    String endpointElementId = "dynamic_consumer_endpoint_".concat(DigestUtils.md5Hex(uri));
 
                     umlString = umlString
                             .concat(StringUtils.replaceEach(umlDynamicConsumerRouteTemplate,

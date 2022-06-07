@@ -13,10 +13,7 @@ import javax.management.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class EnricherInfoExtractor {
 
@@ -32,6 +29,7 @@ public class EnricherInfoExtractor {
         List<ObjectName> processorsList = new ArrayList<>();
 
         CollectionUtils.addAll(processorsList, processorsSet);
+        Collections.sort(processorsList);
 
         for (ObjectName on : processorsList) {
             String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");

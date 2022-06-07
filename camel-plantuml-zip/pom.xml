@@ -3,19 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>camel3-plantuml</artifactId>
+        <artifactId>camel-plantuml</artifactId>
         <groupId>io.github.ncasaux</groupId>
-        <version>1.2.1</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>camel3-plantuml-zip</artifactId>
+    <artifactId>camel-plantuml-zip</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>io.github.ncasaux</groupId>
-            <artifactId>camel3-plantuml-jar</artifactId>
+            <artifactId>camel-plantuml-jar</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
