@@ -23,7 +23,7 @@ public class GetRoutesInfoProcessor implements Processor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetRoutesInfoProcessor.class);
 
-    public final static String[] routeIdFilters = {"camelplantuml.*"};
+    public final static String[] routeIdFilters = {".*camel-plantuml.*"};
     public final static String[] endpointBaseUriFilters = {".*camel-plantuml.*"};
     public final static String[] camelInternalEndpointSchemeFilters = {"direct","seda"};
     private final String jmxHost = System.getProperty("jmxHost");

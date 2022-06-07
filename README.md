@@ -78,21 +78,11 @@ The tool exposes the UML diagram directly from your application through a dedica
 
 #### 1. Add the dependency to your project:
 The jar is a OSGi bundle, hence it can be used with Apache ServiceMix/Apache Karaf.
-
-If you use Camel **2.x**:
 ```
 <dependency>
     <groupId>io.github.ncasaux</groupId>
-    <artifactId>camel2-plantuml-jar</artifactId>
-    <version>1.2.1</version>
-</dependency>
-```
-If you use Camel **3.x**:
-```
-<dependency>
-    <groupId>io.github.ncasaux</groupId>
-    <artifactId>camel3-plantuml-jar</artifactId>
-    <version>1.2.1</version>
+    <artifactId>camel-plantuml-jar</artifactId>
+    <version>x.y.z</version>
 </dependency>
 ```
 
@@ -118,7 +108,7 @@ The tool exposes the UML diagram directly from its dedicated HTTP endpoint.
 The tool is packaged as a zip file.
 
 #### 1. Download the zip file:
-Download the latest release from [here](https://github.com/ncasaux/camel-plantuml/releases/download/camel3-plantuml-v1.2.1/camel3-plantuml-zip-1.2.1.zip)
+Download the latest release from [here](https://github.com/ncasaux/camel-plantuml/releases)
 
 Unzip it in the folder of your choice and go into this folder.
 
@@ -134,10 +124,10 @@ Start **your application** with following parameters and port of your choice:
 #### 3. Connect the tool to your application
 Start locally the tool with parameter `jmxHost`:
 
-`java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel3-plantuml-zip-1.2.1.jar`
+`java -DjmxHost={{YOUR_APPLICATION_IP}}:{{JMX_PORT}} -jar camel-plantuml-zip-x.y.z.jar`
 
 #### 4. Open a browser:
-To have all the endpoints, go to:
+To display all the endpoints, go to:
 
 `http://localhost:8090/camel-plantuml/diagram.puml`
 
@@ -174,6 +164,12 @@ and that's completely incompatible with diagrams this tool aims to create.
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.3.0
+- Deprecated support to Camel 2.X version
+- Renamed camel3-plantuml to camel-plantuml
+- Added unit tests
+- Removed irrelevant code
+
 ### v1.2.1
 - Renamed groupId and packages to io.github.ncasaux
 - Changed to latest LTS Camel3 version (3.11) and latest Camel2 version (2.25.4)

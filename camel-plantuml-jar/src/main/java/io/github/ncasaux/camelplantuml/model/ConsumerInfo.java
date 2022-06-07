@@ -14,16 +14,6 @@ public class ConsumerInfo {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        ConsumerInfo ci = (ConsumerInfo) obj;
-        return obj.getClass().equals(ConsumerInfo.class)
-                && this.endpointUri.equals(ci.endpointUri)
-                && this.routeId.equals(ci.routeId)
-                && this.processorType.equals(ci.processorType)
-                && this.useDynamicEndpoint.equals(ci.useDynamicEndpoint);
-    }
-
-    @Override
     public String toString() {
         return "Consumer in routeId \"".concat(routeId).concat("\" ")
                 .concat("consuming from ").concat(useDynamicEndpoint ? "dynamic " : "static ")

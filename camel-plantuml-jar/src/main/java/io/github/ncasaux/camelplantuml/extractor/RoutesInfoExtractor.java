@@ -14,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class RoutesInfoExtractor {
 
@@ -30,7 +27,9 @@ public class RoutesInfoExtractor {
 
         Set<ObjectName> routesSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=routes,*"), null);
         List<ObjectName> routesList = new ArrayList<>();
+
         CollectionUtils.addAll(routesList, routesSet);
+        Collections.sort(routesList);
 
         for (ObjectName on : routesList) {
             String routeState = (String) mbeanServer.getAttribute(on, "State");
@@ -50,7 +49,7 @@ public class RoutesInfoExtractor {
             RouteUtils.addRouteInfo(routesInfo, routeId, routeInfo, LOGGER);
 
             ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "from", false);
-            ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+            ConsumerUtils.addConsumerInfo(consumersInfo, consumerInfo, LOGGER);
 
             EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
             EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);

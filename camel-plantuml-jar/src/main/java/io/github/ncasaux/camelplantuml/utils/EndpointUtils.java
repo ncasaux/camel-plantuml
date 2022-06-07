@@ -1,6 +1,7 @@
 package io.github.ncasaux.camelplantuml.utils;
 
 import io.github.ncasaux.camelplantuml.model.EndpointBaseUriInfo;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 
 import java.io.UnsupportedEncodingException;
@@ -33,7 +34,7 @@ public class EndpointUtils {
                                               EndpointBaseUriInfo endpointBaseUriInfo,
                                               Logger LOGGER) {
 
-        endpointBaseUriInfo.setDiagramElementId("endpoint_".concat(String.valueOf(endpointBaseUrisInfo.size())));
+        endpointBaseUriInfo.setDiagramElementId("endpoint_".concat(DigestUtils.md5Hex(endpointBaseUri)));
 
         if (!endpointBaseUrisInfo.containsKey(endpointBaseUri)) {
             endpointBaseUrisInfo.put(endpointBaseUri, endpointBaseUriInfo);

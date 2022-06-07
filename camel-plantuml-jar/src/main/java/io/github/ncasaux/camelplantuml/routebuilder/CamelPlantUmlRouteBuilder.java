@@ -49,7 +49,7 @@ public class CamelPlantUmlRouteBuilder extends EndpointRouteBuilder {
         rest("camel-plantuml")
                 .get("diagram.puml")
                     .param().name("connectRoutes").type(RestParamType.query).defaultValue("false").endParam()
-                    .route().id("camelplantuml-http-trigger")
+                    .route().routeId("camel-plantuml-http-trigger")
                     .process(new GetRoutesInfoProcessor())
                 .endRest()
         ;

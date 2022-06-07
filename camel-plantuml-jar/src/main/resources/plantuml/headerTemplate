@@ -1,4 +1,4 @@
-@startuml %%diagramName%%
+@startuml
 
 skinparam ArrowColor #Black
 

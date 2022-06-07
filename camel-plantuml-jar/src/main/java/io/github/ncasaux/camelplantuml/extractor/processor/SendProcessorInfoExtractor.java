@@ -13,10 +13,7 @@ import javax.management.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SendProcessorInfoExtractor {
 
@@ -30,7 +27,9 @@ public class SendProcessorInfoExtractor {
         QueryExp exp = Query.eq(Query.classattr(), Query.value("org.apache.camel.management.mbean.ManagedSendProcessor"));
         Set<ObjectName> processorsSet = mbeanServer.queryNames(new ObjectName("org.apache.camel:type=processors,*"), exp);
         List<ObjectName> processorsList = new ArrayList<>();
+
         CollectionUtils.addAll(processorsList, processorsSet);
+        Collections.sort(processorsList);
 
         for (ObjectName on : processorsList) {
             String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");

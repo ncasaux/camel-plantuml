@@ -13,10 +13,7 @@ import javax.management.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PollEnricherInfoExtractor {
 
@@ -32,6 +29,7 @@ public class PollEnricherInfoExtractor {
         List<ObjectName> processorsList = new ArrayList<>();
 
         CollectionUtils.addAll(processorsList, processorsSet);
+        Collections.sort(processorsList);
 
         for (ObjectName on : processorsList) {
             String processorId = (String) mbeanServer.getAttribute(on, "ProcessorId");
@@ -46,7 +44,7 @@ public class PollEnricherInfoExtractor {
                 String endpointBaseUri = URLDecoder.decode(EndpointUtils.getEndpointBaseUri(normalizedUri, LOGGER), "UTF-8");
 
                 ConsumerInfo consumerInfo = new ConsumerInfo(routeId, endpointBaseUri, "pollEnrich", false);
-                ConsumerUtils.addConsumerInfoIfNotInList(consumersInfo, consumerInfo, LOGGER);
+                ConsumerUtils.addConsumerInfo(consumersInfo, consumerInfo, LOGGER);
 
                 EndpointBaseUriInfo endpointBaseUriInfo = new EndpointBaseUriInfo();
                 EndpointUtils.addEndpointBaseUriInfo(endpointBaseUrisInfo, endpointBaseUri, endpointBaseUriInfo, LOGGER);
