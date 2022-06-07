@@ -5,9 +5,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ camel-3.x ]
+    branches: [ main ]
   pull_request:
-    branches: [ camel-3.x ]
+    branches: [ main ]
 
 jobs:
   build:
