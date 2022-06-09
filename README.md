@@ -165,7 +165,7 @@ Any suggestion, remark, or question? Feel free to create an issue and/or to cont
 
 ## Releases notes
 ### v1.3.0
-- Deprecated support to Camel 2.X version
+- Deprecated support for Camel 2.X version
 - Renamed camel3-plantuml to camel-plantuml
 - Added unit tests
 - Removed irrelevant code
