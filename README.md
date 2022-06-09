@@ -169,6 +169,7 @@ Any suggestion, remark, or question? Feel free to create an issue and/or to cont
 - Renamed camel3-plantuml to camel-plantuml
 - Added unit tests
 - Removed irrelevant code
+- Changed to latest LTS Camel version (3.14.3)
 
 ### v1.2.1
 - Renamed groupId and packages to io.github.ncasaux
