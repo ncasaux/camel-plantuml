@@ -75,6 +75,7 @@ public class EnricherHeaderTest extends CamelTestSupport {
                 "@enduml\n");
 
         AdviceWith.adviceWith(context, "camel-plantuml-http-trigger", a -> {
+                    a.weaveAddLast().transform(a.body().regexReplaceAll("\r", ""));
                     a.weaveAddLast().to("mock:camel-plantuml-output");
                     a.replaceFromWith("direct:camel-plantuml-http-trigger");
                 }
@@ -92,7 +93,7 @@ public class EnricherHeaderTest extends CamelTestSupport {
             @Override
             public void configure() throws Exception {
                 from(timer("foo").period(5000)).routeId("enricherHeaderRoute1")
-                        .setHeader("dummyHeader",constant("mock://dummyEnricher"))
+                        .setHeader("dummyHeader", constant("mock://dummyEnricher"))
                         .enrich().header("dummyHeader").id("_enrich01");
 
                 getContext().addRoutes(new CamelPlantUmlRouteBuilder());

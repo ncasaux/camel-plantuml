@@ -76,6 +76,7 @@ public class PollEnricherHeaderTest extends CamelTestSupport {
                 "@enduml\n");
 
         AdviceWith.adviceWith(context, "camel-plantuml-http-trigger", a -> {
+                    a.weaveAddLast().transform(a.body().regexReplaceAll("\r", ""));
                     a.weaveAddLast().to("mock:camel-plantuml-output");
                     a.replaceFromWith("direct:camel-plantuml-http-trigger");
                 }
@@ -93,7 +94,7 @@ public class PollEnricherHeaderTest extends CamelTestSupport {
             @Override
             public void configure() throws Exception {
                 from(timer("foo").period(5000)).routeId("pollEnricherHeaderRoute1")
-                        .setHeader("dummyHeader",constant("mock://dummyPollEnricher"))
+                        .setHeader("dummyHeader", constant("mock://dummyPollEnricher"))
                         .pollEnrich().header("dummyHeader").id("_pollEnrich01");
 
                 getContext().addRoutes(new CamelPlantUmlRouteBuilder());

@@ -75,6 +75,7 @@ public class RecipientListHeaderTest extends CamelTestSupport {
                 "@enduml\n");
 
         AdviceWith.adviceWith(context, "camel-plantuml-http-trigger", a -> {
+                    a.weaveAddLast().transform(a.body().regexReplaceAll("\r", ""));
                     a.weaveAddLast().to("mock:camel-plantuml-output");
                     a.replaceFromWith("direct:camel-plantuml-http-trigger");
                 }
@@ -92,7 +93,7 @@ public class RecipientListHeaderTest extends CamelTestSupport {
             @Override
             public void configure() throws Exception {
                 from(timer("foo").period(5000)).routeId("recipientListHeaderRoute1")
-                        .setHeader("dummyHeader",constant("mock://dummyRecipient"))
+                        .setHeader("dummyHeader", constant("mock://dummyRecipient"))
                         .recipientList().header("dummyHeader").id("_recipientList01");
 
                 getContext().addRoutes(new CamelPlantUmlRouteBuilder());
