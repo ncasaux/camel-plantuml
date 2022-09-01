@@ -86,6 +86,13 @@ The jar is a OSGi bundle, hence it can be used with Apache ServiceMix/Apache Kar
 </dependency>
 ```
 
+Based on the Apache Camel version you use, choose the correct version:
+
+| **Apache Camel version** | **camel-plantuml version** |
+|--------------------------|----------------------------|
+| <= 3.15                  | 1.3.x                      |
+| \>= 3.16                 | 1.4.x                      |
+
 #### 2. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
 
@@ -164,6 +171,11 @@ and that's completely incompatible with diagrams this tool aims to create.
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.4.0
+- Changed to latest LTS Camel version (3.18.1)
+- Enforced route, producer and consumer filtering on the diagram based on endpointBaseUri
+- Updated dependencies
+
 ### v1.3.0
 - Deprecated support for Camel 2.X version
 - Renamed camel3-plantuml to camel-plantuml

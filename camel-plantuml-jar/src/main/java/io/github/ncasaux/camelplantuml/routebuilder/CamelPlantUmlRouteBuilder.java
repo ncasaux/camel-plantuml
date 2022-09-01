@@ -26,6 +26,7 @@ public class CamelPlantUmlRouteBuilder extends EndpointRouteBuilder {
 
     /**
      * Creates a Camel RouteBuilder for camel-plantuml using specified host and port for the HTTP endpoint
+     *
      * @param host Host of the HTTP endpoint of camel-plantuml
      * @param port Port of the HTTP endpoint of camel-plantuml
      */
@@ -49,9 +50,11 @@ public class CamelPlantUmlRouteBuilder extends EndpointRouteBuilder {
         rest("camel-plantuml")
                 .get("diagram.puml")
                     .param().name("connectRoutes").type(RestParamType.query).defaultValue("false").endParam()
-                    .route().routeId("camel-plantuml-http-trigger")
-                    .process(new GetRoutesInfoProcessor())
-                .endRest()
+                    .to("direct:camel-plantuml-generate-plantuml")
+        ;
+
+        from("direct:camel-plantuml-generate-plantuml").routeId("camel-plantuml-http-trigger")
+                .process(new GetRoutesInfoProcessor())
         ;
     }
 }

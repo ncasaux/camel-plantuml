@@ -40,13 +40,22 @@ public class ConsumersDiagramGenerator {
             String processorType = consumerInfo.getProcessorType();
             String endpointBaseUri = consumerInfo.getEndpointUri();
             String routeElementId = routesInfo.get(routeId).getDiagramElementId();
+            String routeEndpointBaseUri = routesInfo.get(routeId).getEndpointBaseUri();
 
             boolean drawConsumer = true;
 
-            for (String filter : GetRoutesInfoProcessor.routeIdFilters) {
-                if (routeId.matches(filter)) {
+            for (String routeIdFilter : GetRoutesInfoProcessor.routeIdFilters) {
+                if (routeId.matches(routeIdFilter)) {
                     drawConsumer = false;
-                    LOGGER.info("{} matches the routeId filter \"{}\", consumer will not be part of the diagram", consumerInfo, filter);
+                    LOGGER.info("{} matches the routeId filter \"{}\", consumer will not be part of the diagram", consumerInfo, routeIdFilter);
+                    break;
+                }
+            }
+
+            for (String endpointBaseUriFilter : GetRoutesInfoProcessor.endpointBaseUriFilters) {
+                if (routeEndpointBaseUri.matches(endpointBaseUriFilter)) {
+                    drawConsumer = false;
+                    LOGGER.info("{} matches the endpoint filter \"{}\", consumer will not be part of the diagram", consumerInfo, endpointBaseUriFilter);
                     break;
                 }
             }
@@ -68,7 +77,6 @@ public class ConsumersDiagramGenerator {
 
                 } else {
                     String uri = consumerInfo.getEndpointUri();
-//                    String endpointElementId = "dynamic_consumer_endpoint_".concat(String.valueOf(index));
                     String endpointElementId = "dynamic_consumer_endpoint_".concat(DigestUtils.md5Hex(uri));
 
                     umlString = umlString

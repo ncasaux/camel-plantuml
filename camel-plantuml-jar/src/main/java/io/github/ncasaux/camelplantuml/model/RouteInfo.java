@@ -15,6 +15,10 @@ public class RouteInfo {
         return "Route consuming from endpointBaseUri \"".concat(endpointBaseUri).concat("\"");
     }
 
+    public String getEndpointBaseUri() {
+        return endpointBaseUri;
+    }
+
     public String getDescription() {
         return description;
     }
