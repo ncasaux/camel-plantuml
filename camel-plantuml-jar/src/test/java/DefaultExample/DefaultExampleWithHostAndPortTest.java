@@ -126,14 +126,14 @@ public class DefaultExampleWithHostAndPortTest extends CamelTestSupport {
                 "@enduml\n");
 
         AdviceWith.adviceWith(context, "camel-plantuml-http-trigger", a -> {
+                    a.weaveAddLast().transform(a.body().regexReplaceAll("\r", ""));
                     a.weaveAddLast().to("mock:camel-plantuml-output");
-                    a.replaceFromWith("direct:camel-plantuml-http-trigger");
                 }
         );
 
         context.start();
 
-        template.sendBody("direct:camel-plantuml-http-trigger", null);
+        template.sendBody("direct:camel-plantuml-generate-plantuml", null);
         assertMockEndpointsSatisfied();
     }
 
@@ -162,7 +162,7 @@ public class DefaultExampleWithHostAndPortTest extends CamelTestSupport {
                         .description("Route which transforms the message")
                         .transform(simple("${body}${body}"));
 
-                getContext().addRoutes(new CamelPlantUmlRouteBuilder("localhost",9090));
+                getContext().addRoutes(new CamelPlantUmlRouteBuilder("localhost", 9090));
 
             }
 

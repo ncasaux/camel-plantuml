@@ -38,13 +38,22 @@ public class ProducersDiagramGenerator {
             String processorType = producerInfo.getProcessorType();
             String endpointBaseUri = producerInfo.getEndpointUri();
             String routeElementId = routesInfo.get(routeId).getDiagramElementId();
+            String routeEndpointBaseUri = routesInfo.get(routeId).getEndpointBaseUri();
 
             boolean drawProducer = true;
 
-            for (String filter : GetRoutesInfoProcessor.routeIdFilters) {
-                if (routeId.matches(filter)) {
+            for (String routeIdFilter : GetRoutesInfoProcessor.routeIdFilters) {
+                if (routeId.matches(routeIdFilter)) {
                     drawProducer = false;
-                    LOGGER.info("{} matches the routeId filter \"{}\", producer will not be part of the diagram", producerInfo, filter);
+                    LOGGER.info("{} matches the routeId filter \"{}\", producer will not be part of the diagram", producerInfo, routeIdFilter);
+                    break;
+                }
+            }
+
+            for (String endpointBaseUriFilter : GetRoutesInfoProcessor.endpointBaseUriFilters) {
+                if (routeEndpointBaseUri.matches(endpointBaseUriFilter)) {
+                    drawProducer = false;
+                    LOGGER.info("{} matches the endpoint filter \"{}\", producer will not be part of the diagram", producerInfo, endpointBaseUriFilter);
                     break;
                 }
             }
@@ -69,7 +78,6 @@ public class ProducersDiagramGenerator {
 
                 } else {
                     String uri = producerInfo.getEndpointUri();
-//                    String endpointElementId = "dynamic_producer_endpoint_".concat(String.valueOf(index));
                     String endpointElementId = "dynamic_producer_endpoint_".concat(DigestUtils.md5Hex(uri));
 
                     umlString = umlString

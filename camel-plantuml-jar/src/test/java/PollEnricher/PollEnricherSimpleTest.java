@@ -82,14 +82,14 @@ public class PollEnricherSimpleTest extends CamelTestSupport {
                 "@enduml\n");
 
         AdviceWith.adviceWith(context, "camel-plantuml-http-trigger", a -> {
+                    a.weaveAddLast().transform(a.body().regexReplaceAll("\r", ""));
                     a.weaveAddLast().to("mock:camel-plantuml-output");
-                    a.replaceFromWith("direct:camel-plantuml-http-trigger");
                 }
         );
 
         context.start();
 
-        template.sendBody("direct:camel-plantuml-http-trigger", null);
+        template.sendBody("direct:camel-plantuml-generate-plantuml", null);
         assertMockEndpointsSatisfied();
     }
 

@@ -1,6 +1,7 @@
 package io.github.ncasaux.camelplantuml.generator;
 
 import io.github.ncasaux.camelplantuml.model.RouteInfo;
+import io.github.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -11,8 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import static io.github.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor.routeIdFilters;
 
 public class RoutesDiagramGenerator {
 
@@ -28,13 +27,22 @@ public class RoutesDiagramGenerator {
             String routeId = routeInfoEntry.getKey();
             String diagramElementId = routeInfoEntry.getValue().getDiagramElementId();
             String routeDescription = routeInfoEntry.getValue().getDescription();
+            String routeEndpointBaseUri = routeInfoEntry.getValue().getEndpointBaseUri();
 
             boolean drawRoute = true;
 
-            for (String filter : routeIdFilters) {
-                if (routeId.matches(filter)) {
+            for (String routeIdFilter : GetRoutesInfoProcessor.routeIdFilters) {
+                if (routeId.matches(routeIdFilter)) {
                     drawRoute = false;
-                    LOGGER.info("Route with id \"{}\" matches the routeId filter \"{}\", route will not be part of the diagram", routeId, filter);
+                    LOGGER.info("Route with id \"{}\" matches the routeId filter \"{}\", route will not be part of the diagram", routeId, routeIdFilter);
+                    break;
+                }
+            }
+
+            for (String endpointBaseUriFilter : GetRoutesInfoProcessor.endpointBaseUriFilters) {
+                if (routeEndpointBaseUri.matches(endpointBaseUriFilter)) {
+                    drawRoute = false;
+                    LOGGER.info("Route with id \"{}\" matches the endpoint filter \"{}\", route will not be part of the diagram", routeId, endpointBaseUriFilter);
                     break;
                 }
             }
