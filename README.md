@@ -171,6 +171,9 @@ and that's completely incompatible with diagrams this tool aims to create.
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.5.0
+- Changed to latest LTS Camel version (3.20.3)
+
 ### v1.4.0
 - Changed to latest LTS Camel version (3.18.1)
 - Enforced route, producer and consumer filtering on the diagram based on endpointBaseUri

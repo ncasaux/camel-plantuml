@@ -7,7 +7,7 @@
   <groupId>io.github.ncasaux</groupId>
   <artifactId>camel-plantuml</artifactId>
   <packaging>pom</packaging>
-  <version>1.4.0</version>
+  <version>1.5.0</version>
   <modules>
     <module>camel-plantuml-jar</module>
     <module>camel-plantuml-zip</module>
@@ -62,7 +62,7 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-bom</artifactId>
-        <version>3.18.1</version>
+        <version>3.20.3</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>

@@ -1,7 +1,6 @@
 package DefaultExample;
 
 import io.github.ncasaux.camelplantuml.routebuilder.CamelPlantUmlRouteBuilder;
-import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.RoutesBuilder;
 import org.apache.camel.builder.AdviceWith;
@@ -123,7 +122,7 @@ public class DefaultExampleWithConnectRoutesTest extends CamelTestSupport {
         context.start();
 
         template.sendBodyAndHeader("direct:camel-plantuml-generate-plantuml", null, "connectRoutes",true);
-        assertMockEndpointsSatisfied();
+        MockEndpoint.assertIsSatisfied(context);
     }
 
     @Override
