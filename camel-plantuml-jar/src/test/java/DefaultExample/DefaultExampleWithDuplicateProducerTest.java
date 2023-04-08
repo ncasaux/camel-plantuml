@@ -134,7 +134,7 @@ public class DefaultExampleWithDuplicateProducerTest extends CamelTestSupport {
         context.start();
 
         template.sendBody("direct:camel-plantuml-generate-plantuml", null);
-        assertMockEndpointsSatisfied();
+        MockEndpoint.assertIsSatisfied(context);
     }
 
     @Override
