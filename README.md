@@ -93,6 +93,7 @@ Based on the Apache Camel version you use, choose the correct version:
 | <= 3.15                  | 1.3.x                      |
 | \>= 3.16 and <= 3.19     | 1.4.x                      |
 | \>= 3.20                 | 1.5.x                      |
+| \>= 4.0                  | 1.6.x                      |
 
 #### 2. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
@@ -172,6 +173,10 @@ and that's completely incompatible with diagrams this tool aims to create.
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.6.0
+- Changed to latest LTS Camel version (4.0.4)
+- Updated dependencies
+
 ### v1.5.0
 - Changed to latest LTS Camel version (3.20.3)
 
