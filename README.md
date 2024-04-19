@@ -173,6 +173,10 @@ and that's completely incompatible with diagrams this tool aims to create.
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.7.0
+- Changed to latest LTS Camel version (4.4.1)
+- Updated dependencies
+
 ### v1.6.0
 - Changed to latest LTS Camel version (4.0.4)
 - Updated dependencies
