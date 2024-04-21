@@ -94,6 +94,7 @@ Based on the Apache Camel version you use, choose the correct version:
 | \>= 3.16 and <= 3.19     | 1.4.x                      |
 | \>= 3.20                 | 1.5.x                      |
 | \>= 4.0                  | 1.6.x                      |
+| \>= 4.4                  | 1.7.x                      |
 
 #### 2. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
