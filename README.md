@@ -161,7 +161,7 @@ That is the main purpose of this tool.
 
 2. Why this tool can not expose directly the images of the diagrams, instead (or along with) the PlantUML code?
 
-This tool is based on [legacy PlantUML activity diagrams](https://plantuml.com/en/activity-diagram-legacy)
+This tool is based on [legacy PlantUML activity diagrams](https://plantuml.com/en/activity-diagram-legacy).
 To draw such diagrams, Graphviz is required, and unfortunately, there is no Java implementation of Graphviz...
 
 3. So, why don't this tool use the [new PlantUML activity diagrams](https://plantuml.com/en/activity-diagram-beta),
