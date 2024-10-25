@@ -31,7 +31,9 @@ public class GetRoutesInfoProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
 
-        Parameters parameters = new Parameters(Boolean.parseBoolean(exchange.getIn().getHeader("connectRoutes", String.class)));
+        Parameters parameters = new Parameters(
+                Boolean.parseBoolean(exchange.getIn().getHeader("connectRoutes", String.class)),
+                exchange.getIn().getHeader("uriFilterPattern", String.class));
 
         HashMap<String, RouteInfo> routesInfo = new HashMap<>(); //Hashmap key will be the routeId of the Camel route
         ArrayList<ConsumerInfo> consumersInfo = new ArrayList<>();
@@ -72,7 +74,7 @@ public class GetRoutesInfoProcessor implements Processor {
 
         LOGGER.info("Generating PlantUML diagram");
         String umlString = HeaderDiagramGenerator.generateUmlString(exchange.getContext().getName())
-                .concat(RoutesDiagramGenerator.generateUmlString(routesInfo))
+                .concat(RoutesDiagramGenerator.generateUmlString(routesInfo, parameters))
                 .concat(EndpointsDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, parameters))
                 .concat(ConsumersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, parameters))
                 .concat(ProducersDiagramGenerator.generateUmlString(consumersInfo, producersInfo, endpointBaseUrisInfo, routesInfo, parameters))

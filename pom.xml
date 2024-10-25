@@ -7,7 +7,7 @@
   <groupId>io.github.ncasaux</groupId>
   <artifactId>camel-plantuml</artifactId>
   <packaging>pom</packaging>
-  <version>1.7.0</version>
+  <version>1.8.0-SNAPSHOT</version>
   <modules>
     <module>camel-plantuml-jar</module>
     <module>camel-plantuml-zip</module>
