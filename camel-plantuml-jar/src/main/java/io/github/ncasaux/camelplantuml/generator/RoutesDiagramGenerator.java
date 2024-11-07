@@ -50,7 +50,8 @@ public class RoutesDiagramGenerator {
 
             if (parameters.uriFilterPattern().matcher(routeEndpointBaseUri).matches()) {
                 drawRoute = false;
-                LOGGER.info("Route with id \"{}\" matches the uriFilterPattern \"{}\", route will not be part of the diagram", routeId, parameters.uriFilterPattern());
+                LOGGER.info("Route with id \"{}\" and routeEndpointBaseUri \"{}\" matches the uriFilterPattern \"{}\", " +
+                        "route will not be part of the diagram", routeId, routeEndpointBaseUri, parameters.uriFilterPattern());
             }
 
             if (drawRoute) {
