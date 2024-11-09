@@ -58,6 +58,11 @@ public class ProducersDiagramGenerator {
                 }
             }
 
+            if (parameters.uriFilterPattern().matcher(routeEndpointBaseUri).matches() || parameters.uriFilterPattern().matcher(endpointBaseUri).matches()) {
+                drawProducer = false;
+                LOGGER.info("{} matches the uriFilterPattern \"{}\", producer will not be part of the diagram", producerInfo, parameters.uriFilterPattern());
+            }
+
             if (drawProducer) {
                 if (!producerInfo.getUseDynamicEndpoint()) {
                     String targetElementId = endpointBaseUrisInfo.get(endpointBaseUri).getDiagramElementId();

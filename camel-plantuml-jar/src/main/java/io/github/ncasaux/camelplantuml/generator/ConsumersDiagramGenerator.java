@@ -60,6 +60,11 @@ public class ConsumersDiagramGenerator {
                 }
             }
 
+            if (parameters.uriFilterPattern().matcher(endpointBaseUri).matches()) {
+                drawConsumer = false;
+                LOGGER.info("{} matches the uriFilterPattern \"{}\", consumer will not be part of the diagram", consumerInfo, parameters.uriFilterPattern());
+            }
+
             if (parameters.connectRoutes() && producersInfo.stream().anyMatch(producerInfo -> producerInfo.getEndpointUri().equals(endpointBaseUri)) && Arrays.asList(GetRoutesInfoProcessor.camelInternalEndpointSchemeFilters).contains(new URI(endpointBaseUri).getScheme())) {
                 drawConsumer = false;
                 LOGGER.info("Parameter \"connectRoutes\" is \"true\", consumer in routeId \"{}\" from internal endpointBaseUri \"{}\" will not be part of the diagram", routeId, endpointBaseUri);

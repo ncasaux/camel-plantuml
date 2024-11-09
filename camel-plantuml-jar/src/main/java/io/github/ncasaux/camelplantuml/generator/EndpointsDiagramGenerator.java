@@ -44,6 +44,11 @@ public class EndpointsDiagramGenerator {
                 }
             }
 
+            if (parameters.uriFilterPattern().matcher(endpointBaseUri).matches()) {
+                drawEndpoint = false;
+                LOGGER.info("EndpointBaseUri \"{}\" matches the uriFilterPattern \"{}\", endpoint will not be part of the diagram", endpointBaseUri, parameters.uriFilterPattern());
+            }
+
             if (parameters.connectRoutes() && endpointHasConsumer && endpointHasProducer && Arrays.asList(GetRoutesInfoProcessor.camelInternalEndpointSchemeFilters).contains(new URI(endpointBaseUri).getScheme())) {
                 drawEndpoint = false;
                 LOGGER.info("Parameter \"connectRoutes\" is \"true\", endpointBaseUri \"{}\" is internal and has both consumer and producer, endpoint will not be part of the diagram", endpointBaseUri);

@@ -1,6 +1,7 @@
 package io.github.ncasaux.camelplantuml.generator;
 
 import io.github.ncasaux.camelplantuml.model.RouteInfo;
+import io.github.ncasaux.camelplantuml.model.query.Parameters;
 import io.github.ncasaux.camelplantuml.processor.GetRoutesInfoProcessor;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +18,7 @@ public class RoutesDiagramGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoutesDiagramGenerator.class);
 
-    public static String generateUmlString(HashMap<String, RouteInfo> routesInfo) throws IOException {
+    public static String generateUmlString(HashMap<String, RouteInfo> routesInfo, Parameters parameters) throws IOException {
 
         String umlRouteTemplate = IOUtils.toString(Objects.requireNonNull(RoutesDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/routeTemplate")), StandardCharsets.UTF_8);
         String umlRouteTemplateNoDescription = IOUtils.toString(Objects.requireNonNull(RoutesDiagramGenerator.class.getClassLoader().getResourceAsStream("plantuml/routeTemplateNoDescription")), StandardCharsets.UTF_8);
@@ -45,6 +46,12 @@ public class RoutesDiagramGenerator {
                     LOGGER.info("Route with id \"{}\" matches the endpoint filter \"{}\", route will not be part of the diagram", routeId, endpointBaseUriFilter);
                     break;
                 }
+            }
+
+            if (parameters.uriFilterPattern().matcher(routeEndpointBaseUri).matches()) {
+                drawRoute = false;
+                LOGGER.info("Route with id \"{}\" and routeEndpointBaseUri \"{}\" matches the uriFilterPattern \"{}\", " +
+                        "route will not be part of the diagram", routeId, routeEndpointBaseUri, parameters.uriFilterPattern());
             }
 
             if (drawRoute) {
