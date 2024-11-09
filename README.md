@@ -184,7 +184,7 @@ Any suggestion, remark, or question? Feel free to create an issue and/or to cont
 
 ## Releases notes
 ### v1.8.0
-- Added customizable endpoint exclusion (Thanks @ahauschulte)
+- Added customizable endpoint exclusion - Thanks to [ahauschulte](https://github.com/ahauschulte)
 
 ### v1.7.0
 - Changed to latest LTS Camel version (4.4.1)
