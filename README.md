@@ -65,6 +65,7 @@ This tool generates PlantUML diagrams with following features:
 - each consumer is rendered as a labelled arrow (`from` or `pollEnrich`) which connects an endpoint to a route.
 - each producer is rendered as a labelled arrow (`to`,`toD`,`enrich`,`wireTap` or `recipientList`) which connects a route to an endpoint.
 - it is possible to connect the routes to each other, if you don't want to display the "internal" endpoints on the diagram. Routes have to share a `direct` or `seda` endpoint.
+- it is possible to exclude endpoints and/or routes which match a customizable URI pattern.
 
 
 ## How to use ?
@@ -94,7 +95,7 @@ Based on the Apache Camel version you use, choose the correct version:
 | \>= 3.16 and <= 3.19     | 1.4.x                      |
 | \>= 3.20                 | 1.5.x                      |
 | \>= 4.0                  | 1.6.x                      |
-| \>= 4.4                  | 1.7.x                      |
+| \>= 4.4                  | \>=1.7.x                   |
 
 #### 2. Add the route builder to your Camel context:
 `getContext().addRoutes(new CamelPlantUmlRouteBuilder());`
@@ -111,6 +112,10 @@ To have all the endpoints, go to:
 To connect routes directly (and hide "internal" endpoints), add the following parameter:
 
 `http://localhost:8090/camel-plantuml/diagram.puml?connectRoutes=true`
+
+To hide endpoints and/or routes which match a URI pattern (`.*foo.*` in following example), add the following parameter:
+
+`http://localhost:8090/camel-plantuml/diagram.puml?uriFilterPattern=.*foo.*`
 
 ### Option 2: _remote_ mode
 In this mode, the tool connects remotely to the MBean server of your application's JVM.
@@ -145,6 +150,10 @@ To connect routes directly (and hide "internal" endpoints), add the following pa
 
 `http://localhost:8090/camel-plantuml/diagram.puml?connectRoutes=true`
 
+To hide endpoints and/or routes which match a URI pattern (`.*foo.*` in following example), add the following parameter:
+
+`http://localhost:8090/camel-plantuml/diagram.puml?uriFilterPattern=.*foo.*`
+
 ## Rendering the PlantUML Code
 There are multiple options:
 - You can install PlantUML extension on your IDE, and graphviz on your computer to render locally (the best option).
@@ -174,6 +183,9 @@ and that's completely incompatible with diagrams this tool aims to create.
 Any suggestion, remark, or question? Feel free to create an issue and/or to contribute by forking and making pull requests!
 
 ## Releases notes
+### v1.8.0
+- Added customizable endpoint exclusion (Thanks @ahauschulte)
+
 ### v1.7.0
 - Changed to latest LTS Camel version (4.4.1)
 - Updated dependencies
